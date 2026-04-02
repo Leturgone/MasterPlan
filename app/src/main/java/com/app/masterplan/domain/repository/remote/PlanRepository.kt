@@ -1,5 +1,6 @@
 package com.app.masterplan.domain.repository.remote
 
+import com.app.masterplan.domain.dto.AttachedDocument
 import com.app.masterplan.domain.dto.NewPlanData
 import com.app.masterplan.domain.model.plans.Plan
 import com.app.masterplan.domain.model.plans.PlanStatus
@@ -22,4 +23,7 @@ interface PlanRepository {
     suspend fun getPlan(planId: UUID): Plan
 
     suspend fun getSortDirPlansByEndDate(directorId: UUID): List<Plan>
+
+    suspend fun updatePlan(planId: UUID,updatedPlan: Plan,
+                           attachedDocument: AttachedDocument? = null): UUID
 }
