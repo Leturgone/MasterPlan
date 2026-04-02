@@ -1,6 +1,6 @@
 package com.app.masterplan.domain.dto
 
-data class AttachedDocumentDto(
+data class AttachedDocument(
     val fileData: ByteArray,
     val fileName: String
 ) {
@@ -8,7 +8,7 @@ data class AttachedDocumentDto(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as AttachedDocumentDto
+        other as AttachedDocument
 
         if (!fileData.contentEquals(other.fileData)) return false
         if (fileName != other.fileName) return false

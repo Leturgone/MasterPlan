@@ -7,6 +7,6 @@ data class NewTaskData(
     val title: String,
     val description: String,
     val endDate: LocalDate,
-    val document: AttachedDocumentDto? = null,
+    val document: AttachedDocument? = null,
     val executorsId: MutableList<UUID>
 )
