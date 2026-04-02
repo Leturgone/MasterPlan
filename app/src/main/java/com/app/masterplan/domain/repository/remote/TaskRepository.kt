@@ -19,5 +19,7 @@ interface TaskRepository {
 
     suspend fun getAssignedTasks(executorId: UUID): List<Task>
 
-    fun getTask(taskId: UUID): Task
+    suspend fun getTask(taskId: UUID): Task
+
+    suspend fun getTasksFromPlan(planId: UUID): List<Task>
 }
