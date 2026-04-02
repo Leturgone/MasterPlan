@@ -10,7 +10,7 @@ class FilterPlanTasksByStatusUseCase(
 ) {
     suspend operator fun invoke(planId: UUID, taskStatus: TaskStatus): Result<List<Task>>{
         return try {
-            val tasks = taskRepository.getFilterAssignedTasksByStatus(planId,taskStatus)
+            val tasks = taskRepository.getFilterPlanTasksByStatus(planId,taskStatus)
             Result.success(tasks)
         }catch (e: Exception){
             Result.failure(e)

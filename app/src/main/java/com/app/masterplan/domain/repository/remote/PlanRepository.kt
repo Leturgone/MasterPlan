@@ -18,5 +18,4 @@ interface PlanRepository {
 
     suspend fun getFilterDirPlansByStatus(directorId: UUID, status: PlanStatus): List<Plan>
 
-    suspend fun getFilterPlanTasksByStatus(planId: UUID, taskStatus: TaskStatus): List<Plan>
 }
