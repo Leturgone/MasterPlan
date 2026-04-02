@@ -3,7 +3,6 @@ package com.app.masterplan.domain.repository.remote
 import com.app.masterplan.domain.dto.NewPlanData
 import com.app.masterplan.domain.model.plans.Plan
 import com.app.masterplan.domain.model.plans.PlanStatus
-import com.app.masterplan.domain.model.plans.TaskStatus
 import java.util.UUID
 
 interface PlanRepository {
