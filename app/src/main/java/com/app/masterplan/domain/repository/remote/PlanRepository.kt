@@ -20,4 +20,6 @@ interface PlanRepository {
 
     suspend fun getDirPlans(directorId: UUID): List<Plan>
 
+    suspend fun getPlan(planId: UUID): Plan
+
 }
