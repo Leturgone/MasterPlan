@@ -19,5 +19,5 @@ interface TaskRepository {
 
     suspend fun getAssignedTasks(executorId: UUID): List<Task>
 
-
+    fun getTask(taskId: UUID): Task
 }
