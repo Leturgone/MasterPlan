@@ -1,5 +1,6 @@
 package com.app.masterplan.domain.repository.remote
 
+import com.app.masterplan.domain.dto.AttachedDocument
 import com.app.masterplan.domain.dto.NewTaskData
 import com.app.masterplan.domain.model.plans.Task
 import com.app.masterplan.domain.model.plans.TaskStatus
@@ -28,4 +29,7 @@ interface TaskRepository {
     suspend fun getSortAssignedTasksByEndDate(executorId: UUID): List<Task>
 
     suspend fun getSortPlanTasksByEndDate(planId: UUID): List<Task>
+
+    suspend fun updateTask(taskId: UUID,updatedTask: Task,
+                           attachedDocument: AttachedDocument? = null): UUID
 }
