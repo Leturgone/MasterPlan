@@ -1,6 +1,5 @@
 package com.app.masterplan.domain.model.userManagement
 
-import com.app.masterplan.domain.model.auth.UserRole
 import java.util.UUID
 
 data class User(
