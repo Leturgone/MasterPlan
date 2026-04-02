@@ -9,5 +9,5 @@ data class NewPlanDto(
     val startDate: LocalDate? = null,
     val endDate: LocalDate,
     val directorId: UUID,
-    val document: AttachedDocument? = null
+    val document: AttachedDocumentDto? = null
 )
