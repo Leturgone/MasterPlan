@@ -1,4 +1,4 @@
-package com.app.masterplan.domain.useacse.files
+package com.app.masterplan.domain.useacse.document
 
 import com.app.masterplan.domain.repository.remote.DocumentRepository
 import java.util.UUID
