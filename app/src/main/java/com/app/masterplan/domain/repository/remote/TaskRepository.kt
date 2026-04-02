@@ -22,4 +22,6 @@ interface TaskRepository {
     suspend fun getTask(taskId: UUID): Task
 
     suspend fun getTasksFromPlan(planId: UUID): List<Task>
+
+    suspend fun searchAssignedTasksByTitle(query: String, executorId: UUID): List<Task>
 }
