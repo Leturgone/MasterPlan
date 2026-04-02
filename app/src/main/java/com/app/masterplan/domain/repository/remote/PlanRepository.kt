@@ -21,4 +21,5 @@ interface PlanRepository {
 
     suspend fun getPlan(planId: UUID): Plan
 
+    suspend fun getSortDirPlansByEndDate(directorId: UUID): List<Plan>
 }
