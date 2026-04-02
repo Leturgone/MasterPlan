@@ -7,7 +7,7 @@ import java.util.UUID
 class GetTaskInfUseCase(
     private val taskRepository: TaskRepository
 ) {
-    operator fun invoke(taskId: UUID): Result<Task>{
+    suspend operator fun invoke(taskId: UUID): Result<Task>{
         return try {
             val task = taskRepository.getTask(taskId)
             Result.success(task)
