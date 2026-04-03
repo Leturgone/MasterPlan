@@ -10,7 +10,7 @@ interface PlanRepository {
 
     suspend fun updatePlanStatus(planId: UUID, status: PlanStatus): UUID
 
-    suspend fun createPlan(newPlan: NewPlanData): UUID
+    suspend fun createPlan(newPlan: NewPlanData,document: AttachedDocument? = null): UUID
 
     suspend fun deletePlan(planId: UUID): UUID
 
