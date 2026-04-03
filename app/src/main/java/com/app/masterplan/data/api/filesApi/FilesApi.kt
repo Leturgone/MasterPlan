@@ -9,10 +9,10 @@ import java.util.UUID
 
 interface FilesApi {
 
-    @GET("/files/emp/file/{fileId}")
+    @GET("/emp/file/{fileId}")
     suspend fun downloadFile(
         @Header("Authorization") token: String,
-        @Path("fileId") fileId: UUID
+        @Path(value = "fileId") fileId: UUID
     ): Response<ResponseBody>
 
 
