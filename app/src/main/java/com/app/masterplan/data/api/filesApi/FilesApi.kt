@@ -11,8 +11,8 @@ interface FilesApi {
 
     @GET("/files/emp/file/{fileId}")
     suspend fun downloadFile(
-        @Path("fileId") fileId: UUID,
         @Header("Authorization") token: String,
+        @Path("fileId") fileId: UUID
     ): Response<ResponseBody>
 
 
