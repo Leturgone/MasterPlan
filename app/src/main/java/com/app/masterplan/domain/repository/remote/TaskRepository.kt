@@ -8,7 +8,7 @@ import java.util.UUID
 
 interface TaskRepository {
 
-    suspend fun addTaskToPlan(planId: UUID, newTask: NewTaskData): UUID
+    suspend fun addTaskToPlan(planId: UUID, newTask: NewTaskData, document: AttachedDocument? = null,): UUID
 
     suspend fun updateTaskStatus(taskId: UUID, status: TaskStatus): UUID
 
