@@ -1,4 +1,4 @@
-package com.app.masterplan.ui.theme
+package com.app.masterplan.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
