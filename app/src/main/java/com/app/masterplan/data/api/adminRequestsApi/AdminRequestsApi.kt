@@ -19,7 +19,7 @@ import java.util.UUID
 interface AdminRequestsApi {
 
     @PATCH("/admin/requests/{requestId}/status")
-    fun changeAdminRequestStatus(
+    suspend fun changeAdminRequestStatus(
         @Header("Authorization") token: String,
         @Path(value = "requestId") requestId: UUID,
         @Body request: UpdateRequestStatusRequest
@@ -27,38 +27,38 @@ interface AdminRequestsApi {
 
 
     @POST("/admin/requests/{requestId}/answer")
-    fun createAdminAnswer(
+    suspend fun createAdminAnswer(
         @Header("Authorization") token: String,
         @Path(value = "requestId") requestId: UUID,
         @Body request: CreateAdminAnswerRequest
     ): Response<AdminAnswerIdResponse>
 
     @POST("/dir/requests/sender/{senderId}")
-    fun createAdminRequest(
+    suspend  fun createAdminRequest(
         @Header("Authorization") token: String,
         @Path(value = "senderId") senderId: UUID,
         @Body request: CreateAdminRequestRequest
     ): Response<AdminRequestIdResponse>
 
     @GET(("/dir/requests/{requestId}/answer"))
-    fun getAdminAnswerForRequest(
+    suspend fun getAdminAnswerForRequest(
         @Header("Authorization") token: String,
         @Path(value = "requestId") requestId: UUID
     ): Response<AdminAnswerResponse>
 
     @GET(("/dir/requests"))
-    fun getAdminRequestsList(
+    suspend fun getAdminRequestsList(
         @Header("Authorization") token: String
     ): Response<List<AdminRequestResponse>>
 
     @GET(("/dir/requests/{requestId}"))
-    fun getAdminRequest(
+    suspend fun getAdminRequest(
         @Header("Authorization") token: String,
         @Path(value = "requestId") requestId: UUID
     ): Response<AdminRequestResponse>
 
     @GET(("/dir/requests/sender/{senderId}"))
-    fun getCreatedAdminRequestsBySenderList(
+    suspend fun getCreatedAdminRequestsBySenderList(
         @Header("Authorization") token: String,
         @Path(value = "senderId") senderId: UUID
     ): Response<List<AdminRequestResponse>>
