@@ -11,6 +11,9 @@ composeBom = "2024.09.00"
 retrofitVersion = "2.10.0"
 okhttpVersion = "4.9.1"
 corutinesAndroidVersion = "1.7.1"
+daggerHiltVersion = "2.55"
+hiltNavigationComposeVersion = "1.2.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,6 +34,9 @@ retrofit2 = {group = "com.squareup.retrofit2", name = "retrofit",version.ref = "
 retrofit2-converter-gson = {group = "com.squareup.retrofit2", name = "converter-gson",version.ref = "retrofitVersion" }
 okhttp3-logging-interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpVersion"}
 kotlinx-coroutines-android = {group = "org.jetbrains.kotlinx",name = "kotlinx-coroutines-android", version.ref="corutinesAndroidVersion"}
+hilt-android = {group = "com.google.dagger",name = "hilt-android",version.ref = "daggerHiltVersion"}
+hilt-android-compiler = {group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "daggerHiltVersion"}
+hilt-navigation-compose = {group = "androidx.hilt",name = "hilt-navigation-compose", version.ref = "hiltNavigationComposeVersion"}
 
 
 
@@ -38,4 +44,6 @@ kotlinx-coroutines-android = {group = "org.jetbrains.kotlinx",name = "kotlinx-co
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-kapt = { id="kotlin-kapt"}
+dagger-hilt-android = { id = "com.google.dagger.hilt.android",version.ref = "daggerHiltVersion"}
 
