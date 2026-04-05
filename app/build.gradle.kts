@@ -57,10 +57,13 @@ dependencies {
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.okhttp3.logging.interceptor)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.gson)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)
+
+    implementation(libs.okhttp)
 
     testImplementation(libs.junit)
 
