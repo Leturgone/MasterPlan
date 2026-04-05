@@ -6,10 +6,10 @@ import java.util.UUID
 class DownloadFileUseCase(
     private val documentRepository: DocumentRepository
 ) {
-    suspend operator fun invoke(documentId: UUID): Result<ByteArray>{
+    suspend operator fun invoke(documentId: UUID): Result<String>{
         return try {
-            val documentByteArray = documentRepository.downloadDocument(documentId)
-            Result.success(documentByteArray)
+            val documentPath = documentRepository.downloadDocument(documentId)
+            Result.success(documentPath)
         }catch (e: Exception){
             Result.failure(e)
         }
