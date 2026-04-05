@@ -15,4 +15,11 @@ sealed class ApiException(
         timestamp = timestamp,
         message = "AdminApi Exception: $apiMessage (status: $status) "
     )
+
+    class AuthApiException(status: Int,apiMessage: String?, timestamp: LocalDateTime): ApiException(
+        status = status,
+        apiMessage = apiMessage,
+        timestamp = timestamp,
+        message = "AuthApi Exception: $apiMessage (status: $status) "
+    )
 }
