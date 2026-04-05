@@ -22,4 +22,11 @@ sealed class ApiException(
         timestamp = timestamp,
         message = "AuthApi Exception: $apiMessage (status: $status) "
     )
+
+    class FilesApiException(status: Int,apiMessage: String?, timestamp: LocalDateTime): ApiException(
+        status = status,
+        apiMessage = apiMessage,
+        timestamp = timestamp,
+        message = "FilesApi Exception: $apiMessage (status: $status) "
+    )
 }
