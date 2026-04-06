@@ -26,7 +26,7 @@ object AdminResponseMapper {
     fun toDomain(resp: AdminRequestResponse): AdminRequest {
         val status = try {
             AdminRequestStatus.valueOf(resp.status)
-        }catch (e: Exception){
+        }catch (_: Exception){
             AdminRequestStatus.INVALID
         }
         return AdminRequest(
