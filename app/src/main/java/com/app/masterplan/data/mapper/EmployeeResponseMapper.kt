@@ -24,6 +24,10 @@ object EmployeeResponseMapper {
         )
     }
 
+    fun toDomain(resp: List<EmployeeDetailsResponse>): List<Employee>{
+        return resp.map { toDomain(it) }
+    }
+
     fun toDomain(resp: EmployeeWithMetricsDetailsResponse): EmployeeWithMetrics{
         val director = toDomain(resp.director)
         return EmployeeWithMetrics(
