@@ -1,4 +1,4 @@
-package com.app.masterplan.framework.storage.interfaces
+package com.app.masterplan.data.datasource
 
 interface LocalFileDataSource {
 
