@@ -5,7 +5,7 @@ import java.util.UUID
 data class CreateProfileRequest(
     val login: String,
     val password: String,
-    val roles: Set<String>,
+    val roles: List<String>,
     val name: String,
     val surname: String,
     val patronymic: String? = null,
