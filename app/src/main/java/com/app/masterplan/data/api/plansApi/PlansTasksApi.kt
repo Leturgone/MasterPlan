@@ -1,7 +1,6 @@
 package com.app.masterplan.data.api.plansApi
 
 import com.app.masterplan.data.api.plansApi.dto.request.UpdatePlanStatusRequest
-import com.app.masterplan.data.api.plansApi.dto.request.UpdateTaskRequest
 import com.app.masterplan.data.api.plansApi.dto.request.UpdateTaskStatusRequest
 import com.app.masterplan.data.api.plansApi.dto.responce.PlanIdResponse
 import com.app.masterplan.data.api.plansApi.dto.responce.PlanInformationResponse
