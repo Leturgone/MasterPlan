@@ -5,8 +5,8 @@ import com.app.masterplan.data.api.filesApi.FilesApi
 import com.app.masterplan.data.exception.ApiException
 import com.app.masterplan.data.mapper.ApiErrorHandler
 import com.app.masterplan.domain.repository.remote.DocumentRepository
-import com.app.masterplan.framework.storage.interfaces.LocalFileDataSource
-import com.app.masterplan.framework.storage.interfaces.TokenDataSource
+import com.app.masterplan.data.datasource.LocalFileDataSource
+import com.app.masterplan.data.datasource.TokenDataSource
 import java.util.UUID
 import javax.inject.Inject
 

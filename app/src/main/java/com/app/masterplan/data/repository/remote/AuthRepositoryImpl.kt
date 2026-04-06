@@ -8,7 +8,7 @@ import com.app.masterplan.data.mapper.ApiErrorHandler
 import com.app.masterplan.data.mapper.AuthRequestMapper
 import com.app.masterplan.domain.model.auth.JwtToken
 import com.app.masterplan.domain.repository.remote.AuthRepository
-import com.app.masterplan.framework.storage.interfaces.TokenDataSource
+import com.app.masterplan.data.datasource.TokenDataSource
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(

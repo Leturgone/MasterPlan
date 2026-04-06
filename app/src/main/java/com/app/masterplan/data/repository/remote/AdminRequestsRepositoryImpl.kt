@@ -12,7 +12,7 @@ import com.app.masterplan.domain.model.adminRequests.AdminAnswer
 import com.app.masterplan.domain.model.adminRequests.AdminRequest
 import com.app.masterplan.domain.model.adminRequests.AdminRequestStatus
 import com.app.masterplan.domain.repository.remote.AdminRequestsRepository
-import com.app.masterplan.framework.storage.interfaces.TokenDataSource
+import com.app.masterplan.data.datasource.TokenDataSource
 import java.util.UUID
 import javax.inject.Inject
 
