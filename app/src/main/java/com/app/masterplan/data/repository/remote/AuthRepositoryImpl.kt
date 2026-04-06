@@ -8,12 +8,12 @@ import com.app.masterplan.data.mapper.ApiErrorHandler
 import com.app.masterplan.data.mapper.AuthRequestMapper
 import com.app.masterplan.domain.model.auth.JwtToken
 import com.app.masterplan.domain.repository.remote.AuthRepository
-import com.app.masterplan.data.datasource.TokenDataSource
+import com.app.masterplan.data.storage.TokenDataStorage
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val api: AuthApi,
-    private val tokenStorage: TokenDataSource
+    private val tokenStorage: TokenDataStorage
 ): AuthRepository {
     override suspend fun login(
         login: String,

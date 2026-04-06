@@ -12,13 +12,13 @@ import com.app.masterplan.domain.model.adminRequests.AdminAnswer
 import com.app.masterplan.domain.model.adminRequests.AdminRequest
 import com.app.masterplan.domain.model.adminRequests.AdminRequestStatus
 import com.app.masterplan.domain.repository.remote.AdminRequestsRepository
-import com.app.masterplan.data.datasource.TokenDataSource
+import com.app.masterplan.data.storage.TokenDataStorage
 import java.util.UUID
 import javax.inject.Inject
 
 class AdminRequestsRepositoryImpl @Inject constructor(
     private val api: AdminRequestsApi,
-    private val tokenStorage: TokenDataSource
+    private val tokenStorage: TokenDataStorage
 ): AdminRequestsRepository {
 
     override suspend fun changeAdminRequestStatus(
