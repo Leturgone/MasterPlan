@@ -1,11 +1,10 @@
 package com.app.masterplan.data.api.reportsApi
 
-import com.app.masterplan.data.api.reportsApi.dto.request.CreateReportRequest
-import com.app.masterplan.data.api.reportsApi.dto.request.UpdateReportRequest
 import com.app.masterplan.data.api.reportsApi.dto.request.UpdateReportStatusRequest
 import com.app.masterplan.data.api.reportsApi.dto.responce.ReportIdResponse
 import com.app.masterplan.data.api.reportsApi.dto.responce.ReportResponse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -48,7 +47,7 @@ interface ReportsApi {
     suspend fun createReport(
         @Header("Authorization") token: String,
         @Path(value = "reportType") reportType: String,
-        @Part("request") request: CreateReportRequest,
+        @Part("request") request: RequestBody,
         @Part(value = "file") file: MultipartBody.Part
     ): Response<ReportIdResponse>
 
@@ -59,7 +58,7 @@ interface ReportsApi {
         @Path(value = "reportType") reportType: String,
         @Path(value = "reportId") reportId: UUID,
         @Part(value = "file") file: MultipartBody.Part,
-        @Part("request") request: UpdateReportRequest
+        @Part("request") request: RequestBody
     ): Response<ReportIdResponse>
 
 
