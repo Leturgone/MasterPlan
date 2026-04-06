@@ -5,7 +5,7 @@ import com.app.masterplan.data.api.authApi.dto.request.LoginRequest
 import com.app.masterplan.data.api.exception.ApiErrorResponse
 import com.app.masterplan.data.exception.ApiException
 import com.app.masterplan.data.mapper.ApiErrorHandler
-import com.app.masterplan.data.mapper.AuthRequestMapper
+import com.app.masterplan.data.mapper.AuthResponseMapper
 import com.app.masterplan.domain.model.auth.JwtToken
 import com.app.masterplan.domain.repository.remote.AuthRepository
 import com.app.masterplan.data.storage.TokenDataStorage
@@ -24,7 +24,7 @@ class AuthRepositoryImpl @Inject constructor(
             password = password
         )
         val response = api.login(request)
-        val jwtToken = AuthRequestMapper.toDomain(
+        val jwtToken = AuthResponseMapper.toDomain(
             ApiErrorHandler.handleResponse(response,::errorMapper)
         )
         tokenStorage.saveTokenToDataStorage(jwtToken)

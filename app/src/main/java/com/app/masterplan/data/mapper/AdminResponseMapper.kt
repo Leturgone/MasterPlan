@@ -8,7 +8,7 @@ import com.app.masterplan.domain.model.adminRequests.AdminAnswer
 import com.app.masterplan.domain.model.adminRequests.AdminRequest
 import com.app.masterplan.domain.model.adminRequests.AdminRequestStatus
 
-object AdminRequestMapper {
+object AdminResponseMapper {
 
     fun toDomain(resp: AdminAnswerIdResponse) = resp.id
 

@@ -7,7 +7,7 @@ import com.app.masterplan.data.api.adminRequestsApi.dto.request.UpdateRequestSta
 import com.app.masterplan.data.mapper.ApiErrorHandler
 import com.app.masterplan.data.api.exception.ApiErrorResponse
 import com.app.masterplan.data.exception.ApiException
-import com.app.masterplan.data.mapper.AdminRequestMapper
+import com.app.masterplan.data.mapper.AdminResponseMapper
 import com.app.masterplan.domain.model.adminRequests.AdminAnswer
 import com.app.masterplan.domain.model.adminRequests.AdminRequest
 import com.app.masterplan.domain.model.adminRequests.AdminRequestStatus
@@ -32,7 +32,7 @@ class AdminRequestsRepositoryImpl @Inject constructor(
             requestId = adminRequestId,
             request = request
         )
-        return AdminRequestMapper.toDomain(
+        return AdminResponseMapper.toDomain(
             ApiErrorHandler.handleResponse(response,::errorMapper)
         )
     }
@@ -51,7 +51,7 @@ class AdminRequestsRepositoryImpl @Inject constructor(
             requestId = adminRequestId,
             request = request,
         )
-        return AdminRequestMapper.toDomain(
+        return AdminResponseMapper.toDomain(
             ApiErrorHandler.handleResponse(response,::errorMapper)
         )
     }
@@ -71,7 +71,7 @@ class AdminRequestsRepositoryImpl @Inject constructor(
             senderId =senderId,
             request = request
         )
-        return AdminRequestMapper.toDomain(
+        return AdminResponseMapper.toDomain(
             ApiErrorHandler.handleResponse(response,::errorMapper)
         )
     }
@@ -79,7 +79,7 @@ class AdminRequestsRepositoryImpl @Inject constructor(
     override suspend fun getAdminAnswerForRequest(adminRequestId: UUID): AdminAnswer {
         val token = tokenStorage.getTokenFromDataStorage()
         val response = api.getAdminAnswerForRequest(token.token,adminRequestId)
-        return AdminRequestMapper.toDomain(
+        return AdminResponseMapper.toDomain(
             ApiErrorHandler.handleResponse(response,::errorMapper)
         )
     }
@@ -88,14 +88,14 @@ class AdminRequestsRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage()
         val response = api.getAdminRequestsList(token.token)
         return ApiErrorHandler.handleResponse(response,::errorMapper).map {
-            AdminRequestMapper.toDomain(it)
+            AdminResponseMapper.toDomain(it)
         }
     }
 
     override suspend fun getAdminRequest(adminRequestId: UUID): AdminRequest {
         val token = tokenStorage.getTokenFromDataStorage()
         val response = api.getAdminRequest(token.token,adminRequestId)
-        return AdminRequestMapper.toDomain(
+        return AdminResponseMapper.toDomain(
             ApiErrorHandler.handleResponse(response,::errorMapper)
         )
     }
@@ -104,7 +104,7 @@ class AdminRequestsRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage()
         val response = api.getCreatedAdminRequestsBySenderList(token.token,senderId)
         return ApiErrorHandler.handleResponse(response,::errorMapper).map {
-            AdminRequestMapper.toDomain(it)
+            AdminResponseMapper.toDomain(it)
         }
     }
 
