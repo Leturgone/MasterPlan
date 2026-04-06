@@ -4,7 +4,7 @@ import com.app.masterplan.data.api.adminRequestsApi.AdminRequestsApi
 import com.app.masterplan.data.api.authApi.AuthApi
 import com.app.masterplan.data.api.employeeApi.EmployeeApi
 import com.app.masterplan.data.api.filesApi.FilesApi
-import com.app.masterplan.data.api.plansApi.PlansApi
+import com.app.masterplan.data.api.plansApi.PlansTasksApi
 import com.app.masterplan.data.api.reportsApi.ReportsApi
 import com.app.masterplan.data.api.userManagementApi.UserManagementApi
 import dagger.Module
@@ -88,13 +88,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providePlansApi(client: OkHttpClient): PlansApi {
+    fun providePlansApi(client: OkHttpClient): PlansTasksApi {
         return Retrofit
             .Builder().baseUrl(API_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
-            .create(PlansApi::class.java)
+            .create(PlansTasksApi::class.java)
     }
 
 
