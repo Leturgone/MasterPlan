@@ -29,4 +29,12 @@ sealed class ApiException(
         timestamp = timestamp,
         message = "FilesApi Exception: $apiMessage (status: $status) "
     )
+
+
+    class EmployeeApiException(status: Int,apiMessage: String?, timestamp: LocalDateTime): ApiException(
+        status = status,
+        apiMessage = apiMessage,
+        timestamp = timestamp,
+        message = "EmployeeApi Exception: $apiMessage (status: $status) "
+    )
 }
