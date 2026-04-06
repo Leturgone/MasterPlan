@@ -142,7 +142,7 @@ interface PlansTasksApi {
     suspend fun updateTask(
         @Header("Authorization") token: String,
         @Path(value = "taskId") taskId: UUID,
-        @Part("request") request: UpdateTaskRequest,
+        @Part("request") request: RequestBody,
         @Part(value = "file") file: MultipartBody.Part?
     ): Response<TaskIdResponse>
 
