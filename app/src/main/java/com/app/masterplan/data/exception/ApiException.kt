@@ -53,4 +53,12 @@ sealed class ApiException(
         timestamp = timestamp,
         message = "ReportsApi Exception: $apiMessage (status: $status) "
     )
+
+
+    class UserManagementApiException(status: Int, apiMessage: String?, timestamp: LocalDateTime): ApiException(
+        status = status,
+        apiMessage = apiMessage,
+        timestamp = timestamp,
+        message = "UserManagementApi Exception: $apiMessage (status: $status) "
+    )
 }
