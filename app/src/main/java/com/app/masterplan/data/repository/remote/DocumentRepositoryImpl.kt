@@ -7,6 +7,7 @@ import com.app.masterplan.data.mapper.ApiErrorHandler
 import com.app.masterplan.domain.repository.remote.DocumentRepository
 import com.app.masterplan.data.storage.LocalFileDataStorage
 import com.app.masterplan.data.storage.TokenDataStorage
+import java.io.File
 import java.util.UUID
 import javax.inject.Inject
 
@@ -15,7 +16,7 @@ class DocumentRepositoryImpl  @Inject constructor(
     private val localFileDataSource: LocalFileDataStorage,
     private val tokenStorage: TokenDataStorage
 ): DocumentRepository {
-    override suspend fun downloadDocument(documentId: UUID): String {
+    override suspend fun downloadDocument(documentId: UUID): File {
         val token = tokenStorage.getTokenFromDataStorage()
         val response = filesApi.downloadFile(token.token,documentId)
         val byteArray = ApiErrorHandler.handleResponse(response,::errorMapper).bytes()
