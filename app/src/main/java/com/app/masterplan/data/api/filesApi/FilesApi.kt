@@ -13,7 +13,7 @@ interface FilesApi {
     suspend fun downloadFile(
         @Header("Authorization") token: String,
         @Path(value = "fileId") fileId: UUID
-    ): Response<ResponseBody>
+    ): Response<ByteArray>
 
 
 }
