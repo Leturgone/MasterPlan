@@ -6,5 +6,5 @@ data class User(
     val id: UUID,
     val login: String,
     val password: String,
-    val roles: List<UserRole>
+    val roles: Set<UserRole>
 )

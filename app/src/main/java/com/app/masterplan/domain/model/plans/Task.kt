@@ -1,5 +1,6 @@
 package com.app.masterplan.domain.model.plans
 
+import java.time.LocalDate
 import java.util.UUID
 
 data class Task(
@@ -7,9 +8,9 @@ data class Task(
     val title: String,
     val description: String,
     val urgency: Double,
-    val endDate: UUID,
+    val endDate: LocalDate,
     val status: TaskStatus,
     val planId: UUID,
     val documentId: UUID? = null,
-    val executorsIds: MutableList<UUID>
+    val executorsIds: List<UUID>
 )

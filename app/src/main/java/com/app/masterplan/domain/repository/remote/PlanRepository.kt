@@ -4,6 +4,7 @@ import com.app.masterplan.domain.dto.AttachedDocument
 import com.app.masterplan.domain.dto.NewPlanData
 import com.app.masterplan.domain.model.plans.Plan
 import com.app.masterplan.domain.model.plans.PlanStatus
+import java.io.File
 import java.util.UUID
 
 interface PlanRepository {
@@ -14,7 +15,7 @@ interface PlanRepository {
 
     suspend fun deletePlan(planId: UUID): UUID
 
-    suspend fun exportPlan(planId: UUID): ByteArray
+    suspend fun exportPlan(planId: UUID): File
 
     suspend fun getFilterDirPlansByStatus(directorId: UUID, status: PlanStatus): List<Plan>
 
