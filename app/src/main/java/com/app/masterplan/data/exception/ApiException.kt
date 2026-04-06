@@ -45,4 +45,12 @@ sealed class ApiException(
         timestamp = timestamp,
         message = "PlansTasksApi Exception: $apiMessage (status: $status) "
     )
+
+
+    class ReportsApiException(status: Int, apiMessage: String?, timestamp: LocalDateTime): ApiException(
+        status = status,
+        apiMessage = apiMessage,
+        timestamp = timestamp,
+        message = "ReportsApi Exception: $apiMessage (status: $status) "
+    )
 }
