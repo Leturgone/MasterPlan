@@ -50,7 +50,7 @@ class WebSocketWorker(
                         }
                     }
                     text.startsWith("MESSAGE") -> {
-                        val notificationData = MessageMapper.toDomain(text)
+                        val notificationData = NotificationMapper.toDomain(text)
                         notificationCallback.invoke(notificationData)
                     }
                 }
