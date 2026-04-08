@@ -1,5 +1,6 @@
 package com.app.masterplan.framework.service
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -38,5 +39,13 @@ class NotificationCreator @Inject constructor(
             .setAutoCancel(true)
 
         notificationManager.notify(notification.notificationId, builder.build())
+    }
+
+    fun createEmptyNotification(): Notification {
+        return NotificationCompat.Builder(context,channelId)
+            .setContentTitle("")
+            .setContentText("")
+            .setAutoCancel(true)
+            .build();
     }
 }
