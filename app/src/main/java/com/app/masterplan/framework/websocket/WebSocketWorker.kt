@@ -75,7 +75,7 @@ class WebSocketWorker(
 
     }
 
-    suspend fun disconnect() {
+    fun disconnect() {
         webSocket.close(1000, "Disconnecting")
     }
 
