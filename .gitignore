@@ -15,3 +15,4 @@
 local.properties
 /.idea/
 /app/src/main/java/com/app/masterplan/di/keys.kt
+/app/src/main/java/com/app/masterplan/framework/websocket/keys.kt

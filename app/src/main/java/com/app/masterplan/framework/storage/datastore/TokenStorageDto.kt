@@ -1,9 +1,11 @@
-package com.app.masterplan.domain.model.auth
+package com.app.masterplan.framework.storage.datastore
 
 import com.app.masterplan.domain.model.userManagement.UserRole
+import kotlinx.serialization.Serializable
 import java.util.UUID
 
-data class JwtToken(
+@Serializable
+data class TokenStorageDto(
     val token: String,
     val roles: Set<UserRole>,
     val id: UUID

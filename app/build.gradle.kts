@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.datastore)
+    implementation(libs.datastore.preferences)
 
     implementation(libs.okhttp)
 

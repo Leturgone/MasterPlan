@@ -1,4 +1,4 @@
-package com.app.masterplan.di
+package com.app.masterplan.framework
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

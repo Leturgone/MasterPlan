@@ -19,8 +19,9 @@ import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.util.UUID
+import javax.inject.Inject
 
-class TaskRepositoryImpl(
+class TaskRepositoryImpl @Inject constructor(
     private val tasksApi: PlansTasksApi,
     private val tokenStorage: TokenDataStorage
 ): TaskRepository {
