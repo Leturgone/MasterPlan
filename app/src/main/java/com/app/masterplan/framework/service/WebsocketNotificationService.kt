@@ -1,5 +1,6 @@
 package com.app.masterplan.framework.service
 
+import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
 import android.os.Build
@@ -46,9 +47,13 @@ class WebsocketNotificationService @Inject constructor(
     }
 
 
+    @SuppressLint("ForegroundServiceType")
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val notification = notificationCreator.createEmptyNotification()
+        startForeground(1,notification)
         when (intent?.action) {
+
             ACTION_SUBSCRIBE -> {
                 val userId = intent.getSerializableExtra("USER_ID", UUID::class.java)
                 val userRole = intent.getSerializableExtra("USER_ROLE", UserRole::class.java)
