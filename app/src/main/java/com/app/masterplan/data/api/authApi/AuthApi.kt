@@ -8,7 +8,7 @@ import retrofit2.Response
 
 interface AuthApi {
 
-    @POST("/login")
+    @POST("login")
     suspend fun login(
         @Body loginRequest: LoginRequest
     ): Response<LoginResponse>

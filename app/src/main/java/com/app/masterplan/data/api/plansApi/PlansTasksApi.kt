@@ -23,28 +23,28 @@ import java.util.UUID
 
 interface PlansTasksApi {
 
-    @GET("/plans/emp/plan/{planId}/")
+    @GET("plans/emp/plan/{planId}/")
     suspend fun getPlanInformation(
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID
     ): Response<PlanInformationResponse>
 
 
-    @GET("/tasks/emp/task/{taskId}/")
+    @GET("tasks/emp/task/{taskId}/")
     suspend fun getTaskInformation(
         @Header("Authorization") token: String,
         @Path(value = "taskId") taskId: UUID
     ): Response<TaskInformationResponse>
 
 
-    @GET("/plans/dir/plan/{planId}/tasks")
+    @GET("plans/dir/plan/{planId}/tasks")
     suspend fun getPlanTasks(
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID
     ): Response<List<TaskInformationResponse>>
 
 
-    @GET("/plans/dir/plan/{planId}/tasks/status/{status}")
+    @GET("plans/dir/plan/{planId}/tasks/status/{status}")
     suspend fun getPlanTasksFilterByStatus(
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID,
@@ -52,21 +52,21 @@ interface PlansTasksApi {
     ): Response<List<TaskInformationResponse>>
 
 
-    @GET("/plans/dir/plan/{planId}/tasks/sortTime")
+    @GET("plans/dir/plan/{planId}/tasks/sortTime")
     suspend fun getPlanTasksSortByTime(
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID
     ): Response<List<TaskInformationResponse>>
 
 
-    @GET("/tasks/emp/{executorId}/assignedTasks")
+    @GET("tasks/emp/{executorId}/assignedTasks")
     suspend fun getAssignedTasks(
         @Header("Authorization") token: String,
         @Path(value = "executorId") executorId: UUID
     ): Response<List<TaskInformationResponse>>
 
 
-    @GET("/tasks/emp/{executorId}/assignedTasks/search/{query}")
+    @GET("tasks/emp/{executorId}/assignedTasks/search/{query}")
     suspend fun searchAssignedTasksByTitle(
         @Header("Authorization") token: String,
         @Path(value = "executorId") executorId: UUID,
@@ -74,7 +74,7 @@ interface PlansTasksApi {
     ): Response<List<TaskInformationResponse>>
 
 
-    @GET("/tasks/emp/{executorId}/assignedTasks/status/{status}")
+    @GET("tasks/emp/{executorId}/assignedTasks/status/{status}")
     suspend fun getAssignedTasksFilterByStatus(
         @Header("Authorization") token: String,
         @Path(value = "executorId") executorId: UUID,
@@ -82,14 +82,14 @@ interface PlansTasksApi {
     ): Response<List<TaskInformationResponse>>
 
 
-    @GET("/tasks/emp/{executorId}/assignedTasks/sortTime")
+    @GET("tasks/emp/{executorId}/assignedTasks/sortTime")
     suspend fun getAssignedTasksSortByTime(
         @Header("Authorization") token: String,
         @Path(value = "executorId") executorId: UUID
     ): Response<List<TaskInformationResponse>>
 
 
-    @GET("/plans/dir/plan/{planId}/export")
+    @GET("plans/dir/plan/{planId}/export")
     suspend fun exportPlan(
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID
@@ -98,7 +98,7 @@ interface PlansTasksApi {
 
 
     @Multipart
-    @POST("/plans/dir/plan")
+    @POST("plans/dir/plan")
     suspend fun createPLan(
         @Header("Authorization") token: String,
         @Part("request") request: RequestBody,
@@ -106,7 +106,7 @@ interface PlansTasksApi {
     ): Response<PlanIdResponse>
 
     @Multipart
-    @POST("/tasks/dir/task")
+    @POST("tasks/dir/task")
     suspend fun addTaskToPlan(
         @Header("Authorization") token: String,
         @Part("request") request: RequestBody,
@@ -114,14 +114,14 @@ interface PlansTasksApi {
     ): Response<TaskIdResponse>
 
 
-    @GET("/plans/dir/{directorId}/plans")
+    @GET("plans/dir/{directorId}/plans")
     suspend fun getDirPlans(
         @Header("Authorization") token: String,
         @Path(value = "directorId") directorId: UUID
     ): Response<List<PlanInformationResponse>>
 
 
-    @GET("/plans/dir/{directorId}/plans/status/{status}")
+    @GET("plans/dir/{directorId}/plans/status/{status}")
     suspend fun getDirPlansFilterByStatus(
         @Header("Authorization") token: String,
         @Path(value = "directorId") directorId: UUID,
@@ -129,7 +129,7 @@ interface PlansTasksApi {
     ): Response<List<PlanInformationResponse>>
 
 
-    @GET("/plans/dir/{directorId}/plans/sortTime")
+    @GET("plans/dir/{directorId}/plans/sortTime")
     suspend fun getDirPlansSortByTime(
         @Header("Authorization") token: String,
         @Path(value = "directorId") directorId: UUID
@@ -137,7 +137,7 @@ interface PlansTasksApi {
 
 
     @Multipart
-    @PUT("/tasks/dir/task/{taskId}")
+    @PUT("tasks/dir/task/{taskId}")
     suspend fun updateTask(
         @Header("Authorization") token: String,
         @Path(value = "taskId") taskId: UUID,
@@ -147,7 +147,7 @@ interface PlansTasksApi {
 
 
     @Multipart
-    @PUT("/plans/dir/plan/{planId}")
+    @PUT("plans/dir/plan/{planId}")
     suspend fun updatePlan(
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID,
@@ -156,21 +156,21 @@ interface PlansTasksApi {
     ): Response<PlanIdResponse>
 
 
-    @DELETE("/plans/dir/plan/{planId}")
+    @DELETE("plans/dir/plan/{planId}")
     suspend fun deletePlan(
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID
     ): Response<PlanIdResponse>
 
 
-    @DELETE("/tasks/dir/task/{taskId}")
+    @DELETE("tasks/dir/task/{taskId}")
     suspend fun deleteTask(
         @Header("Authorization") token: String,
         @Path(value = "taskId") taskId: UUID
     ): Response<TaskIdResponse>
 
 
-    @PATCH("/plans/dir/plan/{planId}/status")
+    @PATCH("plans/dir/plan/{planId}/status")
     suspend fun updatePlanStatus(
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID,
@@ -178,7 +178,7 @@ interface PlansTasksApi {
     ): Response<PlanIdResponse>
 
 
-    @PATCH("/tasks/dir/task/{taskId}/status")
+    @PATCH("tasks/dir/task/{taskId}/status")
     suspend fun updateTaskStatus(
         @Header("Authorization") token: String,
         @Path(value = "taskId") taskId: UUID,
