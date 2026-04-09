@@ -1,4 +1,4 @@
-package com.app.masterplan.data.repository.remote
+package com.app.masterplan.data.repository
 
 import com.app.masterplan.data.api.exception.ApiErrorResponse
 import com.app.masterplan.data.api.reportsApi.ReportsApi
@@ -6,7 +6,7 @@ import com.app.masterplan.data.api.reportsApi.dto.request.CreateReportRequest
 import com.app.masterplan.data.api.reportsApi.dto.request.UpdateReportRequest
 import com.app.masterplan.data.api.reportsApi.dto.request.UpdateReportStatusRequest
 import com.app.masterplan.data.exception.ApiException
-import com.app.masterplan.data.mapper.ApiErrorHandler
+import com.app.masterplan.data.mapper.ApiErrorResponseHandler
 import com.app.masterplan.data.mapper.MultipartCreator
 import com.app.masterplan.data.mapper.ReportResponseMapper
 import com.app.masterplan.data.storage.TokenDataStorage
@@ -42,7 +42,7 @@ class ReportRepositoryImpl @Inject constructor(
             request = request
         )
         return ReportResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -71,7 +71,7 @@ class ReportRepositoryImpl @Inject constructor(
             file = filePartBody
         )
         return ReportResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -82,7 +82,7 @@ class ReportRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = reportsApi.deleteReport(token,reportType.name,reportId)
         return ReportResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -101,7 +101,7 @@ class ReportRepositoryImpl @Inject constructor(
         )
 
         return ReportResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -118,7 +118,7 @@ class ReportRepositoryImpl @Inject constructor(
             reportStatus = status.name
         )
         return ReportResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -130,7 +130,7 @@ class ReportRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = reportsApi.getCreatedReports(token,employeeId,reportType.name)
         return ReportResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -142,7 +142,7 @@ class ReportRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = reportsApi.getReportInformation(token,reportType.name,reportId)
         return ReportResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -151,7 +151,7 @@ class ReportRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = reportsApi.getSubordinatesTaskReports(token,directorId)
         return ReportResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -180,7 +180,7 @@ class ReportRepositoryImpl @Inject constructor(
             request = requestBody
         )
         return ReportResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -188,8 +188,7 @@ class ReportRepositoryImpl @Inject constructor(
     private fun errorMapper(errorResp: ApiErrorResponse): ApiException.ReportsApiException {
         return ApiException.ReportsApiException(
             status = errorResp.status,
-            apiMessage = errorResp.message,
-            timestamp = errorResp.timestamp
+            apiMessage = errorResp.message
         )
     }
 

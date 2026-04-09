@@ -1,11 +1,11 @@
-package com.app.masterplan.data.repository.remote
+package com.app.masterplan.data.repository
 
 import com.app.masterplan.data.api.exception.ApiErrorResponse
 import com.app.masterplan.data.api.userManagementApi.UserManagementApi
 import com.app.masterplan.data.api.userManagementApi.dto.request.CreateProfileRequest
 import com.app.masterplan.data.api.userManagementApi.dto.request.ResetPasswordRequest
 import com.app.masterplan.data.exception.ApiException
-import com.app.masterplan.data.mapper.ApiErrorHandler
+import com.app.masterplan.data.mapper.ApiErrorResponseHandler
 import com.app.masterplan.data.mapper.UserResponseMapper
 import com.app.masterplan.data.storage.TokenDataStorage
 import com.app.masterplan.domain.dto.NewUserData
@@ -34,7 +34,7 @@ class UserRepositoryImpl @Inject constructor(
         val response = userManagementApi.createUser(token,request)
 
         return UserResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -43,7 +43,7 @@ class UserRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = userManagementApi.deleteUser(token,userId)
         return UserResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -52,7 +52,7 @@ class UserRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = userManagementApi.getUserById(token,userId)
         return UserResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -61,7 +61,7 @@ class UserRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = userManagementApi.getUserByLogin(token,login)
         return UserResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -71,7 +71,7 @@ class UserRepositoryImpl @Inject constructor(
         val request = ResetPasswordRequest(newPassword)
         val response = userManagementApi.resetPassword(token, userId, request)
         return UserResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -79,8 +79,7 @@ class UserRepositoryImpl @Inject constructor(
     private fun errorMapper(errorResp: ApiErrorResponse): ApiException.UserManagementApiException {
         return ApiException.UserManagementApiException(
             status = errorResp.status,
-            apiMessage = errorResp.message,
-            timestamp = errorResp.timestamp
+            apiMessage = errorResp.message
         )
     }
 

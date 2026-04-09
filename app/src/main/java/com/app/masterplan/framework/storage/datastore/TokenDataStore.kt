@@ -2,9 +2,7 @@ package com.app.masterplan.framework.storage.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 
-val Context.dataStore: DataStore<TokenStorageDto> by dataStore(
-    fileName = "settings.json",
-    serializer = TokenSerializer,
-)
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "app_data_store")

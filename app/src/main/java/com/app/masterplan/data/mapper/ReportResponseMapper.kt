@@ -27,8 +27,8 @@ object ReportResponseMapper {
         return Report(
             id = response.id,
             title = response.title,
-            creationDate = response.creationDate,
-            editDate = response.editDate,
+            creationDate = DateSerializer.toLocalDateTime(response.creationDate),
+            editDate = response.editDate?.let { DateSerializer.toLocalDateTime(it)},
             description = response.description,
             reportStatus = status,
             employeeId = response.employeeId,

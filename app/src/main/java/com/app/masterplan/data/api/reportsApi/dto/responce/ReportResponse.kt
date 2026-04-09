@@ -7,8 +7,8 @@ import java.util.UUID
 data class ReportResponse(
     val id: UUID,
     val title: String,
-    val creationDate: LocalDateTime,
-    val editDate: LocalDateTime? = null,
+    val creationDate: String,
+    val editDate: String? = null,
     val description: String? = null,
     val reportStatus: String,
     val employeeId: UUID,

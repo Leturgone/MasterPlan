@@ -21,8 +21,8 @@ object PlanResponseMapper {
             id = response.id,
             title = response.title,
             description = response.description,
-            startDate = response.startDate,
-            endDate = response.endDate,
+            startDate = DateSerializer.toLocalDate(response.startDate),
+            endDate = DateSerializer.toLocalDate(response.endDate),
             status = status,
             directorId = response.directorId,
             documentId = response.documentId

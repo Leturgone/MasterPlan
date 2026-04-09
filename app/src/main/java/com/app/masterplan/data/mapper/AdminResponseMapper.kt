@@ -33,7 +33,7 @@ object AdminResponseMapper {
             id = resp.id,
             title = resp.title,
             description = resp.description,
-            creationDate = resp.creationDate,
+            creationDate = DateSerializer.toLocalDateTime(resp.creationDate),
             senderId = resp.senderId,
             status = status
         )
