@@ -40,12 +40,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.app.masterplan.R
-import com.app.masterplan.presentation.ui.auth.viewModel.LoginViewModel
+import com.app.masterplan.presentation.ui.auth.viewModel.LoginScreenViewModel
 import com.app.masterplan.presentation.ui.common.CustomToastMessage
 import com.app.masterplan.presentation.ui.common.MasterPlanState
 
 @Composable
-fun LoginScreen(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()){
+fun LoginScreen(navController: NavHostController, viewModel: LoginScreenViewModel = hiltViewModel()){
 
     var loginInputText  by remember { mutableStateOf("") }
     var passwordInputText  by remember { mutableStateOf("") }
