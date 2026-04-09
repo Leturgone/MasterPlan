@@ -1,4 +1,4 @@
-package com.app.masterplan.data.repository.remote
+package com.app.masterplan.data.repository
 
 import com.app.masterplan.data.api.exception.ApiErrorResponse
 import com.app.masterplan.data.api.plansApi.PlansTasksApi
@@ -6,7 +6,7 @@ import com.app.masterplan.data.api.plansApi.dto.request.CreatePlanRequest
 import com.app.masterplan.data.api.plansApi.dto.request.UpdatePlanRequest
 import com.app.masterplan.data.api.plansApi.dto.request.UpdatePlanStatusRequest
 import com.app.masterplan.data.exception.ApiException
-import com.app.masterplan.data.mapper.ApiErrorHandler
+import com.app.masterplan.data.mapper.ApiErrorResponseHandler
 import com.app.masterplan.data.mapper.MultipartCreator
 import com.app.masterplan.data.mapper.PlanResponseMapper
 import com.app.masterplan.data.storage.LocalFileDataStorage
@@ -37,7 +37,7 @@ class PlanRepositoryImpl  @Inject constructor(
         val request = UpdatePlanStatusRequest(status.name)
         val response = planApi.updatePlanStatus(token, planId, request)
         return PlanResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -67,7 +67,7 @@ class PlanRepositoryImpl  @Inject constructor(
             file = filePartBody,
         )
         return PlanResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -76,7 +76,7 @@ class PlanRepositoryImpl  @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = planApi.deletePlan(token,planId)
         return PlanResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -84,7 +84,7 @@ class PlanRepositoryImpl  @Inject constructor(
     override suspend fun exportPlan(planId: UUID): File {
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = planApi.exportPlan(token,planId)
-        val bytes = ApiErrorHandler.handleResponse(response,::errorMapper)
+        val bytes = ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         val savedFile = localFileDataSource.saveFileToDataStorage(bytes)
         return savedFile
     }
@@ -97,7 +97,7 @@ class PlanRepositoryImpl  @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = planApi.getDirPlansFilterByStatus(token,directorId,status.name)
         return PlanResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -106,7 +106,7 @@ class PlanRepositoryImpl  @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = planApi.getDirPlans(token,directorId)
         return PlanResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -115,7 +115,7 @@ class PlanRepositoryImpl  @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = planApi.getPlanInformation(token,planId)
         return PlanResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -124,7 +124,7 @@ class PlanRepositoryImpl  @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = planApi.getDirPlansSortByTime(token,directorId)
         return PlanResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -157,7 +157,7 @@ class PlanRepositoryImpl  @Inject constructor(
             file = filePartBody,
         )
         return PlanResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -165,8 +165,7 @@ class PlanRepositoryImpl  @Inject constructor(
     private fun errorMapper(errorResp: ApiErrorResponse): ApiException.PlansTasksApiException {
         return ApiException.PlansTasksApiException(
             status = errorResp.status,
-            apiMessage = errorResp.message,
-            timestamp = errorResp.timestamp
+            apiMessage = errorResp.message
         )
     }
 

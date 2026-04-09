@@ -1,11 +1,11 @@
-package com.app.masterplan.data.repository.remote
+package com.app.masterplan.data.repository
 
 import com.app.masterplan.data.api.employeeApi.EmployeeApi
 import com.app.masterplan.data.api.employeeApi.dto.request.CreateEmployeeRequest
 import com.app.masterplan.data.api.employeeApi.dto.request.UpdateEmployeeRequest
 import com.app.masterplan.data.api.exception.ApiErrorResponse
 import com.app.masterplan.data.exception.ApiException
-import com.app.masterplan.data.mapper.ApiErrorHandler
+import com.app.masterplan.data.mapper.ApiErrorResponseHandler
 import com.app.masterplan.data.mapper.EmployeeResponseMapper
 import com.app.masterplan.data.storage.LocalFileDataStorage
 import com.app.masterplan.domain.model.employee.Employee
@@ -40,14 +40,14 @@ class EmployeeRepositoryImpl @Inject constructor(
         val response = employeeApi.createEmployee(token.token,request)
 
         return EmployeeResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
     override suspend fun exportDirEmployees(directorId: UUID): File {
         val token = tokenStorage.getTokenFromDataStorage()
         val response = employeeApi.exportDirEmployees(token.token,directorId)
-        val bytes = ApiErrorHandler.handleResponse(response,::errorMapper)
+        val bytes = ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         val file = localFileDataSource.saveFileToDataStorage(bytes)
         return file
     }
@@ -56,7 +56,7 @@ class EmployeeRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage()
         val response = employeeApi.getDirEmployees(token.token,directorId)
         return EmployeeResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -64,7 +64,7 @@ class EmployeeRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage()
         val response = employeeApi.getAllEmployees(token.token)
         return EmployeeResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -72,7 +72,7 @@ class EmployeeRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage()
         val response = employeeApi.getDirEmployeesWithoutTasks(token.token,directorId)
         return EmployeeResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -80,7 +80,7 @@ class EmployeeRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage()
         val response = employeeApi.getEmployeeById(token.token,employeeId)
         return EmployeeResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -88,7 +88,7 @@ class EmployeeRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage()
         val response = employeeApi.getProfileInformation(token.token,currentEmployeeId)
         return EmployeeResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -100,7 +100,7 @@ class EmployeeRepositoryImpl @Inject constructor(
             query = query
         )
         return EmployeeResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -108,7 +108,7 @@ class EmployeeRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage()
         val response =employeeApi.searchEmployeeByName(token.token,query)
         return EmployeeResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -116,7 +116,7 @@ class EmployeeRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage()
         val response = employeeApi.sortDirEmployeesByRating(token.token,directorId)
         return EmployeeResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -124,7 +124,7 @@ class EmployeeRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage()
         val response = employeeApi.sortDirEmployeesByWorkload(token.token,directorId)
         return EmployeeResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -143,7 +143,7 @@ class EmployeeRepositoryImpl @Inject constructor(
         )
         val response = employeeApi.updateEmployee(token.token,request)
         return EmployeeResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -152,7 +152,6 @@ class EmployeeRepositoryImpl @Inject constructor(
         return ApiException.EmployeeApiException(
             status = errorResp.status,
             apiMessage = errorResp.message,
-            timestamp = errorResp.timestamp
         )
     }
 

@@ -1,10 +1,10 @@
-package com.app.masterplan.data.repository.remote
+package com.app.masterplan.data.repository
 
 import com.app.masterplan.data.api.authApi.AuthApi
 import com.app.masterplan.data.api.authApi.dto.request.LoginRequest
 import com.app.masterplan.data.api.exception.ApiErrorResponse
 import com.app.masterplan.data.exception.ApiException
-import com.app.masterplan.data.mapper.ApiErrorHandler
+import com.app.masterplan.data.mapper.ApiErrorResponseHandler
 import com.app.masterplan.data.mapper.AuthResponseMapper
 import com.app.masterplan.domain.model.auth.JwtToken
 import com.app.masterplan.domain.repository.remote.AuthRepository
@@ -25,17 +25,20 @@ class AuthRepositoryImpl @Inject constructor(
         )
         val response = api.login(request)
         val jwtToken = AuthResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
         tokenStorage.saveTokenToDataStorage(jwtToken)
         return jwtToken
     }
 
+    override suspend fun logout() {
+        tokenStorage.removeTokenFromDataStorage()
+    }
+
     private fun errorMapper(errorResp: ApiErrorResponse): ApiException.AuthApiException {
         return ApiException.AuthApiException(
             status = errorResp.status,
-            apiMessage = errorResp.message,
-            timestamp = errorResp.timestamp
+            apiMessage = errorResp.message
         )
     }
 }

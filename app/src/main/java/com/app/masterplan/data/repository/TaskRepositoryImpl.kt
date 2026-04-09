@@ -1,4 +1,4 @@
-package com.app.masterplan.data.repository.remote
+package com.app.masterplan.data.repository
 
 import com.app.masterplan.data.api.exception.ApiErrorResponse
 import com.app.masterplan.data.api.plansApi.PlansTasksApi
@@ -6,7 +6,7 @@ import com.app.masterplan.data.api.plansApi.dto.request.CreateTaskRequest
 import com.app.masterplan.data.api.plansApi.dto.request.UpdateTaskRequest
 import com.app.masterplan.data.api.plansApi.dto.request.UpdateTaskStatusRequest
 import com.app.masterplan.data.exception.ApiException
-import com.app.masterplan.data.mapper.ApiErrorHandler
+import com.app.masterplan.data.mapper.ApiErrorResponseHandler
 import com.app.masterplan.data.mapper.MultipartCreator
 import com.app.masterplan.data.mapper.TaskResponseMapper
 import com.app.masterplan.data.storage.TokenDataStorage
@@ -51,7 +51,7 @@ class TaskRepositoryImpl @Inject constructor(
             file = filePartBody
         )
         return TaskResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -61,7 +61,7 @@ class TaskRepositoryImpl @Inject constructor(
         val request = UpdateTaskStatusRequest(status.name)
         val response = tasksApi.updateTaskStatus(token,taskId,request)
         return TaskResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -70,7 +70,7 @@ class TaskRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = tasksApi.deleteTask(token,taskId)
         return TaskResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -84,7 +84,7 @@ class TaskRepositoryImpl @Inject constructor(
         val response = tasksApi.getAssignedTasksFilterByStatus(token,executorId,taskStatus.name)
 
         return TaskResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -98,7 +98,7 @@ class TaskRepositoryImpl @Inject constructor(
         val response = tasksApi.getPlanTasksFilterByStatus(token,planId,taskStatus.name)
 
         return TaskResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -107,7 +107,7 @@ class TaskRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = tasksApi.getAssignedTasks(token,executorId)
         return TaskResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -116,7 +116,7 @@ class TaskRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = tasksApi.getTaskInformation(token,taskId)
         return TaskResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -125,7 +125,7 @@ class TaskRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = tasksApi.getPlanTasks(token,planId)
         return TaskResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -137,7 +137,7 @@ class TaskRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = tasksApi.searchAssignedTasksByTitle(token,executorId,query)
         return TaskResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -146,7 +146,7 @@ class TaskRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = tasksApi.getAssignedTasksSortByTime(token,executorId)
         return TaskResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -155,7 +155,7 @@ class TaskRepositoryImpl @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = tasksApi.getPlanTasksSortByTime(token,planId)
         return TaskResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
@@ -191,15 +191,14 @@ class TaskRepositoryImpl @Inject constructor(
         )
 
         return TaskResponseMapper.toDomain(
-            ApiErrorHandler.handleResponse(response,::errorMapper)
+            ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
     }
 
     private fun errorMapper(errorResp: ApiErrorResponse): ApiException.PlansTasksApiException {
         return ApiException.PlansTasksApiException(
             status = errorResp.status,
-            apiMessage = errorResp.message,
-            timestamp = errorResp.timestamp
+            apiMessage = errorResp.message
         )
     }
 
