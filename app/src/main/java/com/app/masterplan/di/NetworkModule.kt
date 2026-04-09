@@ -42,7 +42,7 @@ object NetworkModule {
     @Singleton
     fun provideAdminRequestsApi(client: OkHttpClient): AdminRequestsApi {
         return Retrofit
-            .Builder().baseUrl("$API_URL/requests")
+            .Builder().baseUrl("$API_URL/requests/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -54,7 +54,7 @@ object NetworkModule {
     @Singleton
     fun provideAuthApi(client: OkHttpClient): AuthApi {
         return Retrofit
-            .Builder().baseUrl("$API_URL/auth")
+            .Builder().baseUrl("$API_URL/auth/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -66,7 +66,7 @@ object NetworkModule {
     @Singleton
     fun provideEmployeeApi(client: OkHttpClient): EmployeeApi {
         return Retrofit
-            .Builder().baseUrl("$API_URL/employees")
+            .Builder().baseUrl("$API_URL/employees/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -78,7 +78,7 @@ object NetworkModule {
     @Singleton
     fun provideFilesApi(client: OkHttpClient): FilesApi {
         return Retrofit
-            .Builder().baseUrl("$API_URL/files")
+            .Builder().baseUrl("$API_URL/files/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -102,7 +102,7 @@ object NetworkModule {
     @Singleton
     fun provideReportsApi(client: OkHttpClient): ReportsApi {
         return Retrofit
-            .Builder().baseUrl("$API_URL/reports")
+            .Builder().baseUrl("$API_URL/reports/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -114,7 +114,7 @@ object NetworkModule {
     @Singleton
     fun provideUserManagementApi(client: OkHttpClient): UserManagementApi {
         return Retrofit
-            .Builder().baseUrl("$API_URL/users/admin")
+            .Builder().baseUrl("$API_URL/users/admin/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
