@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     implementation(libs.datastore)
     implementation(libs.datastore.preferences)
+    implementation(libs.icons.exctended)
 
     implementation(libs.okhttp)
 
