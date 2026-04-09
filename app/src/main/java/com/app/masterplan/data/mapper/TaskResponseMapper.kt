@@ -22,7 +22,7 @@ object TaskResponseMapper {
             title = response.title,
             description = response.description,
             urgency = response.urgency,
-            endDate = response.endDate,
+            endDate = DateSerializer.toLocalDate(response.endDate),
             status = status,
             planId = response.planId,
             documentId = response.documentId,
