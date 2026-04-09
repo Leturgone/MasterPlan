@@ -5,6 +5,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 
 val Context.dataStore: DataStore<TokenStorageDto> by dataStore(
-    fileName = "settings.json",
+    fileName = "token.json",
     serializer = TokenSerializer,
 )
