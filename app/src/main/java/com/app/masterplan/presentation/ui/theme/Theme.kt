@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val LightEmployeeTaskRegTheme = lightColorScheme(
+private val LightMasterPlanTheme = lightColorScheme(
     primary = BLack,
     background = Gray,
     surface = White,
@@ -22,7 +22,7 @@ private val LightEmployeeTaskRegTheme = lightColorScheme(
     onBackground = BLack,
 
     )
-private val DarkEmployeeTaskRegTheme = lightColorScheme(
+private val DarkMasterPlanTheme = lightColorScheme(
     primary = White,
     background = DarkGray,
     surface = White,
@@ -37,13 +37,13 @@ private val DarkEmployeeTaskRegTheme = lightColorScheme(
 
 
 @Composable
-fun EmployeeTaskRegTheme(
+fun MasterPlanTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        darkTheme -> DarkEmployeeTaskRegTheme
-        else -> LightEmployeeTaskRegTheme
+        darkTheme -> DarkMasterPlanTheme
+        else -> LightMasterPlanTheme
     }
     val view = LocalView.current
     if (!view.isInEditMode) {
