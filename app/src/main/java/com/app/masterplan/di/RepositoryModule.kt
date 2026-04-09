@@ -1,0 +1,94 @@
+package com.app.masterplan.di
+
+import com.app.masterplan.data.api.adminRequestsApi.AdminRequestsApi
+import com.app.masterplan.data.api.authApi.AuthApi
+import com.app.masterplan.data.api.employeeApi.EmployeeApi
+import com.app.masterplan.data.api.filesApi.FilesApi
+import com.app.masterplan.data.api.plansApi.PlansTasksApi
+import com.app.masterplan.data.api.reportsApi.ReportsApi
+import com.app.masterplan.data.api.userManagementApi.UserManagementApi
+import com.app.masterplan.data.repository.remote.AdminRequestsRepositoryImpl
+import com.app.masterplan.data.repository.remote.AuthRepositoryImpl
+import com.app.masterplan.data.repository.remote.DocumentRepositoryImpl
+import com.app.masterplan.data.repository.remote.EmployeeRepositoryImpl
+import com.app.masterplan.data.repository.remote.PlanRepositoryImpl
+import com.app.masterplan.data.repository.remote.ReportRepositoryImpl
+import com.app.masterplan.data.repository.remote.UserRepositoryImpl
+import com.app.masterplan.data.storage.LocalFileDataStorage
+import com.app.masterplan.data.storage.TokenDataStorage
+import com.app.masterplan.domain.repository.remote.AdminRequestsRepository
+import com.app.masterplan.domain.repository.remote.AuthRepository
+import com.app.masterplan.domain.repository.remote.DocumentRepository
+import com.app.masterplan.domain.repository.remote.EmployeeRepository
+import com.app.masterplan.domain.repository.remote.PlanRepository
+import com.app.masterplan.domain.repository.remote.ReportRepository
+import com.app.masterplan.domain.repository.remote.UserRepository
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object RepositoryModule {
+
+
+    @Provides
+    @Singleton
+    fun provideAdminRequestRepository(api: AdminRequestsApi, tokenStorage: TokenDataStorage): AdminRequestsRepository{
+        return AdminRequestsRepositoryImpl(api,tokenStorage)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(api: AuthApi, tokenStorage: TokenDataStorage): AuthRepository{
+        return AuthRepositoryImpl(api,tokenStorage)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDocumentRepository(
+        filesApi: FilesApi, localFileDataSource: LocalFileDataStorage, tokenStorage: TokenDataStorage
+    ): DocumentRepository{
+        return DocumentRepositoryImpl(filesApi, localFileDataSource, tokenStorage)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideEmployeeRepository(
+        employeeApi: EmployeeApi, tokenStorage: TokenDataStorage, localFileDataSource: LocalFileDataStorage
+    ): EmployeeRepository {
+        return EmployeeRepositoryImpl(employeeApi, tokenStorage, localFileDataSource)
+    }
+
+
+    @Provides
+    @Singleton
+    fun providePlanRepository(
+        planApi: PlansTasksApi, tokenStorage: TokenDataStorage, localFileDataSource: LocalFileDataStorage
+    ): PlanRepository {
+        return PlanRepositoryImpl(planApi, tokenStorage, localFileDataSource)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideReportRepository(
+        reportsApi: ReportsApi, tokenStorage: TokenDataStorage
+    ): ReportRepository {
+        return ReportRepositoryImpl(reportsApi, tokenStorage)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(
+        userManagementApi: UserManagementApi, tokenStorage: TokenDataStorage
+    ): UserRepository {
+        return UserRepositoryImpl(userManagementApi, tokenStorage)
+    }
+
+
+}
