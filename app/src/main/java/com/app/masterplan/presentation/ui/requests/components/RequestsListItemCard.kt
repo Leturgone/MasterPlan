@@ -27,7 +27,7 @@ import com.app.masterplan.presentation.ui.theme.RedSoft
 import com.app.masterplan.presentation.ui.theme.YellowSoft
 
 @Composable
-fun RequestCard(request: AdminRequest, onClick: () -> Unit){
+fun RequestsListItemCard(request: AdminRequest, onClick: () -> Unit){
 
     Card(
         shape = RoundedCornerShape(8.dp),
