@@ -3,6 +3,8 @@ package com.app.masterplan.presentation.ui.auth.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.masterplan.domain.model.auth.JwtToken
+import com.app.masterplan.domain.useacse.auth.GetUserIdUseCase
+import com.app.masterplan.domain.useacse.auth.GetUserRoleUseCase
 import com.app.masterplan.domain.useacse.auth.LoginUseCase
 import com.app.masterplan.presentation.ui.common.MasterPlanState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +15,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val getUserIdUseCase: GetUserIdUseCase,
+    private val getUserRoleUseCase: GetUserRoleUseCase
 ): ViewModel() {
     private val _loginFlow = MutableStateFlow<MasterPlanState<JwtToken>>(MasterPlanState.Waiting)
 
@@ -26,6 +30,8 @@ class LoginScreenViewModel @Inject constructor(
         val result = loginUseCase(login, password)
 
         result.onSuccess {
+            getUserRoleUseCase()
+            getUserIdUseCase()
             _loginFlow.value = MasterPlanState.Success(it)
         }.onFailure {
             val exception = when(it){
