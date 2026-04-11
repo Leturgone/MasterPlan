@@ -51,8 +51,8 @@ class BottomBarViewModel @Inject constructor(
         getUserRoleUseCase().onSuccess { userRoles ->
             val items = when {
                 UserRole.DIRECTOR in userRoles -> directorItems
-                UserRole.ADMIN in userRoles -> employeeItems
                 UserRole.ADMIN in userRoles -> adminItems
+                UserRole.EMPLOYEE in userRoles -> employeeItems
                 else -> emptyList()
             }
             _itemsFlow.value = MasterPlanState.Success(items)
