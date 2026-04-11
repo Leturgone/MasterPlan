@@ -22,7 +22,7 @@
     <string name="not_started">Не в работе</string>
     <string name="invalid">Неизвестно</string>
     <string name="respond">Ответ</string>
-    <string name="create_respond">Сформулировать ответ</string>
+    <string name="create_response">Сформулировать ответ</string>
     <string name="get_in_work">Взять в работу</string>
     <string name="options">Настройки</string>
     <string name="tasks_solved">Задач решено:</string>
@@ -38,6 +38,10 @@
     <string name="cant_load_search_history">Не удалось загрузить историю поиска</string>
     <string name="set_limit">Задать сроки</string>
     <string name="new_task">Новая задача</string>
+    <string name="new_request">Новая заявка</string>
+    <string name="new_answer">Новый ответ</string>
+    <string name="create_request">Создать заявку</string>
+    <string name="create_answer">Создать ответ</string>
     <string name="task_title">Название задачи</string>
     <string name="task_desc">Описание задачи</string>
     <string name="desc">Описание</string>
