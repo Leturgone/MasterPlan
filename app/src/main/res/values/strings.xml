@@ -18,6 +18,7 @@
     <string name="accounts">Аккаунты</string>
     <string name="requests">Заявки</string>
     <string name="respond">Ответ</string>
+    <string name="create_respond">Сформулировать ответ</string>
     <string name="options">Настройки</string>
     <string name="tasks_solved">Задач решено:</string>
     <string name="cant_load_info_about_emp">Не удалось загрузить данные о сотруднике:</string>
