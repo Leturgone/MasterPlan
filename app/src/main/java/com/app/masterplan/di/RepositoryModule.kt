@@ -14,6 +14,7 @@ import com.app.masterplan.data.repository.EmployeeRepositoryImpl
 import com.app.masterplan.data.repository.PlanRepositoryImpl
 import com.app.masterplan.data.repository.ReportRepositoryImpl
 import com.app.masterplan.data.repository.UserRepositoryImpl
+import com.app.masterplan.data.storage.EmployeeIdStorage
 import com.app.masterplan.data.storage.LocalFileDataStorage
 import com.app.masterplan.data.storage.TokenDataStorage
 import com.app.masterplan.domain.repository.remote.AdminRequestsRepository
@@ -58,9 +59,12 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideEmployeeRepository(
-        employeeApi: EmployeeApi, tokenStorage: TokenDataStorage, localFileDataSource: LocalFileDataStorage
+        employeeApi: EmployeeApi,
+        tokenStorage: TokenDataStorage,
+        localFileDataSource: LocalFileDataStorage,
+        localEmployeeIdStorage: EmployeeIdStorage
     ): EmployeeRepository {
-        return EmployeeRepositoryImpl(employeeApi, tokenStorage, localFileDataSource)
+        return EmployeeRepositoryImpl(employeeApi, tokenStorage, localFileDataSource, localEmployeeIdStorage)
     }
 
 
