@@ -10,7 +10,6 @@ import com.app.masterplan.data.storage.TokenDataStorage
 import com.app.masterplan.domain.model.auth.JwtToken
 import com.app.masterplan.domain.model.userManagement.UserRole
 import com.app.masterplan.domain.repository.remote.AuthRepository
-import java.util.UUID
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -18,7 +17,6 @@ class AuthRepositoryImpl @Inject constructor(
     private val tokenStorage: TokenDataStorage
 ): AuthRepository {
 
-    private var userIdCache: UUID? = null
 
     private var rolesCache: Set<UserRole>? = null
 
@@ -48,15 +46,6 @@ class AuthRepositoryImpl @Inject constructor(
             val roles = token.roles
             rolesCache = roles
             roles
-        }
-    }
-
-    override suspend fun getLocalUserId(): UUID {
-        return userIdCache ?: run {
-            val token = tokenStorage.getTokenFromDataStorage()
-            val userId = token.id
-            userIdCache = userId
-            userId
         }
     }
 
