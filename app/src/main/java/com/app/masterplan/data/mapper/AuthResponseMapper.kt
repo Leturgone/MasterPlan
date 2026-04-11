@@ -14,7 +14,7 @@ object AuthResponseMapper {
             }
         }.toSet()
         return JwtToken(
-            token = resp.token,
+            token = "Bearer ${resp.token}",
             roles = roles,
             id = resp.id
         )
