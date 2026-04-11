@@ -4,6 +4,8 @@ import com.app.masterplan.domain.repository.remote.AdminRequestsRepository
 import com.app.masterplan.domain.repository.remote.AuthRepository
 import com.app.masterplan.domain.repository.remote.EmployeeRepository
 import com.app.masterplan.domain.useacse.adminRequests.ChangeAdminRequestStatusUseCase
+import com.app.masterplan.domain.useacse.adminRequests.CreateAdminAnswerUseCase
+import com.app.masterplan.domain.useacse.adminRequests.CreateAdminRequestUseCase
 import com.app.masterplan.domain.useacse.adminRequests.GetAdminAnswerForRequestUseCase
 import com.app.masterplan.domain.useacse.adminRequests.GetAdminRequestsListUseCase
 import com.app.masterplan.domain.useacse.adminRequests.GetCreatedAdminRequestsBySenderListUseCase
@@ -13,6 +15,8 @@ import com.app.masterplan.domain.useacse.auth.LoginUseCase
 import com.app.masterplan.domain.useacse.employee.GetEmployeeByIdUseCase
 import com.app.masterplan.presentation.ui.auth.viewModel.LoginScreenViewModel
 import com.app.masterplan.presentation.ui.bottomBar.viewModel.BottomBarViewModel
+import com.app.masterplan.presentation.ui.requests.viewmodel.NewAnswerScreenViewModel
+import com.app.masterplan.presentation.ui.requests.viewmodel.NewRequestsScreenViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestCardViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestsListScreenViewModel
 import dagger.Module
@@ -68,6 +72,7 @@ object ViewModelModule {
         )
     }
 
+
     @Provides
     @Singleton
     fun provideRequestCardViewModel(
@@ -82,6 +87,30 @@ object ViewModelModule {
         return RequestCardViewModel(
             getUserRoleUseCase, updateAdminRequestStatusUseCase,
             getAdminAnswerForRequestUseCase,  getEmployeeByIdUseCase
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewAnswerScreenViewModel(
+        adminRequestsRepository: AdminRequestsRepository,
+    ): NewAnswerScreenViewModel {
+        val createAdminAnswerUseCase = CreateAdminAnswerUseCase(adminRequestsRepository)
+        return NewAnswerScreenViewModel(
+            createAdminAnswerUseCase
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewRequestsScreenViewModel(
+        employeeRepository: EmployeeRepository,
+        adminRequestsRepository: AdminRequestsRepository,
+    ): NewRequestsScreenViewModel {
+        val getLocalEmpIdUseCase = GetLocalEmpIdUseCase(employeeRepository)
+        val createAdminRequestUseCase = CreateAdminRequestUseCase(adminRequestsRepository)
+        return NewRequestsScreenViewModel(
+            getLocalEmpIdUseCase, createAdminRequestUseCase
         )
     }
 
