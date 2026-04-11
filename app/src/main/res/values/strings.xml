@@ -17,8 +17,13 @@
     <string name="reports">Отчеты</string>
     <string name="accounts">Аккаунты</string>
     <string name="requests">Заявки</string>
+    <string name="inProgress">В работе</string>
+    <string name="completed">Выполнено</string>
+    <string name="not_started">Не в работе</string>
+    <string name="invalid">Неизвестно</string>
     <string name="respond">Ответ</string>
     <string name="create_respond">Сформулировать ответ</string>
+    <string name="get_in_work">Взять в работу</string>
     <string name="options">Настройки</string>
     <string name="tasks_solved">Задач решено:</string>
     <string name="cant_load_info_about_emp">Не удалось загрузить данные о сотруднике:</string>
