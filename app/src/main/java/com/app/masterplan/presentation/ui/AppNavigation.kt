@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.app.masterplan.presentation.ui.auth.screens.LoginScreen
+import com.app.masterplan.presentation.ui.requests.screens.RequestsListScreen
 
 
 //themeViewModel: AppThemeViewModel,
@@ -21,6 +22,7 @@ fun AppNavigation(innerPadding: PaddingValues, navController: NavHostController)
     ) {
 
         composable("login"){ LoginScreen(navController) }
+        composable("requests") { RequestsListScreen(navController) }
 //        composable("tasks"){
 //            TaskScreen(navController, profileViewModel = profileViewModel)
 //        }
