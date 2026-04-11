@@ -7,6 +7,7 @@ import com.app.masterplan.data.api.exception.ApiErrorResponse
 import com.app.masterplan.data.exception.ApiException
 import com.app.masterplan.data.mapper.ApiErrorResponseHandler
 import com.app.masterplan.data.mapper.EmployeeResponseMapper
+import com.app.masterplan.data.storage.EmployeeIdStorage
 import com.app.masterplan.data.storage.LocalFileDataStorage
 import com.app.masterplan.domain.model.employee.Employee
 import com.app.masterplan.domain.model.employee.EmployeeWithMetrics
@@ -20,6 +21,7 @@ class EmployeeRepositoryImpl @Inject constructor(
     private val employeeApi: EmployeeApi,
     private val tokenStorage: TokenDataStorage,
     private val localFileDataSource: LocalFileDataStorage,
+    private val localEmployeeIdStorage: EmployeeIdStorage
 ): EmployeeRepository {
     override suspend fun createEmployee(
         name: String,
@@ -82,6 +84,28 @@ class EmployeeRepositoryImpl @Inject constructor(
         return EmployeeResponseMapper.toDomain(
             ApiErrorResponseHandler.handleResponse(response,::errorMapper)
         )
+    }
+
+    private var localEmployeeIdCache: UUID? = null
+
+    override suspend fun getLocalEmployeeId(): UUID {
+
+        return localEmployeeIdCache ?: run {
+            val token = tokenStorage.getTokenFromDataStorage()
+            val localEmployeeId = try {
+                localEmployeeIdStorage.getLocalEmployeeId()
+            }catch (_: Exception){
+                val response = employeeApi.getEmployeeByUserId(token.token,token.id)
+                val localEmployee = EmployeeResponseMapper.toDomain(
+                    ApiErrorResponseHandler.handleResponse(response,::errorMapper)
+                )
+                localEmployeeIdStorage.saveLocalEmployeeId(localEmployee.id)
+                localEmployee.id
+            }
+            localEmployeeIdCache = localEmployeeId
+            localEmployeeId
+        }
+
     }
 
     override suspend fun getProfileInformation(currentEmployeeId: UUID): EmployeeWithMetrics {
