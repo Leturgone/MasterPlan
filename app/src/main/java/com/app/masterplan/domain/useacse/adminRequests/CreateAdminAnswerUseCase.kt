@@ -1,5 +1,6 @@
 package com.app.masterplan.domain.useacse.adminRequests
 
+import com.app.masterplan.domain.model.adminRequests.AdminRequestStatus
 import com.app.masterplan.domain.repository.remote.AdminRequestsRepository
 import java.util.UUID
 
@@ -13,6 +14,7 @@ class CreateAdminAnswerUseCase(
                 description = description,
                 adminRequestId = adminRequestId
             )
+            adminRequestsRepository.changeAdminRequestStatus(adminRequestId, AdminRequestStatus.COMPLETED)
             Result.success(adminAnswerId)
         }catch (e: Exception){
             Result.failure(e)
