@@ -140,10 +140,18 @@ fun AccountsListScreen(
                     modalViewModel.closeRequestTab()
                 },
             ){
-                AccountCard(modalViewModel) {
-                    val employeeId = modalViewModel.employeeFlow.value?.id?:""
-                    navController.navigate("edit_profile/${employeeId}")
-                }
+                AccountCard(
+                    modalViewModel,
+                    editUserButtonOnClick = {
+                        val employeeId = modalViewModel.employeeFlow.value?.id ?: ""
+                        navController.navigate("edit_profile/${employeeId}")
+                        modalViewModel.closeRequestTab()
+                    },
+                    afterDelete = {
+                        modalViewModel.closeRequestTab()
+                        viewModel.loadAccounts()
+                    }
+                )
             }
         }
     }

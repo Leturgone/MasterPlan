@@ -33,7 +33,7 @@ import com.app.masterplan.presentation.ui.theme.RedSoft
 import com.app.masterplan.presentation.ui.theme.YellowSoft
 
 @Composable
-fun AccountCard(viewModel: AccountCardViewModel, editUserButtonOnClick: () -> Unit){
+fun AccountCard(viewModel: AccountCardViewModel, editUserButtonOnClick: () -> Unit, afterDelete: () -> Unit){
 
     val employeeData = viewModel.employeeFlow.collectAsState()
     val userDataFlow = viewModel.userDataFlow.collectAsState()
@@ -82,6 +82,7 @@ fun AccountCard(viewModel: AccountCardViewModel, editUserButtonOnClick: () -> Un
 
                 IconButton(onClick = {
                     viewModel.deleteUser()
+                    afterDelete()
                 }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
