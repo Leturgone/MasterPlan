@@ -103,7 +103,7 @@ fun BottomBar(
         ),
 
         BottomNavigationItem(
-            route = "employees",
+            route = "accounts",
             icon = Icons.Rounded.AccountCircle,
             title = stringResource(id = R.string.employees)
         ),
