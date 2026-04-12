@@ -17,15 +17,18 @@ import com.app.masterplan.domain.useacse.auth.LoginUseCase
 import com.app.masterplan.domain.useacse.employee.GetAllEmployeesUseCase
 import com.app.masterplan.domain.useacse.employee.GetEmployeeByIdUseCase
 import com.app.masterplan.domain.useacse.employee.SearchEmployeeByNameUseCase
+import com.app.masterplan.domain.useacse.employee.UpdateEmployeeUseCase
 import com.app.masterplan.domain.useacse.searchHistory.ClearSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.GetSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.SaveSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.userManagement.CreateUserUseCase
 import com.app.masterplan.domain.useacse.userManagement.DeleteUserUseCase
 import com.app.masterplan.domain.useacse.userManagement.GetUserByIdUseCase
+import com.app.masterplan.domain.useacse.userManagement.ResetPasswordUseCase
 import com.app.masterplan.presentation.ui.accounts.viewmodel.AccountCardViewModel
 import com.app.masterplan.presentation.ui.accounts.viewmodel.AccountListViewModel
 import com.app.masterplan.presentation.ui.accounts.viewmodel.CreateAccountScreenViewModel
+import com.app.masterplan.presentation.ui.accounts.viewmodel.EditAccountScreenViewModel
 import com.app.masterplan.presentation.ui.auth.viewModel.LoginScreenViewModel
 import com.app.masterplan.presentation.ui.bottomBar.viewModel.BottomBarViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.NewAnswerScreenViewModel
@@ -171,6 +174,25 @@ object ViewModelModule {
         val createUserUseCase = CreateUserUseCase(userRepository)
         return CreateAccountScreenViewModel(
             createUserUseCase
+        )
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideEditAccountScreenViewModel(
+        userRepository: UserRepository,
+        employeeRepository: EmployeeRepository,
+    ): EditAccountScreenViewModel{
+        val getEmployeeByIdUseCase = GetEmployeeByIdUseCase(employeeRepository)
+        val getUserByIdUseCase = GetUserByIdUseCase(userRepository)
+        val resetPasswordUseCase = ResetPasswordUseCase(userRepository)
+        val updateEmployeeUseCase = UpdateEmployeeUseCase(employeeRepository)
+        return EditAccountScreenViewModel(
+            getEmployeeByIdUseCase,
+            getUserByIdUseCase,
+            resetPasswordUseCase,
+            updateEmployeeUseCase
         )
     }
 
