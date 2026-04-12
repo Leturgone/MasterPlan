@@ -36,4 +36,12 @@ sealed class StorageException(
     class DeleteEmployeeIdException(message: String?): StorageException(
         "Error while getting employeeId : $message"
     )
+
+    class SavingHistoryException(message: String?): StorageException(
+        "Error while saving history : $message"
+    )
+
+    class ClearHistoryException(message: String?): StorageException(
+        "Error while clear history : $message"
+    )
 }
