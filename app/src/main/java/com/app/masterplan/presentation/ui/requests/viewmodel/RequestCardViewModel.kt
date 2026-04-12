@@ -107,7 +107,6 @@ class RequestCardViewModel @Inject constructor(
 
         _senderInfo.value = MasterPlanState.Loading
 
-        _answerInfo.value = MasterPlanState.Loading
 
         val empName = async{
             getEmployeeByIdUseCase(request.senderId)
@@ -140,10 +139,22 @@ class RequestCardViewModel @Inject constructor(
         ).onSuccess {
             _selectedRequestStatus.value = AdminRequestStatus.IN_PROGRESS
         }
+
     }
 
 
     fun closeRequestTab() = viewModelScope.launch {
         _isModalVisible.value = false
+        //resetState()
+    }
+
+    fun resetState() {
+        _selectedRequest.value = null
+        _selectedRequestStatus.value = AdminRequestStatus.INVALID
+        _senderInfo.value = MasterPlanState.Waiting
+        _answerInfo.value = MasterPlanState.Waiting
+        _showGetInWorkButton.value = false
+        _showCreateAnswerButton.value = false
+        _showAnswerInfo.value = false
     }
 }
