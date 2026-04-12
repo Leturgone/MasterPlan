@@ -5,11 +5,13 @@
     <string name="fio">ФИО</string>
     <string name="director_fio">ФИО Начальника</string>
     <string name="login_input">Логин</string>
+    <string name="roles">Права</string>
+    <string name="director">Руководитель</string>
     <string name="password">Пароль</string>
     <string name="employees">Исполнители</string>
-    <string name="employees_not_found">Сотрудников не найдено</string>
-    <string name="employee">Сотрудник</string>
-    <string name="director">Начальник</string>
+    <string name="employees_not_found">Исполнителей не найдено</string>
+    <string name="employee">Исполнитель</string>
+    <string name="admin">Администратор</string>
     <string name="tasks">Задачи</string>
     <string name="plans">Планы</string>
     <string name="profile">Профиль</string>
@@ -36,6 +38,7 @@
     <string name="clear_search_history">Очистить историю</string>
     <string name="search_history_empty">История поиска пуста</string>
     <string name="cant_load_search_history">Не удалось загрузить историю поиска</string>
+    <string name="search_accounts">Поиск аккаунтов</string>
     <string name="set_limit">Задать сроки</string>
     <string name="new_task">Новая задача</string>
     <string name="new_request">Новая заявка</string>
