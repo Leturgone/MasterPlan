@@ -10,6 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.app.masterplan.presentation.ui.accounts.screens.AccountsListScreen
+import com.app.masterplan.presentation.ui.accounts.screens.CreateAccountScreen
+import com.app.masterplan.presentation.ui.accounts.screens.SelectDirectorScreen
 import com.app.masterplan.presentation.ui.auth.screens.LoginScreen
 import com.app.masterplan.presentation.ui.requests.screens.NewAnswerScreen
 import com.app.masterplan.presentation.ui.requests.screens.NewRequestScreen
@@ -39,6 +41,8 @@ fun AppNavigation(innerPadding: PaddingValues, navController: NavHostController)
             }
         }
         composable("accounts"){ AccountsListScreen(navController) }
+        composable("new_profile"){ CreateAccountScreen(navController) }
+        composable("director_selection"){ SelectDirectorScreen(navController)}
 //        composable("tasks"){
 //            TaskScreen(navController, profileViewModel = profileViewModel)
 //        }
