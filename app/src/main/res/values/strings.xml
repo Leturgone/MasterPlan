@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MasterPlan</string>
     <string name="create_acc">Создать аккаунт</string>
+    <string name="edit_acc">Изменить аккаунт</string>
     <string name="sign_in">Войти</string>
     <string name="fio">ФИО</string>
     <string name="director_fio">ФИО Начальника</string>
