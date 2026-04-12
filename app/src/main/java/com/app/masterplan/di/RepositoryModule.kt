@@ -13,9 +13,11 @@ import com.app.masterplan.data.repository.DocumentRepositoryImpl
 import com.app.masterplan.data.repository.EmployeeRepositoryImpl
 import com.app.masterplan.data.repository.PlanRepositoryImpl
 import com.app.masterplan.data.repository.ReportRepositoryImpl
+import com.app.masterplan.data.repository.SearchHistoryRepositoryImpl
 import com.app.masterplan.data.repository.UserRepositoryImpl
 import com.app.masterplan.data.storage.EmployeeIdStorage
 import com.app.masterplan.data.storage.LocalFileDataStorage
+import com.app.masterplan.data.storage.SearchHistoryDataStorage
 import com.app.masterplan.data.storage.TokenDataStorage
 import com.app.masterplan.domain.repository.remote.AdminRequestsRepository
 import com.app.masterplan.domain.repository.remote.AuthRepository
@@ -23,6 +25,7 @@ import com.app.masterplan.domain.repository.remote.DocumentRepository
 import com.app.masterplan.domain.repository.remote.EmployeeRepository
 import com.app.masterplan.domain.repository.remote.PlanRepository
 import com.app.masterplan.domain.repository.remote.ReportRepository
+import com.app.masterplan.domain.repository.remote.SearchHistoryRepository
 import com.app.masterplan.domain.repository.remote.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -92,6 +95,14 @@ object RepositoryModule {
         userManagementApi: UserManagementApi, tokenStorage: TokenDataStorage
     ): UserRepository {
         return UserRepositoryImpl(userManagementApi, tokenStorage)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchHistoryRepository(
+        searchHistoryDataStorage: SearchHistoryDataStorage
+    ): SearchHistoryRepository{
+        return SearchHistoryRepositoryImpl(searchHistoryDataStorage)
     }
 
 
