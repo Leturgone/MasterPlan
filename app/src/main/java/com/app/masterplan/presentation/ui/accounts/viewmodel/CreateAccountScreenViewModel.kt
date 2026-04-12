@@ -35,8 +35,6 @@ class CreateAccountScreenViewModel @Inject constructor(
     val selectedDir: StateFlow<Employee?> = _selectedDir
 
 
-    private val _editPassword = MutableStateFlow<Boolean>(false)
-
     // Список ролей с переключателями
     private val _roles = MutableStateFlow(
         listOf(
