@@ -1,20 +1,32 @@
 <resources>
     <string name="app_name">MasterPlan</string>
     <string name="create_acc">Создать аккаунт</string>
+    <string name="edit_acc">Изменить аккаунт</string>
     <string name="sign_in">Войти</string>
     <string name="fio">ФИО</string>
     <string name="director_fio">ФИО Начальника</string>
     <string name="login_input">Логин</string>
+    <string name="roles">Права</string>
+    <string name="director">Руководитель</string>
     <string name="password">Пароль</string>
-    <string name="employees">Сотрудники</string>
-    <string name="employees_not_found">Сотрудников не найдено</string>
-    <string name="employee">Сотрудник</string>
-    <string name="director">Начальник</string>
+    <string name="employees">Исполнители</string>
+    <string name="employees_not_found">Исполнителей не найдено</string>
+    <string name="employee">Исполнитель</string>
+    <string name="admin">Администратор</string>
     <string name="tasks">Задачи</string>
+    <string name="plans">Планы</string>
     <string name="profile">Профиль</string>
     <string name="task">Задача</string>
-    <string name="responds">Ответы</string>
+    <string name="reports">Отчеты</string>
+    <string name="accounts">Аккаунты</string>
+    <string name="requests">Заявки</string>
+    <string name="inProgress">В работе</string>
+    <string name="completed">Выполнено</string>
+    <string name="not_started">Не в работе</string>
+    <string name="invalid">Неизвестно</string>
     <string name="respond">Ответ</string>
+    <string name="create_response">Сформулировать ответ</string>
+    <string name="get_in_work">Взять в работу</string>
     <string name="options">Настройки</string>
     <string name="tasks_solved">Задач решено:</string>
     <string name="cant_load_info_about_emp">Не удалось загрузить данные о сотруднике:</string>
@@ -27,8 +39,13 @@
     <string name="clear_search_history">Очистить историю</string>
     <string name="search_history_empty">История поиска пуста</string>
     <string name="cant_load_search_history">Не удалось загрузить историю поиска</string>
+    <string name="search_accounts">Поиск аккаунтов</string>
     <string name="set_limit">Задать сроки</string>
     <string name="new_task">Новая задача</string>
+    <string name="new_request">Новая заявка</string>
+    <string name="new_answer">Новый ответ</string>
+    <string name="create_request">Создать заявку</string>
+    <string name="create_answer">Создать ответ</string>
     <string name="task_title">Название задачи</string>
     <string name="task_desc">Описание задачи</string>
     <string name="desc">Описание</string>
@@ -57,5 +74,13 @@
     <string name="update_search">Обновить</string>
     <string name="update_report">Обновить отчет</string>
     <string name="deleted">Удалено</string>
+    <string name="account_data">Учетные</string>
+    <string name="employee_data">Личные</string>
+    <string name="assign_director">Назначить руководителя</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="patronymic">Отчество</string>
+    <string name="save">Сохранить</string>
+
 </resources>
 

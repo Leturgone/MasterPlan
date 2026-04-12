@@ -57,6 +57,12 @@ interface EmployeeApi {
         @Path(value = "id") empId: UUID
     ): Response<EmployeeDetailsResponse>
 
+    @GET("emp/employee/userId/{id}")
+    suspend fun getEmployeeByUserId(
+        @Header("Authorization") token: String,
+        @Path(value = "id") userId: UUID
+    ): Response<EmployeeDetailsResponse>
+
 
     @GET("emp/profile/{id}")
     suspend fun getProfileInformation(

@@ -153,7 +153,8 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginScreenViewMode
 
                     is MasterPlanState.Success<*> -> LaunchedEffect(Unit){
                         navController.popBackStack()
-                        navController.navigate("profile")
+                        //navController.navigate("profile")
+                        navController.navigate("requests")
                     }
 
                     is MasterPlanState.Waiting -> null

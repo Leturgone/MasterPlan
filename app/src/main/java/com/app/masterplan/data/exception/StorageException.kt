@@ -8,6 +8,10 @@ sealed class StorageException(
         "Token not found"
     )
 
+    class EmployeeIdNotFoundException(): StorageException(
+        "EmployeeId not found"
+    )
+
     class SaveFileException(message: String): StorageException(
         "Error while saving file : $message"
     )
@@ -22,5 +26,22 @@ sealed class StorageException(
 
     class DeleteTokenException(message: String?): StorageException(
         "Error while getting token : $message"
+    )
+
+
+    class SaveEmployeeIdException(message: String?): StorageException(
+        "Error while getting employeeId : $message"
+    )
+
+    class DeleteEmployeeIdException(message: String?): StorageException(
+        "Error while getting employeeId : $message"
+    )
+
+    class SavingHistoryException(message: String?): StorageException(
+        "Error while saving history : $message"
+    )
+
+    class ClearHistoryException(message: String?): StorageException(
+        "Error while clear history : $message"
     )
 }

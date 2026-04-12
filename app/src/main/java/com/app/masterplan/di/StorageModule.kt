@@ -1,8 +1,14 @@
 package com.app.masterplan.di
 
 import android.content.Context
+import com.app.masterplan.data.storage.EmployeeIdStorage
 import com.app.masterplan.data.storage.LocalFileDataStorage
+import com.app.masterplan.data.storage.SearchHistoryDataStorage
+import com.app.masterplan.data.storage.ThemeDataStorage
 import com.app.masterplan.data.storage.TokenDataStorage
+import com.app.masterplan.framework.storage.datastore.EmployeeIdStorageImpl
+import com.app.masterplan.framework.storage.datastore.SearchHistoryDataStorageImpl
+import com.app.masterplan.framework.storage.datastore.ThemeDataStorageImpl
 import com.app.masterplan.framework.storage.datastore.TokenDataStorageImpl
 import com.app.masterplan.framework.storage.filesStorage.LocalFileDataStorageImpl
 import dagger.Module
@@ -29,5 +35,25 @@ object StorageModule {
     fun provideLocalFileDataStorage(@ApplicationContext context: Context): LocalFileDataStorage {
         return LocalFileDataStorageImpl(context)
     }
+
+    @Provides
+    @Singleton
+    fun provideEmployeeIdStorage(@ApplicationContext context: Context): EmployeeIdStorage {
+        return EmployeeIdStorageImpl(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchHistoryStorage(@ApplicationContext context: Context): SearchHistoryDataStorage {
+        return SearchHistoryDataStorageImpl(context)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideThemeDataStorage(@ApplicationContext context: Context): ThemeDataStorage {
+        return ThemeDataStorageImpl(context)
+    }
+
 
 }
