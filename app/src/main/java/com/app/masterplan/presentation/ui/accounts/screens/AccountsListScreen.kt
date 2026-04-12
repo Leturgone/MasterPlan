@@ -141,8 +141,8 @@ fun AccountsListScreen(
                 },
             ){
                 AccountCard(modalViewModel) {
-                    val requestId = modalViewModel.employeeFlow.value?.id?:""
-                    navController.navigate("edit_profile/${requestId}")
+                    val employeeId = modalViewModel.employeeFlow.value?.id?:""
+                    navController.navigate("edit_profile/${employeeId}")
                 }
             }
         }
