@@ -4,6 +4,7 @@ import com.app.masterplan.domain.repository.remote.AdminRequestsRepository
 import com.app.masterplan.domain.repository.remote.AuthRepository
 import com.app.masterplan.domain.repository.remote.EmployeeRepository
 import com.app.masterplan.domain.repository.remote.SearchHistoryRepository
+import com.app.masterplan.domain.repository.remote.ThemeRepository
 import com.app.masterplan.domain.repository.remote.UserRepository
 import com.app.masterplan.domain.useacse.adminRequests.ChangeAdminRequestStatusUseCase
 import com.app.masterplan.domain.useacse.adminRequests.CreateAdminAnswerUseCase
@@ -14,6 +15,7 @@ import com.app.masterplan.domain.useacse.adminRequests.GetCreatedAdminRequestsBy
 import com.app.masterplan.domain.useacse.employee.GetLocalEmpIdUseCase
 import com.app.masterplan.domain.useacse.auth.GetUserRoleUseCase
 import com.app.masterplan.domain.useacse.auth.LoginUseCase
+import com.app.masterplan.domain.useacse.auth.LogoutUseCase
 import com.app.masterplan.domain.useacse.employee.GetAllEmployeesUseCase
 import com.app.masterplan.domain.useacse.employee.GetEmployeeByIdUseCase
 import com.app.masterplan.domain.useacse.employee.SearchEmployeeByNameUseCase
@@ -21,6 +23,8 @@ import com.app.masterplan.domain.useacse.employee.UpdateEmployeeUseCase
 import com.app.masterplan.domain.useacse.searchHistory.ClearSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.GetSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.SaveSearchHistoryUseCase
+import com.app.masterplan.domain.useacse.theme.ChangeThemeUseCase
+import com.app.masterplan.domain.useacse.theme.GetCurrentThemeIsDarkUseCase
 import com.app.masterplan.domain.useacse.userManagement.CreateUserUseCase
 import com.app.masterplan.domain.useacse.userManagement.DeleteUserUseCase
 import com.app.masterplan.domain.useacse.userManagement.GetUserByIdUseCase
@@ -31,6 +35,7 @@ import com.app.masterplan.presentation.ui.accounts.viewmodel.CreateAccountScreen
 import com.app.masterplan.presentation.ui.accounts.viewmodel.EditAccountScreenViewModel
 import com.app.masterplan.presentation.ui.auth.viewModel.LoginScreenViewModel
 import com.app.masterplan.presentation.ui.bottomBar.viewModel.BottomBarViewModel
+import com.app.masterplan.presentation.ui.options.viewmodel.OptionsViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.NewAnswerScreenViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.NewRequestsScreenViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestCardViewModel
@@ -193,6 +198,22 @@ object ViewModelModule {
             getUserByIdUseCase,
             resetPasswordUseCase,
             updateEmployeeUseCase
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideOptionsViewModel(
+        themeRepository: ThemeRepository,
+        authRepository: AuthRepository
+    ): OptionsViewModel {
+        val changeThemeUseCase = ChangeThemeUseCase(themeRepository)
+        val getCurrentThemeIsDarkUseCase = GetCurrentThemeIsDarkUseCase(themeRepository)
+        val logoutUseCase = LogoutUseCase(authRepository)
+        return OptionsViewModel(
+            changeThemeUseCase,
+            getCurrentThemeIsDarkUseCase,
+            logoutUseCase
         )
     }
 
