@@ -73,5 +73,13 @@
     <string name="update_search">Обновить</string>
     <string name="update_report">Обновить отчет</string>
     <string name="deleted">Удалено</string>
+    <string name="account_data">Учетные</string>
+    <string name="employee_data">Личные</string>
+    <string name="assign_director">Назначить руководителя</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="patronymic">Отчество</string>
+    <string name="save">Сохранить</string>
+
 </resources>
 
