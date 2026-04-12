@@ -20,10 +20,12 @@ import com.app.masterplan.domain.useacse.employee.SearchEmployeeByNameUseCase
 import com.app.masterplan.domain.useacse.searchHistory.ClearSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.GetSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.SaveSearchHistoryUseCase
+import com.app.masterplan.domain.useacse.userManagement.CreateUserUseCase
 import com.app.masterplan.domain.useacse.userManagement.DeleteUserUseCase
 import com.app.masterplan.domain.useacse.userManagement.GetUserByIdUseCase
 import com.app.masterplan.presentation.ui.accounts.viewmodel.AccountCardViewModel
 import com.app.masterplan.presentation.ui.accounts.viewmodel.AccountListViewModel
+import com.app.masterplan.presentation.ui.accounts.viewmodel.CreateAccountScreenViewModel
 import com.app.masterplan.presentation.ui.auth.viewModel.LoginScreenViewModel
 import com.app.masterplan.presentation.ui.bottomBar.viewModel.BottomBarViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.NewAnswerScreenViewModel
@@ -158,6 +160,17 @@ object ViewModelModule {
             saveSearchHistoryUseCase,
             clearSearchHistoryUseCase,
             searchEmployeeByNameUseCase
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideCreateAccountScreenViewModel(
+        userRepository: UserRepository
+    ): CreateAccountScreenViewModel{
+        val createUserUseCase = CreateUserUseCase(userRepository)
+        return CreateAccountScreenViewModel(
+            createUserUseCase
         )
     }
 
