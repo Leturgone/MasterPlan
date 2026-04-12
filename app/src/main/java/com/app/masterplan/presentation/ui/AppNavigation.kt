@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.app.masterplan.presentation.ui.accounts.screens.AccountsListScreen
 import com.app.masterplan.presentation.ui.auth.screens.LoginScreen
 import com.app.masterplan.presentation.ui.requests.screens.NewAnswerScreen
 import com.app.masterplan.presentation.ui.requests.screens.NewRequestScreen
@@ -36,8 +37,8 @@ fun AppNavigation(innerPadding: PaddingValues, navController: NavHostController)
             it.arguments?.getString("requestId")?.let { requestId ->
                 NewAnswerScreen(navController,requestId)
             }
-
         }
+        composable("accounts"){ AccountsListScreen(navController) }
 //        composable("tasks"){
 //            TaskScreen(navController, profileViewModel = profileViewModel)
 //        }
