@@ -10,5 +10,7 @@ data class ProfileData(
     val name: String = "",
     val surname: String = "",
     val patronymic: String? = null,
-    val directorId: UUID? =  null
+    val directorId: UUID? =  null,
+    val userId: UUID? = null,
+    val employeeId: UUID? = null
 )
