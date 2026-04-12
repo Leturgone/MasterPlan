@@ -21,6 +21,7 @@ import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -34,6 +35,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.app.masterplan.R
 import com.app.masterplan.presentation.ui.common.CustomToastMessage
@@ -48,10 +52,10 @@ import com.app.masterplan.presentation.ui.requests.viewmodel.RequestsListScreenV
 fun RequestsListScreen(
     navController: NavHostController,
     viewModel: RequestsListScreenViewModel = hiltViewModel(),
-    modalViewModel: RequestCardViewModel = hiltViewModel()
+    modalViewModel: RequestCardViewModel = hiltViewModel(),
 ){
 
-    val sheetState = rememberModalBottomSheetState()
+
 
     var showToast by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
@@ -61,8 +65,10 @@ fun RequestsListScreen(
 
     val isModalVisible = modalViewModel.isModalVisible.collectAsState()
 
-    LaunchedEffect(null) {
+    LaunchedEffect(Unit) {
         viewModel.loadRequestsList()
+        modalViewModel.closeRequestTab()
+
     }
 
 
@@ -135,10 +141,10 @@ fun RequestsListScreen(
                 onDismissRequest = {
                     modalViewModel.closeRequestTab()
                 },
-                sheetState = sheetState
             ){
-                RequestsCard() {
-                    navController.navigate("new_response")
+                RequestsCard(modalViewModel) {
+                    val requestId = modalViewModel.selectedRequest.value?.id?:""
+                    navController.navigate("new_answer/${requestId}")
                 }
             }
         }
