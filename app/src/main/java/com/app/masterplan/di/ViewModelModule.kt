@@ -18,6 +18,7 @@ import com.app.masterplan.domain.useacse.auth.LoginUseCase
 import com.app.masterplan.domain.useacse.auth.LogoutUseCase
 import com.app.masterplan.domain.useacse.employee.GetAllEmployeesUseCase
 import com.app.masterplan.domain.useacse.employee.GetEmployeeByIdUseCase
+import com.app.masterplan.domain.useacse.employee.GetProfileInformationUseCase
 import com.app.masterplan.domain.useacse.employee.SearchEmployeeByNameUseCase
 import com.app.masterplan.domain.useacse.employee.UpdateEmployeeUseCase
 import com.app.masterplan.domain.useacse.searchHistory.ClearSearchHistoryUseCase
@@ -36,6 +37,7 @@ import com.app.masterplan.presentation.ui.accounts.viewmodel.EditAccountScreenVi
 import com.app.masterplan.presentation.ui.auth.viewModel.LoginScreenViewModel
 import com.app.masterplan.presentation.ui.bottomBar.viewModel.BottomBarViewModel
 import com.app.masterplan.presentation.ui.options.viewmodel.OptionsViewModel
+import com.app.masterplan.presentation.ui.profile.viewmodel.ProfileScreenViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.NewAnswerScreenViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.NewRequestsScreenViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestCardViewModel
@@ -214,6 +216,23 @@ object ViewModelModule {
             changeThemeUseCase,
             getCurrentThemeIsDarkUseCase,
             logoutUseCase
+        )
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideProfileViewModel(
+        employeeRepository: EmployeeRepository,
+        authRepository: AuthRepository
+    ): ProfileScreenViewModel {
+        val getProfileInformationUseCase = GetProfileInformationUseCase(employeeRepository)
+        val getEmployeeIdUseCase = GetLocalEmpIdUseCase(employeeRepository)
+        val getUserRoleUseCase = GetUserRoleUseCase(authRepository)
+        return ProfileScreenViewModel(
+            getProfileInformationUseCase,
+            getEmployeeIdUseCase,
+            getUserRoleUseCase
         )
     }
 
