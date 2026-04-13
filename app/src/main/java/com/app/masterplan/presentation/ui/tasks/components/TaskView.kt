@@ -102,7 +102,7 @@ fun TaskView(task: Task, onPlanClick: (UUID) -> Unit){
 
             Text(
                 text = "${stringResource(R.string.deadline)}: ",
-                fontSize = 13.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
                 textAlign = TextAlign.End,
@@ -110,7 +110,7 @@ fun TaskView(task: Task, onPlanClick: (UUID) -> Unit){
 
             Text(
                 text = task.endDate.format(outputFormatter),
-                fontSize = 25.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
                 textAlign = TextAlign.Start,
