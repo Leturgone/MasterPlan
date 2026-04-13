@@ -90,4 +90,10 @@
     <string name="by_workload">По загруженности</string>
     <string name="without_tasks">Без задач</string>
     <string name="export">Экспорт</string>
+    <string name="assigned_tasks">Порученные задачи</string>
+    <string name="by_new">Новое</string>
+    <string name="by_time">Срочно</string>
+    <string name="to_plan">К плану</string>
+    <string name="deadline">Срок выполнения</string>
+    <string name="create_report">Сохранить отчет</string>
 </resources>
