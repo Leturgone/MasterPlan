@@ -35,7 +35,6 @@ class CreateAccountScreenViewModel @Inject constructor(
     val selectedDir: StateFlow<Employee?> = _selectedDir
 
 
-    // Список ролей с переключателями
     private val _roles = MutableStateFlow(
         listOf(
             RoleData(UserRole.EMPLOYEE),
