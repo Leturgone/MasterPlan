@@ -2,6 +2,7 @@ package com.app.masterplan.di
 
 import com.app.masterplan.domain.repository.remote.AdminRequestsRepository
 import com.app.masterplan.domain.repository.remote.AuthRepository
+import com.app.masterplan.domain.repository.remote.DocumentRepository
 import com.app.masterplan.domain.repository.remote.EmployeeRepository
 import com.app.masterplan.domain.repository.remote.SearchHistoryRepository
 import com.app.masterplan.domain.repository.remote.TaskRepository
@@ -17,6 +18,7 @@ import com.app.masterplan.domain.useacse.employee.GetLocalEmpIdUseCase
 import com.app.masterplan.domain.useacse.auth.GetUserRoleUseCase
 import com.app.masterplan.domain.useacse.auth.LoginUseCase
 import com.app.masterplan.domain.useacse.auth.LogoutUseCase
+import com.app.masterplan.domain.useacse.document.DownloadFileUseCase
 import com.app.masterplan.domain.useacse.employee.ExportDirEmployeesUseCase
 import com.app.masterplan.domain.useacse.employee.GetAllDirectorEmployeesUseCase
 import com.app.masterplan.domain.useacse.employee.GetAllEmployeesUseCase
@@ -28,7 +30,10 @@ import com.app.masterplan.domain.useacse.employee.SearchEmployeeByNameUseCase
 import com.app.masterplan.domain.useacse.employee.SortDirEmployeesByRatingUseCase
 import com.app.masterplan.domain.useacse.employee.SortDirEmployeesByWorkloadUseCase
 import com.app.masterplan.domain.useacse.employee.UpdateEmployeeUseCase
+import com.app.masterplan.domain.useacse.plans.ChangeTaskStatusUseCase
+import com.app.masterplan.domain.useacse.plans.FilterAssignedTasksByStatusUseCase
 import com.app.masterplan.domain.useacse.plans.GetAssignedTasksUseCase
+import com.app.masterplan.domain.useacse.plans.SortAssignedTasksByEndDateUseCase
 import com.app.masterplan.domain.useacse.searchHistory.ClearSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.GetSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.SaveSearchHistoryUseCase
@@ -52,6 +57,7 @@ import com.app.masterplan.presentation.ui.requests.viewmodel.NewAnswerScreenView
 import com.app.masterplan.presentation.ui.requests.viewmodel.NewRequestsScreenViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestCardViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestsListScreenViewModel
+import com.app.masterplan.presentation.ui.tasks.viewModel.AssignedTasksScreenViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -293,4 +299,29 @@ object ViewModelModule {
     }
 
 
+
+    @Provides
+    @Singleton
+    fun provideAssignedTasksScreenViewModel(
+        employeeRepository: EmployeeRepository,
+        taskRepository: TaskRepository,
+        documentRepository: DocumentRepository
+    ): AssignedTasksScreenViewModel {
+
+        val getLocalEmpIdUseCase = GetLocalEmpIdUseCase(employeeRepository)
+        val getAssignedTasksUseCase = GetAssignedTasksUseCase(taskRepository)
+        val filterAssignedTasksByStatusUseCase = FilterAssignedTasksByStatusUseCase(taskRepository)
+        val sortAssignedTasksByEndDateUseCase = SortAssignedTasksByEndDateUseCase(taskRepository)
+        val downloadFileUseCase = DownloadFileUseCase(documentRepository)
+        val changeTaskStatusUseCase = ChangeTaskStatusUseCase(taskRepository)
+
+        return AssignedTasksScreenViewModel(
+            getLocalEmpIdUseCase,
+            getAssignedTasksUseCase,
+            filterAssignedTasksByStatusUseCase,
+            sortAssignedTasksByEndDateUseCase,
+            downloadFileUseCase,
+            changeTaskStatusUseCase
+        )
+    }
 }
