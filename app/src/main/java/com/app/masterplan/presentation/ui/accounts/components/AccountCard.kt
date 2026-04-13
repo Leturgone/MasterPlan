@@ -172,7 +172,7 @@ fun AccountCard(viewModel: AccountCardViewModel, editUserButtonOnClick: () -> Un
                 )
 
                 val director  = (directorDataFlow.value as MasterPlanState.Success).result
-                val initials = "${director.surname[0]}.${director.name[0]}"
+                val initials = "${director.surname[0]}${director.name[0]}"
                 val nameWithInitials = "${director.surname} ${director.name[0]}.${director.patronymic?.get(0)?:""}"
                 AvatarNameSec(initials,nameWithInitials, Modifier)
             }
