@@ -96,4 +96,5 @@
     <string name="to_plan">К плану</string>
     <string name="deadline">Срок выполнения</string>
     <string name="create_report">Сохранить отчет</string>
+    <string name="search_by_task">Поиск по задачам</string>
 </resources>
