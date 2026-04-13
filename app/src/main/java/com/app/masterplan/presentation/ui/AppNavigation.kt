@@ -16,6 +16,7 @@ import com.app.masterplan.presentation.ui.accounts.screens.SelectDirectorScreen
 import com.app.masterplan.presentation.ui.accounts.viewmodel.EditAccountScreenViewModel
 import com.app.masterplan.presentation.ui.auth.screens.LoginScreen
 import com.app.masterplan.presentation.ui.options.screens.OptionsScreen
+import com.app.masterplan.presentation.ui.profile.screens.ProfileScreen
 import com.app.masterplan.presentation.ui.requests.screens.NewAnswerScreen
 import com.app.masterplan.presentation.ui.requests.screens.NewRequestScreen
 import com.app.masterplan.presentation.ui.requests.screens.RequestsListScreen
@@ -53,6 +54,7 @@ fun AppNavigation(innerPadding: PaddingValues, navController: NavHostController)
             }
         }
         composable("options"){ OptionsScreen(navController) }
+        composable("profile") { ProfileScreen(navController) }
 
 //        composable("tasks"){
 //            TaskScreen(navController, profileViewModel = profileViewModel)
