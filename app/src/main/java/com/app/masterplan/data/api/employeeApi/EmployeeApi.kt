@@ -5,6 +5,7 @@ import com.app.masterplan.data.api.employeeApi.dto.request.UpdateEmployeeRequest
 import com.app.masterplan.data.api.employeeApi.dto.responce.EmployeeDetailsResponse
 import com.app.masterplan.data.api.employeeApi.dto.responce.EmployeeIdResponse
 import com.app.masterplan.data.api.employeeApi.dto.responce.EmployeeWithMetricsDetailsResponse
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -28,7 +29,7 @@ interface EmployeeApi {
     suspend fun exportDirEmployees(
         @Header("Authorization") token: String,
         @Path(value = "directorId") directorId: UUID
-    ): Response<ByteArray>
+    ): Response<ResponseBody>
 
 
     @GET("dir/employee/{directorId}/employees")
