@@ -17,11 +17,11 @@ class LocalFileDataStorageImpl(
     private val context: Context
 ): LocalFileDataStorage {
 
-    override suspend fun saveFileToDataStorage(byteArray: ByteArray): File {
+    override suspend fun saveFileToDataStorage(byteArray: ByteArray,ext: String): File {
         return withContext(Dispatchers.IO){
             val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
             val destinationFile = File(downloadsDir,
-                "download_${System.currentTimeMillis().toInt()}.pdf"
+                "download_${System.currentTimeMillis().toInt()}.$ext"
             )
             destinationFile.outputStream().write(byteArray)
             destinationFile
