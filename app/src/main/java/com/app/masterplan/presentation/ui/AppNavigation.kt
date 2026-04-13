@@ -23,6 +23,7 @@ import com.app.masterplan.presentation.ui.requests.screens.NewRequestScreen
 import com.app.masterplan.presentation.ui.requests.screens.RequestsListScreen
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestCardViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestsListScreenViewModel
+import com.app.masterplan.presentation.ui.tasks.screens.AssignedTasksScreen
 import java.util.UUID
 
 
@@ -57,6 +58,7 @@ fun AppNavigation(innerPadding: PaddingValues, navController: NavHostController)
         composable("options"){ OptionsScreen(navController) }
         composable("profile") { ProfileScreen(navController) }
         composable("employees") { EmployeeListScreen() }
+        composable("assigned_tasks") { AssignedTasksScreen(navController) }
 
 //        composable("tasks"){
 //            TaskScreen(navController, profileViewModel = profileViewModel)
