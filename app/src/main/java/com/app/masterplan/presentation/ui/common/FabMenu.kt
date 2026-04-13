@@ -40,7 +40,7 @@ fun FabMenu(menuOptions: List<FabMenuOption>) {
             onClick = { expanded = !expanded },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(bottom = 50.dp, end = 40.dp),
+                .padding(bottom = 50.dp, end = 20.dp),
             contentColor = MaterialTheme.colorScheme.onPrimary,
             containerColor = MaterialTheme.colorScheme.primary
         )
@@ -50,7 +50,7 @@ fun FabMenu(menuOptions: List<FabMenuOption>) {
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(bottom = 120.dp, end = 40.dp),
+                    .padding(bottom = 120.dp, end = 30.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalAlignment = Alignment.End,
 
