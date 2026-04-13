@@ -66,7 +66,7 @@ class AccountListViewModel @Inject constructor(
     fun getSearchHistory() = viewModelScope.launch {
         _searchHistoryFlow.value = MasterPlanState.Loading
         val list = getSearchHistoryUseCase().getOrElse {
-            _accountsListFlow.value =  MasterPlanState.Failure(Exception(it.message))
+            _searchHistoryFlow.value =  MasterPlanState.Failure(Exception(it.message))
             return@launch
         }
         _searchHistoryFlow.value = MasterPlanState.Success(list)
