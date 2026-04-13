@@ -85,7 +85,7 @@ class PlanRepositoryImpl  @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = planApi.exportPlan(token,planId)
         val bytes = ApiErrorResponseHandler.handleResponse(response,::errorMapper)
-        val savedFile = localFileDataSource.saveFileToDataStorage(bytes)
+        val savedFile = localFileDataSource.saveFileToDataStorage(bytes,"xlsx")
         return savedFile
     }
 
