@@ -40,7 +40,7 @@ fun BottomBar(
 
     val directorItems = listOf(
         BottomNavigationItem(
-            route = "emp_list",
+            route = "employees",
             icon = Icons.Rounded.Groups,
             title = stringResource(id = R.string.employees)
         ),
