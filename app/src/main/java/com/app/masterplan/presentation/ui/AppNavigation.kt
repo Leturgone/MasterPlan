@@ -24,6 +24,7 @@ import com.app.masterplan.presentation.ui.requests.screens.RequestsListScreen
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestCardViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestsListScreenViewModel
 import com.app.masterplan.presentation.ui.tasks.screens.AssignedTasksScreen
+import com.app.masterplan.presentation.ui.tasks.screens.SelectExecutorScreen
 import com.app.masterplan.presentation.ui.tasks.screens.TaskSearchScreen
 import java.util.UUID
 
@@ -61,6 +62,7 @@ fun AppNavigation(innerPadding: PaddingValues, navController: NavHostController)
         composable("employees") { EmployeeListScreen() }
         composable("assigned_tasks") { AssignedTasksScreen(navController) }
         composable("search_assigned_tasks"){ TaskSearchScreen(navController) }
+        composable("executor_selection"){ SelectExecutorScreen(navController)}
 
 //        composable("tasks"){
 //            TaskScreen(navController, profileViewModel = profileViewModel)
