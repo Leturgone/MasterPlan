@@ -30,7 +30,6 @@ fun FabMenu(menuOptions: List<FabMenuOption>) {
 
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Основной FAB
         FloatingActionButton(
             shape = CircleShape,
             content =  {
@@ -47,7 +46,7 @@ fun FabMenu(menuOptions: List<FabMenuOption>) {
             containerColor = MaterialTheme.colorScheme.primary
         )
 
-        // Меню опций
+        // меню
         if (expanded) {
             Column(
                 modifier = Modifier
