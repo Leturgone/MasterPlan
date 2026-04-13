@@ -33,7 +33,7 @@ fun AccountListItemCard(account: Employee, onClick: () -> Unit){
             .padding(horizontal = 16.dp),
         ){
 
-            val initials = "${account.surname[0]}.${account.name[0]}"
+            val initials = "${account.surname[0]}${account.name[0]}"
             val nameWithInitials = "${account.surname} ${account.name[0]}.${account.patronymic?.get(0)?:""}"
             AvatarNameSec(
                 initials, nameWithInitials,Modifier.padding(top = 10.dp)
