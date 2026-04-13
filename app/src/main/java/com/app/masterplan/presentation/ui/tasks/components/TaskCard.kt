@@ -29,7 +29,8 @@ fun TaskCard(
     onPlanClick: (UUID) -> Unit,
     downloadButtonTitle: String,
     onDownLoadButtonClick: (UUID) -> Unit,
-    onCreateReportClick: (UUID) -> Unit
+    functionButtonTitle: String?,
+    functionOnClick: (UUID) -> Unit,
 ) {
 
     Column(
@@ -43,26 +44,11 @@ fun TaskCard(
             CardButton(downloadButtonTitle) { onDownLoadButtonClick(task.documentId) }
         }
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            ExtendedFloatingActionButton(
-                onClick = { onCreateReportClick(task.id) },
-                icon = { Icon(Icons.Default.MailOutline, "Create report button") },
-                text = {
-                    Text(
-                        text = stringResource(com.app.masterplan.R.string.create_report),
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
-                    )
-                },
-                contentColor = MaterialTheme.colorScheme.onPrimary,
-                containerColor = MaterialTheme.colorScheme.primary,
-            )
+        if(functionButtonTitle!=null) (
+                CardButton(functionButtonTitle) { functionOnClick(task.id) }
+        )else {
+            null
         }
-
 
     }
 }
