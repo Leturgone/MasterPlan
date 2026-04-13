@@ -22,7 +22,7 @@ class DocumentRepositoryImpl  @Inject constructor(
     override suspend fun downloadDocument(documentId: UUID): File {
         val token = tokenStorage.getTokenFromDataStorage()
         val response = filesApi.downloadFile(token.token,documentId)
-        val byteArray = ApiErrorResponseHandler.handleResponse(response,::errorMapper)
+        val byteArray = ApiErrorResponseHandler.handleResponse(response,::errorMapper).bytes()
         val savedPath = localFileDataSource.saveFileToDataStorage(byteArray,"pdf")
         return savedPath
     }

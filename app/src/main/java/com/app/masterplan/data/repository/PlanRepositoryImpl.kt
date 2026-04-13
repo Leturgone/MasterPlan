@@ -84,7 +84,7 @@ class PlanRepositoryImpl  @Inject constructor(
     override suspend fun exportPlan(planId: UUID): File {
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = planApi.exportPlan(token,planId)
-        val bytes = ApiErrorResponseHandler.handleResponse(response,::errorMapper)
+        val bytes = ApiErrorResponseHandler.handleResponse(response,::errorMapper).bytes()
         val savedFile = localFileDataSource.saveFileToDataStorage(bytes,"xlsx")
         return savedFile
     }
