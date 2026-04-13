@@ -49,9 +49,13 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(api: AuthApi, tokenStorage: TokenDataStorage,
-                              searchHistoryDataStorage: SearchHistoryDataStorage): AuthRepository{
-        return AuthRepositoryImpl(api,tokenStorage, searchHistoryDataStorage)
+    fun provideAuthRepository(api: AuthApi,
+                              tokenStorage: TokenDataStorage,
+                              searchHistoryDataStorage: SearchHistoryDataStorage,
+                              localEmployeeIdStorage: EmployeeIdStorage
+                              ): AuthRepository{
+        return AuthRepositoryImpl(api,tokenStorage,
+            searchHistoryDataStorage,localEmployeeIdStorage)
     }
 
     @Provides
