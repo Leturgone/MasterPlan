@@ -177,7 +177,7 @@ fun AssignedTasksScreen(
                 Icon(Icons.Default.Search, null)
             },
             onClick = {
-
+                navController.navigate("search_assigned_tasks")
             },
             modifier = Modifier
                 .align(Alignment.BottomStart)
