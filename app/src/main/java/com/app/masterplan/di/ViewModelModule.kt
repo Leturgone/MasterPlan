@@ -33,6 +33,7 @@ import com.app.masterplan.domain.useacse.employee.UpdateEmployeeUseCase
 import com.app.masterplan.domain.useacse.plans.ChangeTaskStatusUseCase
 import com.app.masterplan.domain.useacse.plans.FilterAssignedTasksByStatusUseCase
 import com.app.masterplan.domain.useacse.plans.GetAssignedTasksUseCase
+import com.app.masterplan.domain.useacse.plans.SearchAssignedTasksByTitleUseCase
 import com.app.masterplan.domain.useacse.plans.SortAssignedTasksByEndDateUseCase
 import com.app.masterplan.domain.useacse.searchHistory.ClearSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.GetSearchHistoryUseCase
@@ -58,6 +59,7 @@ import com.app.masterplan.presentation.ui.requests.viewmodel.NewRequestsScreenVi
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestCardViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestsListScreenViewModel
 import com.app.masterplan.presentation.ui.tasks.viewModel.AssignedTasksScreenViewModel
+import com.app.masterplan.presentation.ui.tasks.viewModel.TaskSearchScreenViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -320,6 +322,35 @@ object ViewModelModule {
             getAssignedTasksUseCase,
             filterAssignedTasksByStatusUseCase,
             sortAssignedTasksByEndDateUseCase,
+            downloadFileUseCase,
+            changeTaskStatusUseCase
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideTaskSearchScreenViewModel(
+        employeeRepository: EmployeeRepository,
+        taskRepository: TaskRepository,
+        searchHistoryRepository: SearchHistoryRepository,
+        documentRepository: DocumentRepository
+    ): TaskSearchScreenViewModel {
+        val getLocalEmpIdUseCase = GetLocalEmpIdUseCase(employeeRepository)
+        val getAssignedTasksUseCase = GetAssignedTasksUseCase(taskRepository)
+        val getSearchHistoryUseCase = GetSearchHistoryUseCase(searchHistoryRepository)
+        val saveSearchHistoryUseCase = SaveSearchHistoryUseCase(searchHistoryRepository)
+        val clearSearchHistoryUseCase = ClearSearchHistoryUseCase(searchHistoryRepository)
+        val searchAssignedTasksByTitleUseCase = SearchAssignedTasksByTitleUseCase(taskRepository)
+        val downloadFileUseCase = DownloadFileUseCase(documentRepository)
+        val changeTaskStatusUseCase = ChangeTaskStatusUseCase(taskRepository)
+
+        return TaskSearchScreenViewModel(
+            getLocalEmpIdUseCase,
+            getAssignedTasksUseCase,
+            getSearchHistoryUseCase,
+            saveSearchHistoryUseCase,
+            clearSearchHistoryUseCase,
+            searchAssignedTasksByTitleUseCase,
             downloadFileUseCase,
             changeTaskStatusUseCase
         )
