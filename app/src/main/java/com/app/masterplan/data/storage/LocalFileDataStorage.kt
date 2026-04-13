@@ -5,7 +5,7 @@ import java.io.File
 
 interface LocalFileDataStorage {
 
-    suspend fun saveFileToDataStorage(byteArray: ByteArray): File
+    suspend fun saveFileToDataStorage(byteArray: ByteArray,ext: String): File
 
     suspend fun getFileByPath(filePath: String): AttachedDocument
 
