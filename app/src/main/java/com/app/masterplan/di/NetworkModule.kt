@@ -90,7 +90,7 @@ object NetworkModule {
     @Singleton
     fun providePlansApi(client: OkHttpClient): PlansTasksApi {
         return Retrofit
-            .Builder().baseUrl(API_URL)
+            .Builder().baseUrl("$API_URL/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

@@ -23,7 +23,7 @@ class DocumentRepositoryImpl  @Inject constructor(
         val token = tokenStorage.getTokenFromDataStorage()
         val response = filesApi.downloadFile(token.token,documentId)
         val byteArray = ApiErrorResponseHandler.handleResponse(response,::errorMapper)
-        val savedPath = localFileDataSource.saveFileToDataStorage(byteArray)
+        val savedPath = localFileDataSource.saveFileToDataStorage(byteArray,"pdf")
         return savedPath
     }
 

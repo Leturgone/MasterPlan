@@ -49,8 +49,8 @@ class EmployeeRepositoryImpl @Inject constructor(
     override suspend fun exportDirEmployees(directorId: UUID): File {
         val token = tokenStorage.getTokenFromDataStorage()
         val response = employeeApi.exportDirEmployees(token.token,directorId)
-        val bytes = ApiErrorResponseHandler.handleResponse(response,::errorMapper)
-        val file = localFileDataSource.saveFileToDataStorage(bytes)
+        val bytes = ApiErrorResponseHandler.handleResponse(response,::errorMapper).bytes()
+        val file = localFileDataSource.saveFileToDataStorage(bytes,"xlsx")
         return file
     }
 

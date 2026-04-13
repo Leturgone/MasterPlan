@@ -14,6 +14,7 @@ import com.app.masterplan.data.repository.EmployeeRepositoryImpl
 import com.app.masterplan.data.repository.PlanRepositoryImpl
 import com.app.masterplan.data.repository.ReportRepositoryImpl
 import com.app.masterplan.data.repository.SearchHistoryRepositoryImpl
+import com.app.masterplan.data.repository.TaskRepositoryImpl
 import com.app.masterplan.data.repository.ThemeRepositoryImpl
 import com.app.masterplan.data.repository.UserRepositoryImpl
 import com.app.masterplan.data.storage.EmployeeIdStorage
@@ -28,6 +29,7 @@ import com.app.masterplan.domain.repository.remote.EmployeeRepository
 import com.app.masterplan.domain.repository.remote.PlanRepository
 import com.app.masterplan.domain.repository.remote.ReportRepository
 import com.app.masterplan.domain.repository.remote.SearchHistoryRepository
+import com.app.masterplan.domain.repository.remote.TaskRepository
 import com.app.masterplan.domain.repository.remote.ThemeRepository
 import com.app.masterplan.domain.repository.remote.UserRepository
 import dagger.Module
@@ -87,6 +89,13 @@ object RepositoryModule {
         return PlanRepositoryImpl(planApi, tokenStorage, localFileDataSource)
     }
 
+    @Provides
+    @Singleton
+    fun provideTaskRepository(
+        planApi: PlansTasksApi, tokenStorage: TokenDataStorage
+    ): TaskRepository {
+        return TaskRepositoryImpl(planApi, tokenStorage)
+    }
 
     @Provides
     @Singleton

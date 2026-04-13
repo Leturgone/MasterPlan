@@ -85,5 +85,9 @@
     <string name="workload">Нагрузка</string>
     <string name="assigned_tasks_count">Количество порученных задач</string>
     <string name="requests_for_admin">Заявки администратору</string>
+    <string name="all">Все</string>
+    <string name="by_rating">По рейтингу</string>
+    <string name="by_workload">По загруженности</string>
+    <string name="without_tasks">Без задач</string>
+    <string name="export">Экспорт</string>
 </resources>
-
