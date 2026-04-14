@@ -53,7 +53,7 @@
     <string name="upload_file">Загрузить файл</string>
     <string name="download_file">Скачать файл</string>
     <string name="upload_order">Загрузить отчет</string>
-    <string name="download_order">Скачать отчет</string>
+    <string name="download_report">Скачать отчет</string>
     <string name="set_emp">Назначить сотрудника</string>
     <string name="create_task">Создать задачу</string>
     <string name="create_resp">Создать ответ</string>
@@ -106,4 +106,23 @@
     <string name="create_plan">Создать план</string>
     <string name="edit_plan">Редактировать план</string>
     <string name="edit_task">Редактировать задачу</string>
+    <string name="reports_for_tasks">Отчеты по задачам</string>
+    <string name="reports_for_plans">Отчеты по планам</string>
+    <string name="report_for_tasks">Отчеты по задаче</string>
+    <string name="report_for_plans">Отчеты по плану</string>
+    <string name="my">Мои</string>
+    <string name="to_check">На проверку</string>
+    <string name="checked">Проверено</string>
+    <string name="checking">На проверке</string>
+    <string name="not_check">Не проверено</string>
+    <string name="to_update">На доработке</string>
+    <string name="created_at">Создан</string>
+    <string name="updated_at">Обновлен</string>
+    <string name="status">Статус</string>
+    <string name="new_report_for_tasks">Новый отчет по задаче</string>
+    <string name="new_report_for_plans">Новый отчет по плану</string>
+    <string name="report_title">Название отчета</string>
+    <string name="report_desc">Описание отчета</string>
+    <string name="update_report_for_tasks">Обновить отчет по задаче</string>
+    <string name="update_report_for_plans">Обновить отчет по плану</string>
 </resources>

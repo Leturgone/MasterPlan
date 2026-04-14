@@ -17,9 +17,12 @@ import com.app.masterplan.domain.model.reports.Report
 import com.app.masterplan.domain.model.reports.ReportStatus
 import com.app.masterplan.domain.model.reports.ReportType
 import com.app.masterplan.domain.repository.remote.ReportRepository
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonPrimitive
+import com.google.gson.JsonSerializer
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.time.LocalDate
 import java.util.UUID
 import javax.inject.Inject
 
@@ -27,6 +30,14 @@ class ReportRepositoryImpl @Inject constructor(
     private val reportsApi: ReportsApi,
     private val tokenStorage: TokenDataStorage,
 ): ReportRepository {
+
+
+
+    private val gson = GsonBuilder()
+        .registerTypeAdapter(LocalDate::class.java, JsonSerializer<LocalDate> { src, _, _ ->
+            JsonPrimitive(src.toString())
+        })
+        .create()
 
     override suspend fun updateReportStatus(
         reportId: UUID,
@@ -60,7 +71,7 @@ class ReportRepositoryImpl @Inject constructor(
             employeeId = newReportData.employeeId,
             referenceId = newReportData.referenceId
         )
-        val requestJson = Gson().toJson(request)
+        val requestJson = gson.toJson(request)
         val requestBody = requestJson.toRequestBody("application/json".toMediaTypeOrNull())
         val filePartBody = MultipartCreator.toMultipartBodyPart(document)
 
@@ -168,7 +179,7 @@ class ReportRepositoryImpl @Inject constructor(
             description = updatedData.description,
             documentId = updatedData.documentId
         )
-        val requestJson = Gson().toJson(request)
+        val requestJson = gson.toJson(request)
         val requestBody = requestJson.toRequestBody("application/json".toMediaTypeOrNull())
         val filePartBody = MultipartCreator.toMultipartBodyPart(document)
 

@@ -7,19 +7,23 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material.icons.filled.Upload
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SegmentedButton
@@ -46,9 +50,11 @@ import com.app.masterplan.presentation.ui.common.CustomToastMessage
 import com.app.masterplan.presentation.ui.common.FabMenu
 import com.app.masterplan.presentation.ui.common.FabMenuOption
 import com.app.masterplan.presentation.ui.common.MasterPlanState
+import com.app.masterplan.presentation.ui.tasks.components.AboutPlanFromTasksCard
 import com.app.masterplan.presentation.ui.tasks.components.TaskFromPlanCard
 import com.app.masterplan.presentation.ui.tasks.components.TaskList
 import com.app.masterplan.presentation.ui.tasks.viewModel.TasksFromPlanScreenViewModel
+import com.app.masterplan.presentation.ui.theme.RedSoft
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -104,6 +110,11 @@ fun TasksFromPlanScreen(
 
     val executorsList by viewModel.executorsList.collectAsState()
 
+    val isModalPlan = viewModel.isModalPlanVisible.collectAsState()
+
+    val loadedPlan = viewModel.loadedPlan.collectAsState()
+
+    val downloadedPlanFile by viewModel.downloadPlanFile.collectAsState()
 
     Box() {
 
@@ -135,21 +146,37 @@ fun TasksFromPlanScreen(
                     }
                     else -> null
                 }
-                ExtendedFloatingActionButton(
-                    shape = CircleShape,
-                    onClick = {
-                        viewModel.exportPlan()
-                    },
-                    icon = { Icon(Icons.Default.Upload, "Export plan button") },
-                    text = {
-                        Text(
-                            text = stringResource(id = R.string.export),
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+
+                Row() {
+                    IconButton(onClick = {
+                        viewModel.openPlanTab(planId)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.QuestionMark,
+                            contentDescription = "deleteReportButton",
+                            modifier = Modifier,
+                            tint = MaterialTheme.colorScheme.primary
                         )
-                    },
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
-                    containerColor = MaterialTheme.colorScheme.primary
-                )
+                    }
+                    ExtendedFloatingActionButton(
+                        shape = CircleShape,
+                        onClick = {
+                            viewModel.exportPlan()
+                        },
+                        icon = { Icon(Icons.Default.Upload,
+                            "Export plan button", modifier = Modifier.size(14.dp)) },
+                        text = {
+                            Text(
+                                text = stringResource(id = R.string.export),
+                                fontSize = 12.sp,
+                                modifier = Modifier.padding(vertical = 12.dp)
+                            )
+                        },
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
+                }
+
             }
 
 
@@ -270,6 +297,31 @@ fun TasksFromPlanScreen(
                             viewModel.closeRequestTab()
                             viewModel.loadTasksFromPlan()
                         }
+                    )
+                }
+
+            }
+        }
+
+        if (isModalPlan.value == true){
+            ModalBottomSheet(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                onDismissRequest = {
+                    viewModel.closeRequestTab()
+                },
+            ){
+                loadedPlan.value?.let { plan ->
+                    AboutPlanFromTasksCard(
+                        plan = plan,
+                        downloadButtonTitle = when (downloadedPlanFile) {
+                            is MasterPlanState.Failure -> stringResource(R.string.error_while_loading)
+                            MasterPlanState.Loading -> stringResource(R.string.loading)
+                            is MasterPlanState.Success -> {
+                                (downloadedPlanFile as MasterPlanState.Success).result.absolutePath
+                            }
+                            MasterPlanState.Waiting -> stringResource(R.string.download_file)
+                        },
+                        onDownloadFileClick = { viewModel.downloadPlan() }
                     )
                 }
 

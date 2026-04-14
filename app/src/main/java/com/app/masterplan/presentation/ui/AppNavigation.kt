@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.app.masterplan.domain.model.reports.ReportType
 import com.app.masterplan.presentation.ui.accounts.screens.AccountsListScreen
 import com.app.masterplan.presentation.ui.accounts.screens.CreateAccountScreen
 import com.app.masterplan.presentation.ui.accounts.screens.EditAccountScreen
@@ -21,6 +22,9 @@ import com.app.masterplan.presentation.ui.plans.screen.PlansListScreen
 import com.app.masterplan.presentation.ui.plans.screen.UpdatePlanScreen
 import com.app.masterplan.presentation.ui.plans.viewmodel.UpdatePlanViewModel
 import com.app.masterplan.presentation.ui.profile.screens.ProfileScreen
+import com.app.masterplan.presentation.ui.reports.screens.NewReportScreen
+import com.app.masterplan.presentation.ui.reports.screens.ReportListScreen
+import com.app.masterplan.presentation.ui.reports.screens.UpdateReportScreen
 import com.app.masterplan.presentation.ui.requests.screens.NewAnswerScreen
 import com.app.masterplan.presentation.ui.requests.screens.NewRequestScreen
 import com.app.masterplan.presentation.ui.requests.screens.RequestsListScreen
@@ -85,12 +89,12 @@ fun AppNavigation(innerPadding: PaddingValues, navController: NavHostController)
         }
         composable("create_report_plan/{planId}"){
             it.arguments?.getString("planId")?.let { planId ->
-
+                NewReportScreen(planId, ReportType.PLAN, navController)
             }
         }
         composable("create_report_task/{taskId}"){
-            it.arguments?.getString("taskId")?.let { planId ->
-
+            it.arguments?.getString("taskId")?.let { taskId ->
+                NewReportScreen(taskId, ReportType.TASK, navController)
             }
         }
         composable("selected_executor") { SelectExecutorScreen(navController) }
@@ -106,20 +110,18 @@ fun AppNavigation(innerPadding: PaddingValues, navController: NavHostController)
                 UpdateTaskScreen(taskId, navController, viewModel )
             }
         }
+        composable("reports"){ ReportListScreen(navController) }
 
-//        composable("tasks"){
-//            TaskScreen(navController, profileViewModel = profileViewModel)
-//        }
-//        composable("new_task") { NewTaskScreen(navController) }
-//        composable("new_task/{employeeName}/{employeeId}/{directorId}") {
-//            val empName = it.arguments?.getString("employeeName")
-//            val empId = it.arguments?.getString("employeeId")?.toInt()
-//            val dirId = it.arguments?.getString("directorId")?.toInt()
-//            NewTaskScreen(navController,employeeName = empName,employeeId =empId, directorId = dirId) }
-//        composable("set_employee") { SetEmployeeScreen(navController)  }
-//        composable("opt") { OptScreen(navController, themeViewModel = themeViewModel, profileViewModel = profileViewModel) }
-//        composable("emp_list"){ EmployeesScreen() }
-//        composable("resp"){ ReportScreen(profileViewModel) }
-//        composable("profile"){ ProfileScreen(navController,profileViewModel) }
+        composable("update_report_task/{reportId}"){
+            it.arguments?.getString("reportId")?.let { reportId ->
+                UpdateReportScreen(reportId, ReportType.TASK, navController)
+            }
+        }
+
+        composable("update_report_plan/{reportId}"){
+            it.arguments?.getString("reportId")?.let { reportId ->
+                UpdateReportScreen(reportId, ReportType.PLAN, navController)
+            }
+        }
     }
 }
