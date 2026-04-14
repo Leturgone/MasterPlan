@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.app.masterplan.R
+import com.app.masterplan.domain.model.reports.ReportType
 import com.app.masterplan.presentation.ui.common.CustomToastMessage
 import com.app.masterplan.presentation.ui.common.FabMenu
 import com.app.masterplan.presentation.ui.common.FabMenuOption
@@ -242,7 +243,10 @@ fun ReportListScreen(
                                 },
                                 onDownloadClick = { viewModel.downloadReport() },
                                 onUpdateClick = {
-                                    navController.navigate("update_report/${report.report.id}")
+                                    when(report.report.type){
+                                        ReportType.TASK -> navController.navigate("update_report_task/${report.report.id}")
+                                        ReportType.PLAN -> navController.navigate("update_report_plan/${report.report.id}")
+                                    }
                                     viewModel.closeRequestTab()
                                     viewModel.loadAllReports()
                                 }
