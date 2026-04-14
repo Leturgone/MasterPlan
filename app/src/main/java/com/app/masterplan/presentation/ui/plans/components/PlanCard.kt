@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.app.masterplan.R
-import com.app.masterplan.domain.model.employee.Employee
 import com.app.masterplan.domain.model.plans.Plan
 import com.app.masterplan.presentation.ui.common.CardButton
 import com.app.masterplan.presentation.ui.theme.RedSoft
@@ -33,7 +32,6 @@ fun PlanCard(
     downloadButtonTitle: String,
     onDownloadFileClick: (UUID) -> Unit,
     onTasksClick: (UUID) -> Unit,
-    executors: List<Employee>,
     crud: Boolean,
     onDeleteClick: (UUID) -> Unit,
     onEditClick: (UUID) -> Unit
