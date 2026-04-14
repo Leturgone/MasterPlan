@@ -61,6 +61,7 @@ fun TaskFromPlanCard(
             fontWeight = FontWeight.Bold,
             color = Color.Black,
             textAlign = TextAlign.Start,
+            modifier = Modifier.padding(start = 16.dp)
         )
 
         ExecutorsList(executors)
