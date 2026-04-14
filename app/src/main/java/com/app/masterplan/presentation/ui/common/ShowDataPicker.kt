@@ -24,7 +24,6 @@ fun DeadLintPicker(
 ) {
     if (!isVisible) return
 
-    // Инициализируем состояние DatePicker
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = initialDate?.toEpochDay()?.times(86400000)
     )
@@ -41,6 +40,7 @@ fun DeadLintPicker(
                             .toLocalDate()
                         onDateSelected(localDate)
                     }
+                    onDismiss()
                 }
             ){
                 Text(stringResource(id = R.string.confirm))
