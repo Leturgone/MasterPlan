@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,13 +16,23 @@ import com.app.masterplan.presentation.ui.accounts.viewmodel.EditAccountScreenVi
 import com.app.masterplan.presentation.ui.auth.screens.LoginScreen
 import com.app.masterplan.presentation.ui.employees.screens.EmployeeListScreen
 import com.app.masterplan.presentation.ui.options.screens.OptionsScreen
+import com.app.masterplan.presentation.ui.plans.screen.CreateNewPlanScreen
+import com.app.masterplan.presentation.ui.plans.screen.PlansListScreen
+import com.app.masterplan.presentation.ui.plans.screen.UpdatePlanScreen
+import com.app.masterplan.presentation.ui.plans.viewmodel.UpdatePlanViewModel
 import com.app.masterplan.presentation.ui.profile.screens.ProfileScreen
 import com.app.masterplan.presentation.ui.requests.screens.NewAnswerScreen
 import com.app.masterplan.presentation.ui.requests.screens.NewRequestScreen
 import com.app.masterplan.presentation.ui.requests.screens.RequestsListScreen
-import com.app.masterplan.presentation.ui.requests.viewmodel.RequestCardViewModel
-import com.app.masterplan.presentation.ui.requests.viewmodel.RequestsListScreenViewModel
-import java.util.UUID
+import com.app.masterplan.presentation.ui.tasks.screens.AssignedTasksScreen
+import com.app.masterplan.presentation.ui.tasks.screens.CreateNewTaskScreen
+import com.app.masterplan.presentation.ui.tasks.screens.SelectExecutorScreen
+import com.app.masterplan.presentation.ui.tasks.screens.TaskSearchScreen
+import com.app.masterplan.presentation.ui.tasks.screens.TasksFromPlanScreen
+import com.app.masterplan.presentation.ui.tasks.screens.UpdateTaskScreen
+import com.app.masterplan.presentation.ui.tasks.viewModel.CreateNewTaskViewModel
+import com.app.masterplan.presentation.ui.tasks.viewModel.TasksFromPlanScreenViewModel
+import com.app.masterplan.presentation.ui.tasks.viewModel.UpdateTaskViewModel
 
 
 //themeViewModel: AppThemeViewModel,
@@ -57,6 +66,46 @@ fun AppNavigation(innerPadding: PaddingValues, navController: NavHostController)
         composable("options"){ OptionsScreen(navController) }
         composable("profile") { ProfileScreen(navController) }
         composable("employees") { EmployeeListScreen() }
+        composable("assigned_tasks") { AssignedTasksScreen(navController) }
+        composable("search_assigned_tasks"){ TaskSearchScreen(navController) }
+        composable("executor_selection"){ SelectExecutorScreen(navController)}
+        composable("plans") { PlansListScreen(navController) }
+        composable("edit_plan/{planId}"){
+            it.arguments?.getString("planId")?.let { planId ->
+                val viewModel: UpdatePlanViewModel = hiltViewModel()
+                UpdatePlanScreen(planId,navController,viewModel)
+            }
+        }
+        composable("create_plan") { CreateNewPlanScreen(navController) }
+        composable("tasks_from_plan/{planId}"){
+            it.arguments?.getString("planId")?.let { planId ->
+                val viewModel: TasksFromPlanScreenViewModel = hiltViewModel()
+                TasksFromPlanScreen(planId, navController, viewModel)
+            }
+        }
+        composable("create_report_plan/{planId}"){
+            it.arguments?.getString("planId")?.let { planId ->
+
+            }
+        }
+        composable("create_report_task/{taskId}"){
+            it.arguments?.getString("taskId")?.let { planId ->
+
+            }
+        }
+        composable("selected_executor") { SelectExecutorScreen(navController) }
+        composable("add_task_to_plan/{planId}"){
+            it.arguments?.getString("planId")?.let { planId ->
+                val viewModel: CreateNewTaskViewModel = hiltViewModel()
+                CreateNewTaskScreen(planId,navController,viewModel)
+            }
+        }
+        composable("edit_task/{taskId}"){
+            it.arguments?.getString("taskId")?.let { taskId ->
+                val viewModel: UpdateTaskViewModel = hiltViewModel()
+                UpdateTaskScreen(taskId, navController, viewModel )
+            }
+        }
 
 //        composable("tasks"){
 //            TaskScreen(navController, profileViewModel = profileViewModel)

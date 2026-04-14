@@ -8,6 +8,7 @@ import com.app.masterplan.data.api.plansApi.dto.responce.TaskIdResponse
 import com.app.masterplan.data.api.plansApi.dto.responce.TaskInformationResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -93,7 +94,7 @@ interface PlansTasksApi {
     suspend fun exportPlan(
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID
-    ): Response<ByteArray>
+    ): Response<ResponseBody>
 
 
 
@@ -102,7 +103,7 @@ interface PlansTasksApi {
     suspend fun createPLan(
         @Header("Authorization") token: String,
         @Part("request") request: RequestBody,
-        @Part(value = "file") file: MultipartBody.Part?
+        @Part file: MultipartBody.Part?
     ): Response<PlanIdResponse>
 
     @Multipart
@@ -110,7 +111,7 @@ interface PlansTasksApi {
     suspend fun addTaskToPlan(
         @Header("Authorization") token: String,
         @Part("request") request: RequestBody,
-        @Part(value = "file") file: MultipartBody.Part?
+        @Part file: MultipartBody.Part?
     ): Response<TaskIdResponse>
 
 
@@ -142,7 +143,7 @@ interface PlansTasksApi {
         @Header("Authorization") token: String,
         @Path(value = "taskId") taskId: UUID,
         @Part("request") request: RequestBody,
-        @Part(value = "file") file: MultipartBody.Part?
+        @Part file: MultipartBody.Part?
     ): Response<TaskIdResponse>
 
 
@@ -152,7 +153,7 @@ interface PlansTasksApi {
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID,
         @Part("request") request: RequestBody,
-        @Part(value = "file") file: MultipartBody.Part?
+        @Part file: MultipartBody.Part?
     ): Response<PlanIdResponse>
 
 

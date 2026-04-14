@@ -32,7 +32,7 @@ fun CardButton(
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .height(73.dp)
+            .height(73.dp).padding(bottom = 10.dp)
             .clickable(onClick = onDownloadClicked),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {

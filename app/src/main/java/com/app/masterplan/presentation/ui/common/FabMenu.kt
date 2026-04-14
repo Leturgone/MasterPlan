@@ -1,6 +1,5 @@
 package com.app.masterplan.presentation.ui.common
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,7 +29,6 @@ fun FabMenu(menuOptions: List<FabMenuOption>) {
 
 
     Box(modifier = Modifier.fillMaxSize()) {
-        // Основной FAB
         FloatingActionButton(
             shape = CircleShape,
             content =  {
@@ -42,17 +40,17 @@ fun FabMenu(menuOptions: List<FabMenuOption>) {
             onClick = { expanded = !expanded },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(bottom = 50.dp, end = 40.dp),
+                .padding(bottom = 50.dp, end = 20.dp),
             contentColor = MaterialTheme.colorScheme.onPrimary,
             containerColor = MaterialTheme.colorScheme.primary
         )
 
-        // Меню опций
+        // меню
         if (expanded) {
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(bottom = 120.dp, end = 40.dp),
+                    .padding(bottom = 120.dp, end = 30.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 horizontalAlignment = Alignment.End,
 

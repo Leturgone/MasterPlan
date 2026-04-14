@@ -17,9 +17,13 @@ import com.app.masterplan.domain.model.plans.Plan
 import com.app.masterplan.domain.model.plans.PlanStatus
 import com.app.masterplan.domain.repository.remote.PlanRepository
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonPrimitive
+import com.google.gson.JsonSerializer
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.time.LocalDate
 import java.util.UUID
 import javax.inject.Inject
 
@@ -28,6 +32,12 @@ class PlanRepositoryImpl  @Inject constructor(
     private val tokenStorage: TokenDataStorage,
     private val localFileDataSource: LocalFileDataStorage
 ): PlanRepository {
+
+    private val gson = GsonBuilder()
+        .registerTypeAdapter(LocalDate::class.java, JsonSerializer<LocalDate> { src, _, _ ->
+            JsonPrimitive(src.toString())
+        })
+        .create()
 
     override suspend fun updatePlanStatus(
         planId: UUID,
@@ -55,7 +65,7 @@ class PlanRepositoryImpl  @Inject constructor(
             endDate = newPlan.endDate,
             directorId = newPlan.directorId
         )
-        val requestJson = Gson().toJson(request)
+        val requestJson = gson.toJson(request)
 
         val requestBody = requestJson.toRequestBody("application/json".toMediaTypeOrNull())
 
@@ -84,7 +94,7 @@ class PlanRepositoryImpl  @Inject constructor(
     override suspend fun exportPlan(planId: UUID): File {
         val token = tokenStorage.getTokenFromDataStorage().token
         val response = planApi.exportPlan(token,planId)
-        val bytes = ApiErrorResponseHandler.handleResponse(response,::errorMapper)
+        val bytes = ApiErrorResponseHandler.handleResponse(response,::errorMapper).bytes()
         val savedFile = localFileDataSource.saveFileToDataStorage(bytes,"xlsx")
         return savedFile
     }
@@ -146,7 +156,7 @@ class PlanRepositoryImpl  @Inject constructor(
             documentId = updatedPlan.documentId,
             status = updatedPlan.status.name
         )
-        val requestJson= Gson().toJson(request)
+        val requestJson= gson.toJson(request)
         val requestBody = requestJson.toRequestBody("application/json".toMediaTypeOrNull())
 
         val filePartBody = attachedDocument?.let { MultipartCreator.toMultipartBodyPart(it) }

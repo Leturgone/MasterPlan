@@ -16,8 +16,12 @@ import com.app.masterplan.domain.model.plans.Task
 import com.app.masterplan.domain.model.plans.TaskStatus
 import com.app.masterplan.domain.repository.remote.TaskRepository
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonPrimitive
+import com.google.gson.JsonSerializer
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.time.LocalDate
 import java.util.UUID
 import javax.inject.Inject
 
@@ -25,6 +29,14 @@ class TaskRepositoryImpl @Inject constructor(
     private val tasksApi: PlansTasksApi,
     private val tokenStorage: TokenDataStorage
 ): TaskRepository {
+
+
+    private val gson = GsonBuilder()
+        .registerTypeAdapter(LocalDate::class.java, JsonSerializer<LocalDate> { src, _, _ ->
+            JsonPrimitive(src.toString())
+        })
+        .create()
+
 
     override suspend fun addTaskToPlan(
         planId: UUID,
@@ -39,7 +51,7 @@ class TaskRepositoryImpl @Inject constructor(
             endDate = newTask.endDate,
             executorsIds = newTask.executorsId
         )
-        val requestJson = Gson().toJson(request)
+        val requestJson = gson.toJson(request)
 
         val requestBody = requestJson.toRequestBody("application/json".toMediaTypeOrNull())
 
@@ -178,7 +190,7 @@ class TaskRepositoryImpl @Inject constructor(
             executorsIds = updatedTask.executorsIds
         )
 
-        val requestJson= Gson().toJson(request)
+        val requestJson= gson.toJson(request)
         val requestBody = requestJson.toRequestBody("application/json".toMediaTypeOrNull())
 
         val filePartBody = attachedDocument?.let { MultipartCreator.toMultipartBodyPart(it) }

@@ -58,7 +58,7 @@ fun BottomBar(
         ),
 
         BottomNavigationItem(
-            route = "tasks",
+            route = "assigned_tasks",
             icon = Icons.Rounded.ModeEditOutline,
             title = stringResource(id = R.string.tasks)
         ),
@@ -82,7 +82,7 @@ fun BottomBar(
 
 
         BottomNavigationItem(
-            route = "tasks",
+            route = "assigned_tasks",
             icon = Icons.Rounded.ModeEditOutline,
             title = stringResource(id = R.string.tasks)
         ),
