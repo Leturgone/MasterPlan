@@ -138,7 +138,7 @@ fun TasksFromPlanScreen(
                 ExtendedFloatingActionButton(
                     shape = CircleShape,
                     onClick = {
-                        viewModel.exportFile
+                        viewModel.exportPlan()
                     },
                     icon = { Icon(Icons.Default.Upload, "Export plan button") },
                     text = {
