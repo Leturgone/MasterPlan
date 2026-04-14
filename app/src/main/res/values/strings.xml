@@ -98,5 +98,12 @@
     <string name="assign_executor">Назначить исполнителя</string>
     <string name="task_title">Название задачи</string>
     <string name="task_desc">Описание задачи</string>
+    <string name="tasks_from_plan">Задачи из плана</string>
     <string name="assign_executors">Назначить исполнителей</string>
+    <string name="plans_long">Планы мероприятий</string>
+    <string name="plan_title">Название плана</string>
+    <string name="plan_desc">Описание плана</string>
+    <string name="create_plan">Создать план</string>
+    <string name="edit_plan">Редактировать план</string>
+    <string name="edit_task">Редактировать задачу</string>
 </resources>
