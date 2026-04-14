@@ -21,6 +21,7 @@ import com.app.masterplan.presentation.ui.plans.screen.PlansListScreen
 import com.app.masterplan.presentation.ui.plans.screen.UpdatePlanScreen
 import com.app.masterplan.presentation.ui.plans.viewmodel.UpdatePlanViewModel
 import com.app.masterplan.presentation.ui.profile.screens.ProfileScreen
+import com.app.masterplan.presentation.ui.reports.screens.ReportListScreen
 import com.app.masterplan.presentation.ui.requests.screens.NewAnswerScreen
 import com.app.masterplan.presentation.ui.requests.screens.NewRequestScreen
 import com.app.masterplan.presentation.ui.requests.screens.RequestsListScreen
@@ -106,6 +107,7 @@ fun AppNavigation(innerPadding: PaddingValues, navController: NavHostController)
                 UpdateTaskScreen(taskId, navController, viewModel )
             }
         }
+        composable("reports"){ ReportListScreen(navController) }
 
 //        composable("tasks"){
 //            TaskScreen(navController, profileViewModel = profileViewModel)
