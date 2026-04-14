@@ -59,7 +59,7 @@ class UpdatePlanViewModel  @Inject constructor(
         _attachedDocument.value = MasterPlanState.Success(result)
     }
 
-    fun updateTask() = viewModelScope.launch {
+    fun updatePlan() = viewModelScope.launch {
         _savingFlow.value = MasterPlanState.Loading
 
         val updatedPlan = _updatedPlan.value ?: return@launch
