@@ -16,7 +16,7 @@ fun ExecutorsList(
     list: List<Employee>
 ){
     LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(start = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(list.size){
