@@ -7,4 +7,6 @@ interface TokenDataStorage {
     suspend fun getTokenFromDataStorage(): JwtToken
 
     suspend fun saveTokenToDataStorage(token: JwtToken)
+
+    suspend fun removeTokenFromDataStorage()
 }

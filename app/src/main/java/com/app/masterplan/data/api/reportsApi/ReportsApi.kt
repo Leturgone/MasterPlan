@@ -19,7 +19,7 @@ import java.util.UUID
 
 interface ReportsApi {
 
-    @GET("/emp/report/{reportId}/type/{reportType}")
+    @GET("emp/report/{reportId}/type/{reportType}")
     suspend fun getReportInformation(
         @Header("Authorization") token: String,
         @Path(value = "reportType") reportType: String,
@@ -27,7 +27,7 @@ interface ReportsApi {
     ): Response<ReportResponse>
 
 
-    @GET("/emp/{employeeId}/report/type/{reportType}/all")
+    @GET("emp/{employeeId}/report/type/{reportType}/all")
     suspend fun getCreatedReports(
         @Header("Authorization") token: String,
         @Path(value = "employeeId") employeeId: UUID,
@@ -35,7 +35,7 @@ interface ReportsApi {
     ): Response<List<ReportResponse>>
 
 
-    @GET("/dir/{directorId}/subordinatesReports/type/TASK")
+    @GET("dir/{directorId}/subordinatesReports/type/TASK")
     suspend fun getSubordinatesTaskReports(
         @Header("Authorization") token: String,
         @Path(value = "directorId") directorId: UUID
@@ -43,26 +43,26 @@ interface ReportsApi {
 
 
     @Multipart
-    @POST("/emp/report/type/{reportType}")
+    @POST("emp/report/type/{reportType}")
     suspend fun createReport(
         @Header("Authorization") token: String,
         @Path(value = "reportType") reportType: String,
         @Part("request") request: RequestBody,
-        @Part(value = "file") file: MultipartBody.Part
+        @Part file: MultipartBody.Part
     ): Response<ReportIdResponse>
 
     @Multipart
-    @PATCH("/emp/report/{reportId}/type/{reportType}")
+    @PATCH("emp/report/{reportId}/type/{reportType}")
     suspend fun  updateReport(
         @Header("Authorization") token: String,
         @Path(value = "reportType") reportType: String,
         @Path(value = "reportId") reportId: UUID,
-        @Part(value = "file") file: MultipartBody.Part,
+        @Part file: MultipartBody.Part,
         @Part("request") request: RequestBody
     ): Response<ReportIdResponse>
 
 
-    @GET("/dir/{directorId}/subordinatesReports/type/TASK/status/{reportStatus}")
+    @GET("dir/{directorId}/subordinatesReports/type/TASK/status/{reportStatus}")
     suspend fun getFilterByStatusSubordinatesTaskReports(
         @Header("Authorization") token: String,
         @Path(value = "directorId") directorId: UUID,
@@ -70,7 +70,7 @@ interface ReportsApi {
     ): Response<List<ReportResponse>>
 
 
-    @GET("/emp/{employeeId}/report/type/{reportType}/status/{reportStatus}")
+    @GET("emp/{employeeId}/report/type/{reportType}/status/{reportStatus}")
     suspend fun getFilterByStatusCreatedReports(
         @Header("Authorization") token: String,
         @Path(value = "employeeId") employeeId: UUID,
@@ -79,7 +79,7 @@ interface ReportsApi {
     ): Response<List<ReportResponse>>
 
 
-    @DELETE(("/emp/report/{reportId}/type/{reportType}"))
+    @DELETE(("emp/report/{reportId}/type/{reportType}"))
     suspend fun deleteReport(
         @Header("Authorization") token: String,
         @Path(value = "reportType") reportType: String,
@@ -87,7 +87,7 @@ interface ReportsApi {
     ): Response<ReportIdResponse>
 
 
-    @PATCH(("/dir/report/{reportId}/type/{reportType}/status"))
+    @PATCH(("dir/report/{reportId}/type/{reportType}/status"))
     suspend fun changeReportStatus(
         @Header("Authorization") token: String,
         @Path(value = "reportType") reportType: String,

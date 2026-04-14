@@ -19,6 +19,8 @@ interface EmployeeRepository {
 
     suspend fun getEmployeeById(employeeId: UUID): Employee
 
+    suspend fun getLocalEmployeeId(): UUID
+
     suspend fun getProfileInformation(currentEmployeeId: UUID): EmployeeWithMetrics
 
     suspend fun searchDirEmployeeByName(query: String, directorId: UUID): List<Employee>

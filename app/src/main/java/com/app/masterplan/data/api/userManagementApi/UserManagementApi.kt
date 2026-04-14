@@ -16,35 +16,35 @@ import java.util.UUID
 
 interface UserManagementApi {
 
-    @POST("/user")
-    fun createUser(
+    @POST("user")
+    suspend fun createUser(
         @Header("Authorization") token: String,
         @Body request: CreateProfileRequest
     ): Response<UserUidResponse>
 
 
-    @DELETE("/user/{id}")
-    fun deleteUser(
+    @DELETE("user/{id}")
+    suspend fun deleteUser(
         @Header("Authorization") token: String,
         @Path(value = "id")id: UUID
     ): Response<UserUidResponse>
 
 
-    @GET("/user/login/{login}")
-    fun getUserByLogin(
+    @GET("user/login/{login}")
+    suspend fun getUserByLogin(
         @Header("Authorization") token: String,
         @Path(value = "login") login: String
     ): Response<UserDataResponse>
 
 
-    @GET("/user/id/{id}")
-    fun getUserById(
+    @GET("user/id/{id}")
+    suspend fun getUserById(
         @Header("Authorization") token: String,
         @Path(value = "id") id: UUID
     ): Response<UserDataResponse>
 
-    @PATCH("/user/{id}/password")
-    fun resetPassword(
+    @PATCH("user/{id}/password")
+    suspend fun resetPassword(
         @Header("Authorization") token: String,
         @Path(value = "id") id: UUID,
         @Body request: ResetPasswordRequest

@@ -6,5 +6,5 @@ data class NewEmployeeData(
     val name: String,
     val surname: String,
     val patronymic: String? = null,
-    val directorId: UUID
+    val directorId: UUID? =  null
 )
