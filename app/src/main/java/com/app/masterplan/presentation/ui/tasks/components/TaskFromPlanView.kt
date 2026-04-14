@@ -32,8 +32,8 @@ fun TaskFromPlanView(task: Task){
 
     val outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yy")
     Column(
-        modifier = Modifier.height(400.dp).padding(16.dp),
-        verticalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.height(300.dp).padding(start = 16.dp),
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.Start
     ) {
         Text(
