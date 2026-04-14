@@ -48,7 +48,7 @@ interface ReportsApi {
         @Header("Authorization") token: String,
         @Path(value = "reportType") reportType: String,
         @Part("request") request: RequestBody,
-        @Part(value = "file") file: MultipartBody.Part
+        @Part file: MultipartBody.Part
     ): Response<ReportIdResponse>
 
     @Multipart
@@ -57,7 +57,7 @@ interface ReportsApi {
         @Header("Authorization") token: String,
         @Path(value = "reportType") reportType: String,
         @Path(value = "reportId") reportId: UUID,
-        @Part(value = "file") file: MultipartBody.Part,
+        @Part file: MultipartBody.Part,
         @Part("request") request: RequestBody
     ): Response<ReportIdResponse>
 
