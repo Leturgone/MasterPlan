@@ -24,25 +24,25 @@ import androidx.navigation.NavHostController
 import com.app.masterplan.R
 import com.app.masterplan.presentation.ui.accounts.components.AccountList
 import com.app.masterplan.presentation.ui.accounts.components.DirectorData
-import com.app.masterplan.presentation.ui.accounts.viewmodel.AccountListViewModel
 import com.app.masterplan.presentation.ui.common.CustomToastMessage
 import com.app.masterplan.presentation.ui.common.MasterPlanState
 import com.app.masterplan.presentation.ui.common.SearchSec
+import com.app.masterplan.presentation.ui.employees.viewmodel.EmployeeListScreenViewModel
 
 @Composable
 fun SelectExecutorScreen(
     navController: NavHostController,
-    viewModel: AccountListViewModel = hiltViewModel(),
+    viewModel: EmployeeListScreenViewModel  = hiltViewModel(),
 ){
     var showToast by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
 
-    val accountListFlow = viewModel.accountListFlow.collectAsState()
+    val accountListFlow = viewModel.employeesFlow.collectAsState()
     val searchHistoryFlow = viewModel.searchHistoryFlow.collectAsState()
 
 
     LaunchedEffect(Unit) {
-        viewModel.loadAccounts()
+        viewModel.loadDirEmployees()
     }
 
     Box() {
@@ -79,7 +79,7 @@ fun SelectExecutorScreen(
                             viewModel.search(it)
                         },
                         onSearchEmpty = {
-                            viewModel.loadAccounts()
+                            viewModel.loadDirEmployees()
                         },
                         searchHistoryState = searchHistoryFlow,
                         onGetSearchHistory = {
@@ -104,7 +104,7 @@ fun SelectExecutorScreen(
                                 userId = it.userId
                             )
                             navController.previousBackStackEntry?.savedStateHandle?.set(
-                                "selected_director", dirData
+                                "selected_executor", dirData
                             )
                             navController.popBackStack()
                         }
