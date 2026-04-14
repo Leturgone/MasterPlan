@@ -55,11 +55,14 @@ import com.app.masterplan.domain.useacse.plans.SortPlanTasksByEndDateUseCase
 import com.app.masterplan.domain.useacse.plans.UpdatePlanUseCase
 import com.app.masterplan.domain.useacse.plans.UpdateTaskUseCase
 import com.app.masterplan.domain.useacse.reports.ChangeReportStatusUseCase
+import com.app.masterplan.domain.useacse.reports.CreateReportUseCase
 import com.app.masterplan.domain.useacse.reports.DeleteReportUseCase
 import com.app.masterplan.domain.useacse.reports.FilterByStatusCreatedReportsUseCase
 import com.app.masterplan.domain.useacse.reports.FilterByStatusSubordinatesTaskReportsUseCase
 import com.app.masterplan.domain.useacse.reports.GetCreatedReportsUseCase
+import com.app.masterplan.domain.useacse.reports.GetReportInfUseCase
 import com.app.masterplan.domain.useacse.reports.GetSubordinatesTaskReportsUseCase
+import com.app.masterplan.domain.useacse.reports.UpdateReportUseCase
 import com.app.masterplan.domain.useacse.searchHistory.ClearSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.GetSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.SaveSearchHistoryUseCase
@@ -82,7 +85,9 @@ import com.app.masterplan.presentation.ui.plans.viewmodel.CreateNewPlanViewModel
 import com.app.masterplan.presentation.ui.plans.viewmodel.PlansListScreenViewModel
 import com.app.masterplan.presentation.ui.plans.viewmodel.UpdatePlanViewModel
 import com.app.masterplan.presentation.ui.profile.viewmodel.ProfileScreenViewModel
+import com.app.masterplan.presentation.ui.reports.viewmodel.NewReportViewModel
 import com.app.masterplan.presentation.ui.reports.viewmodel.ReportsScreenViewModel
+import com.app.masterplan.presentation.ui.reports.viewmodel.UpdateReportViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.NewAnswerScreenViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.NewRequestsScreenViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestCardViewModel
@@ -548,6 +553,43 @@ object ViewModelModule {
             downloadFileUseCase,
             getTaskInfUseCase,
             getPlanInfUseCase
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewReportViewModel(
+        employeeRepository: EmployeeRepository,
+        reportRepository: ReportRepository,
+        documentRepository: DocumentRepository
+    ): NewReportViewModel {
+        val getLocalEmpIdUseCase = GetLocalEmpIdUseCase(employeeRepository)
+        val createNewReportUseCase = CreateReportUseCase(reportRepository)
+        val attachFileUseCase = AttachFileUseCase(documentRepository)
+        return NewReportViewModel(
+            getLocalEmpIdUseCase,
+            createNewReportUseCase,
+            attachFileUseCase
+        )
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideUpdateReportViewModel(
+        employeeRepository: EmployeeRepository,
+        reportRepository: ReportRepository,
+        documentRepository: DocumentRepository
+    ): UpdateReportViewModel {
+        val getLocalEmpIdUseCase = GetLocalEmpIdUseCase(employeeRepository)
+        val updateReportUseCase = UpdateReportUseCase(reportRepository)
+        val getReportInfUseCase = GetReportInfUseCase(reportRepository)
+        val attachFileUseCase = AttachFileUseCase(documentRepository)
+        return UpdateReportViewModel(
+            getLocalEmpIdUseCase,
+            updateReportUseCase,
+            getReportInfUseCase,
+            attachFileUseCase
         )
     }
 
