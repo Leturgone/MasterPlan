@@ -476,6 +476,7 @@ object ViewModelModule {
         val exportPlanUseCase = ExportPlanUseCase(planRepository)
         val deleteTaskFromPlanUseCase = DeleteTaskFromPlanUseCase(taskRepository)
         val getEmployeeByIdUseCase = GetEmployeeByIdUseCase(employeeRepository)
+        val getPlanInfUseCase = GetPlanInfUseCase(planRepository)
         return TasksFromPlanScreenViewModel(
             getUserRoleUseCase,
             getTasksFromPlanUseCase,
@@ -484,7 +485,8 @@ object ViewModelModule {
             downloadFileUseCase,
             exportPlanUseCase,
             deleteTaskFromPlanUseCase,
-            getEmployeeByIdUseCase
+            getEmployeeByIdUseCase,
+            getPlanInfUseCase
         )
     }
 

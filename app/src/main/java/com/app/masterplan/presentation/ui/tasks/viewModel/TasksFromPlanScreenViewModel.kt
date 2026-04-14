@@ -3,6 +3,7 @@ package com.app.masterplan.presentation.ui.tasks.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.masterplan.domain.model.employee.Employee
+import com.app.masterplan.domain.model.plans.Plan
 import com.app.masterplan.domain.model.plans.Task
 import com.app.masterplan.domain.model.plans.TaskStatus
 import com.app.masterplan.domain.model.userManagement.UserRole
@@ -12,6 +13,7 @@ import com.app.masterplan.domain.useacse.employee.GetEmployeeByIdUseCase
 import com.app.masterplan.domain.useacse.plans.DeleteTaskFromPlanUseCase
 import com.app.masterplan.domain.useacse.plans.ExportPlanUseCase
 import com.app.masterplan.domain.useacse.plans.FilterPlanTasksByStatusUseCase
+import com.app.masterplan.domain.useacse.plans.GetPlanInfUseCase
 import com.app.masterplan.domain.useacse.plans.GetTasksFromPlanUseCase
 import com.app.masterplan.domain.useacse.plans.SortPlanTasksByEndDateUseCase
 import com.app.masterplan.presentation.ui.common.MasterPlanState
@@ -34,7 +36,8 @@ class TasksFromPlanScreenViewModel @Inject constructor(
     private val downloadFileUseCase: DownloadFileUseCase,
     private val exportPlanUseCase: ExportPlanUseCase,
     private val deleteTaskFromPlanUseCase: DeleteTaskFromPlanUseCase,
-    private val getEmployeeByIdUseCase: GetEmployeeByIdUseCase
+    private val getEmployeeByIdUseCase: GetEmployeeByIdUseCase,
+    private val getPlanInfUseCase: GetPlanInfUseCase
 ): ViewModel() {
 
     private val _assignedTasksListFlow = MutableStateFlow<MasterPlanState<List<Task>>>(MasterPlanState.Waiting)
@@ -52,6 +55,16 @@ class TasksFromPlanScreenViewModel @Inject constructor(
     private val _isModalVisible = MutableStateFlow(false)
     val isModalVisible: StateFlow<Boolean> = _isModalVisible
 
+
+    private val _isModalPlanVisible = MutableStateFlow(false)
+    val isModalPlanVisible: StateFlow<Boolean> = _isModalPlanVisible
+
+    private val _loadedPlan = MutableStateFlow<Plan?>(null)
+    val loadedPlan: StateFlow<Plan?> = _loadedPlan
+
+    private val _downloadPlanFile = MutableStateFlow<MasterPlanState<File>>(MasterPlanState.Waiting)
+
+    val downloadPlanFile: StateFlow<MasterPlanState<File>> = _downloadPlanFile
 
     private val _selectedTask = MutableStateFlow<Task?>(null)
     val selectedTask: StateFlow<Task?> = _selectedTask
@@ -122,6 +135,15 @@ class TasksFromPlanScreenViewModel @Inject constructor(
         _executorsList.value = MasterPlanState.Success(list)
     }
 
+    fun openPlanTab(planId: String) = viewModelScope.launch {
+        val planUid = UUID.fromString(planId)
+        val plan = getPlanInfUseCase(planUid).getOrElse {
+            return@launch
+        }
+        _loadedPlan.value = plan
+        _isModalPlanVisible.value = true
+    }
+
 
     fun exportPlan() = viewModelScope.launch {
         val planId = _currentPlan.value ?: return@launch
@@ -149,6 +171,23 @@ class TasksFromPlanScreenViewModel @Inject constructor(
                 return@launch
             }
             _downloadFile.value = MasterPlanState.Success(file)
+        }
+    }
+
+    fun downloadPlan() = viewModelScope.launch {
+        _downloadPlanFile.value = MasterPlanState.Loading
+
+        val plan = _loadedPlan.value
+
+        if (plan == null || plan.documentId == null){
+            _downloadPlanFile.value =  MasterPlanState.Waiting
+            return@launch
+        }else {
+            val file = downloadFileUseCase(plan.documentId).getOrElse {
+                _downloadPlanFile.value =  MasterPlanState.Failure(Exception(it.message))
+                return@launch
+            }
+            _downloadPlanFile.value = MasterPlanState.Success(file)
         }
     }
 
@@ -226,6 +265,7 @@ class TasksFromPlanScreenViewModel @Inject constructor(
 
     fun closeRequestTab() = viewModelScope.launch {
         _isModalVisible.value = false
+        _isModalPlanVisible.value = false
         _selectedTask.value = null
         _downloadFile.value = MasterPlanState.Waiting
 
