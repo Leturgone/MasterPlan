@@ -1,5 +1,6 @@
 package com.app.masterplan.presentation.ui.tasks.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,8 +12,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.MailOutline
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -45,11 +44,12 @@ fun TaskFromPlanCard(
     onEditClick: (UUID) -> Unit
 ){
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = Modifier.fillMaxSize().padding(start = 16.dp, end = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(5.dp),
         horizontalAlignment = Alignment.Start
     ) {
         TaskFromPlanView(task)
+        Log.d("Composable", "isCrud value: $crud")
 
         if (task.documentId!= null){
             CardButton(downloadButtonTitle) { onDownloadFileClick(task.documentId) }
@@ -75,7 +75,7 @@ fun TaskFromPlanCard(
                     modifier = Modifier.width(73.dp).height(56.dp),
                     containerColor = RedSoft,
                     contentColor = MaterialTheme.colorScheme.onPrimary,
-                    onClick = { onEditClick(task.id) },
+                    onClick = { onDeleteClick(task.id) },
                 ) {
                     Icon(Icons.Filled.Delete, "Floating delete button.")
                 }
@@ -84,7 +84,7 @@ fun TaskFromPlanCard(
                     modifier = Modifier.width(73.dp).height(56.dp),
                     containerColor = YellowSoft,
                     contentColor = MaterialTheme.colorScheme.onPrimary,
-                    onClick = { onDeleteClick(task.id) },
+                    onClick = { onEditClick(task.id) },
                 ) {
                     Icon(Icons.Filled.Edit, "Floating edit button.")
                 }
