@@ -18,6 +18,7 @@ gsonVersion = "2.13.2"
 datastoreVersion = "1.2.1"
 material-icons-extended = "1.7.8"
 aspectj = "1.9.25.1"
+material3 = "1.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,6 +47,7 @@ gson = {group = "com.google.code.gson",name = "gson",version.ref = "gsonVersion"
 datastore-preferences = {group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastoreVersion"}
 datastore = {group = "androidx.datastore", name = "datastore", version.ref = "datastoreVersion"}
 icons-exctended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "material-icons-extended" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
