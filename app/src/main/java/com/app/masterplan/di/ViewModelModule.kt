@@ -4,6 +4,7 @@ import com.app.masterplan.domain.repository.remote.AdminRequestsRepository
 import com.app.masterplan.domain.repository.remote.AuthRepository
 import com.app.masterplan.domain.repository.remote.DocumentRepository
 import com.app.masterplan.domain.repository.remote.EmployeeRepository
+import com.app.masterplan.domain.repository.remote.PlanRepository
 import com.app.masterplan.domain.repository.remote.SearchHistoryRepository
 import com.app.masterplan.domain.repository.remote.TaskRepository
 import com.app.masterplan.domain.repository.remote.ThemeRepository
@@ -18,6 +19,7 @@ import com.app.masterplan.domain.useacse.employee.GetLocalEmpIdUseCase
 import com.app.masterplan.domain.useacse.auth.GetUserRoleUseCase
 import com.app.masterplan.domain.useacse.auth.LoginUseCase
 import com.app.masterplan.domain.useacse.auth.LogoutUseCase
+import com.app.masterplan.domain.useacse.document.AttachFileUseCase
 import com.app.masterplan.domain.useacse.document.DownloadFileUseCase
 import com.app.masterplan.domain.useacse.employee.ExportDirEmployeesUseCase
 import com.app.masterplan.domain.useacse.employee.GetAllDirectorEmployeesUseCase
@@ -30,11 +32,27 @@ import com.app.masterplan.domain.useacse.employee.SearchEmployeeByNameUseCase
 import com.app.masterplan.domain.useacse.employee.SortDirEmployeesByRatingUseCase
 import com.app.masterplan.domain.useacse.employee.SortDirEmployeesByWorkloadUseCase
 import com.app.masterplan.domain.useacse.employee.UpdateEmployeeUseCase
+import com.app.masterplan.domain.useacse.plans.AddTaskToPlanUseCase
+import com.app.masterplan.domain.useacse.plans.ChangePlanStatusUseCase
 import com.app.masterplan.domain.useacse.plans.ChangeTaskStatusUseCase
+import com.app.masterplan.domain.useacse.plans.CreatePlanUseCase
+import com.app.masterplan.domain.useacse.plans.DeletePlanUseCase
+import com.app.masterplan.domain.useacse.plans.DeleteTaskFromPlanUseCase
+import com.app.masterplan.domain.useacse.plans.ExportPlanUseCase
 import com.app.masterplan.domain.useacse.plans.FilterAssignedTasksByStatusUseCase
+import com.app.masterplan.domain.useacse.plans.FilterDirPlansByStatusUseCase
+import com.app.masterplan.domain.useacse.plans.FilterPlanTasksByStatusUseCase
 import com.app.masterplan.domain.useacse.plans.GetAssignedTasksUseCase
+import com.app.masterplan.domain.useacse.plans.GetDirPlansUseCase
+import com.app.masterplan.domain.useacse.plans.GetPlanInfUseCase
+import com.app.masterplan.domain.useacse.plans.GetTaskInfUseCase
+import com.app.masterplan.domain.useacse.plans.GetTasksFromPlanUseCase
 import com.app.masterplan.domain.useacse.plans.SearchAssignedTasksByTitleUseCase
 import com.app.masterplan.domain.useacse.plans.SortAssignedTasksByEndDateUseCase
+import com.app.masterplan.domain.useacse.plans.SortDirPlansByEndDateUseCase
+import com.app.masterplan.domain.useacse.plans.SortPlanTasksByEndDateUseCase
+import com.app.masterplan.domain.useacse.plans.UpdatePlanUseCase
+import com.app.masterplan.domain.useacse.plans.UpdateTaskUseCase
 import com.app.masterplan.domain.useacse.searchHistory.ClearSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.GetSearchHistoryUseCase
 import com.app.masterplan.domain.useacse.searchHistory.SaveSearchHistoryUseCase
@@ -53,13 +71,19 @@ import com.app.masterplan.presentation.ui.bottomBar.viewModel.BottomBarViewModel
 import com.app.masterplan.presentation.ui.employees.viewmodel.EmployeeCardViewModel
 import com.app.masterplan.presentation.ui.employees.viewmodel.EmployeeListScreenViewModel
 import com.app.masterplan.presentation.ui.options.viewmodel.OptionsViewModel
+import com.app.masterplan.presentation.ui.plans.viewmodel.CreateNewPlanViewModel
+import com.app.masterplan.presentation.ui.plans.viewmodel.PlansListScreenViewModel
+import com.app.masterplan.presentation.ui.plans.viewmodel.UpdatePlanViewModel
 import com.app.masterplan.presentation.ui.profile.viewmodel.ProfileScreenViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.NewAnswerScreenViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.NewRequestsScreenViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestCardViewModel
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestsListScreenViewModel
 import com.app.masterplan.presentation.ui.tasks.viewModel.AssignedTasksScreenViewModel
+import com.app.masterplan.presentation.ui.tasks.viewModel.CreateNewTaskViewModel
 import com.app.masterplan.presentation.ui.tasks.viewModel.TaskSearchScreenViewModel
+import com.app.masterplan.presentation.ui.tasks.viewModel.TasksFromPlanScreenViewModel
+import com.app.masterplan.presentation.ui.tasks.viewModel.UpdateTaskViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -355,4 +379,132 @@ object ViewModelModule {
             changeTaskStatusUseCase
         )
     }
+
+
+    @Provides
+    @Singleton
+    fun providePlansListScreenViewModel(
+        authRepository: AuthRepository,
+        employeeRepository: EmployeeRepository,
+        planRepository: PlanRepository,
+        documentRepository: DocumentRepository
+    ): PlansListScreenViewModel {
+        val getUserRoleUseCase = GetUserRoleUseCase(authRepository)
+        val getLocalEmpIdUseCase = GetLocalEmpIdUseCase(employeeRepository)
+        val getDirPlansUseCase = GetDirPlansUseCase(planRepository)
+        val sortDirPlansByEndDateUseCase = SortDirPlansByEndDateUseCase(planRepository)
+        val filterDirPlansByStatusUseCase = FilterDirPlansByStatusUseCase(planRepository)
+        val downloadFileUseCase = DownloadFileUseCase(documentRepository)
+        val deletePlanUseCase = DeletePlanUseCase(planRepository)
+        val changePlanStatusUseCase = ChangePlanStatusUseCase(planRepository)
+
+        return PlansListScreenViewModel(
+            getUserRoleUseCase,
+            getLocalEmpIdUseCase,
+            getDirPlansUseCase,
+            sortDirPlansByEndDateUseCase,
+            filterDirPlansByStatusUseCase,
+            downloadFileUseCase,
+            deletePlanUseCase,
+            changePlanStatusUseCase
+        )
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideUpdatePlanViewModel(
+        planRepository: PlanRepository,
+        documentRepository: DocumentRepository
+    ):  UpdatePlanViewModel {
+        val getPlanInfUseCase = GetPlanInfUseCase(planRepository)
+        val updatePlanUseCase = UpdatePlanUseCase(planRepository)
+        val attachFileUseCase = AttachFileUseCase(documentRepository)
+        return  UpdatePlanViewModel(
+            getPlanInfUseCase,
+            updatePlanUseCase,
+            attachFileUseCase
+        )
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideCreateNewPlanViewModel(
+        employeeRepository: EmployeeRepository,
+        planRepository: PlanRepository,
+        documentRepository: DocumentRepository
+    ): CreateNewPlanViewModel {
+        val getLocalEmpIdUseCase = GetLocalEmpIdUseCase(employeeRepository)
+        val createNewPlanUseCase = CreatePlanUseCase(planRepository)
+        val attachFileUseCase = AttachFileUseCase(documentRepository)
+        return  CreateNewPlanViewModel(
+            getLocalEmpIdUseCase,
+            createNewPlanUseCase,
+            attachFileUseCase
+        )
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideTasksFromPlanScreenViewModel(
+        authRepository: AuthRepository,
+        taskRepository: TaskRepository,
+        documentRepository: DocumentRepository,
+        planRepository: PlanRepository,
+        employeeRepository: EmployeeRepository
+    ): TasksFromPlanScreenViewModel {
+        val getUserRoleUseCase = GetUserRoleUseCase(authRepository)
+        val getTasksFromPlanUseCase = GetTasksFromPlanUseCase(taskRepository)
+        val sortPlanTasksByEndDateUseCase = SortPlanTasksByEndDateUseCase(taskRepository)
+        val filterPlanTasksByStatusUseCase = FilterPlanTasksByStatusUseCase(taskRepository)
+        val downloadFileUseCase = DownloadFileUseCase(documentRepository)
+        val exportPlanUseCase = ExportPlanUseCase(planRepository)
+        val deleteTaskFromPlanUseCase = DeleteTaskFromPlanUseCase(taskRepository)
+        val getEmployeeByIdUseCase = GetEmployeeByIdUseCase(employeeRepository)
+        return TasksFromPlanScreenViewModel(
+            getUserRoleUseCase,
+            getTasksFromPlanUseCase,
+            sortPlanTasksByEndDateUseCase,
+            filterPlanTasksByStatusUseCase,
+            downloadFileUseCase,
+            exportPlanUseCase,
+            deleteTaskFromPlanUseCase,
+            getEmployeeByIdUseCase
+        )
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideCreateNewTaskViewModel(
+        taskRepository: TaskRepository,
+        documentRepository: DocumentRepository
+    ): CreateNewTaskViewModel {
+        val addTaskToPlanUseCase = AddTaskToPlanUseCase(taskRepository)
+        val attachFileUseCase = AttachFileUseCase(documentRepository)
+        return CreateNewTaskViewModel(
+            addTaskToPlanUseCase,
+            attachFileUseCase
+        )
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideUpdateTaskViewModel(
+        taskRepository: TaskRepository,
+        documentRepository: DocumentRepository
+    ): UpdateTaskViewModel {
+        val getTaskByIdUseCase = GetTaskInfUseCase(taskRepository)
+        val updateTaskUseCase = UpdateTaskUseCase(taskRepository)
+        val attachFileUseCase = AttachFileUseCase(documentRepository)
+        return UpdateTaskViewModel(
+            getTaskByIdUseCase,
+            updateTaskUseCase,
+            attachFileUseCase
+        )
+    }
+
 }
