@@ -103,7 +103,7 @@ interface PlansTasksApi {
     suspend fun createPLan(
         @Header("Authorization") token: String,
         @Part("request") request: RequestBody,
-        @Part(value = "file") file: MultipartBody.Part?
+        @Part file: MultipartBody.Part?
     ): Response<PlanIdResponse>
 
     @Multipart
@@ -111,7 +111,7 @@ interface PlansTasksApi {
     suspend fun addTaskToPlan(
         @Header("Authorization") token: String,
         @Part("request") request: RequestBody,
-        @Part(value = "file") file: MultipartBody.Part?
+        @Part file: MultipartBody.Part?
     ): Response<TaskIdResponse>
 
 
@@ -143,7 +143,7 @@ interface PlansTasksApi {
         @Header("Authorization") token: String,
         @Path(value = "taskId") taskId: UUID,
         @Part("request") request: RequestBody,
-        @Part(value = "file") file: MultipartBody.Part?
+        @Part file: MultipartBody.Part?
     ): Response<TaskIdResponse>
 
 
@@ -153,7 +153,7 @@ interface PlansTasksApi {
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID,
         @Part("request") request: RequestBody,
-        @Part(value = "file") file: MultipartBody.Part?
+        @Part file: MultipartBody.Part?
     ): Response<PlanIdResponse>
 
 
