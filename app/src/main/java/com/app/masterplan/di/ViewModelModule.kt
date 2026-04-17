@@ -526,12 +526,14 @@ object ViewModelModule {
     @Provides
     @Singleton
     fun provideReportsScreenViewModel(
+        authRepository: AuthRepository,
         employeeRepository: EmployeeRepository,
         reportRepository: ReportRepository,
         documentRepository: DocumentRepository,
         taskRepository: TaskRepository,
         planRepository: PlanRepository,
         ): ReportsScreenViewModel {
+        val getUserRoleUseCase = GetUserRoleUseCase(authRepository)
         val getLocalEmpIdUseCase = GetLocalEmpIdUseCase(employeeRepository)
         val getEmployeeByIdUseCase = GetEmployeeByIdUseCase(employeeRepository)
         val changeReportStatusUseCase = ChangeReportStatusUseCase(reportRepository)
@@ -545,6 +547,7 @@ object ViewModelModule {
         val getPlanInfUseCase = GetPlanInfUseCase(planRepository)
         return ReportsScreenViewModel(
             getLocalEmpIdUseCase,
+            getUserRoleUseCase,
             getEmployeeByIdUseCase,
             changeReportStatusUseCase,
             deleteReportUseCase,
