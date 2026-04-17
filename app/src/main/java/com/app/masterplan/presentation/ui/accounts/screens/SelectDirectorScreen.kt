@@ -58,7 +58,7 @@ fun SelectDirectorScreen(
                 .padding(16.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.accounts),
+                text = stringResource(id = R.string.assign_director),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 fontSize = 25.sp,
