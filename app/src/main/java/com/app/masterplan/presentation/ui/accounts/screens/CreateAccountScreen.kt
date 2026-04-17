@@ -94,7 +94,6 @@ fun CreateAccountScreen(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
 
-                var selectedIndex by remember { mutableIntStateOf(0) }
                 val options = listOf(
                     stringResource(R.string.account_data),
                     stringResource(R.string.employee_data)
@@ -108,8 +107,17 @@ fun CreateAccountScreen(
                                 count = options.size
                             ),
                             onClick = { viewModel.setCurrentTab(index) },
-                            selected = index == selectedIndex,
-                            label = { Text(label) }
+                            selected = index == currentTab.value,
+                            label = { Text(label) },
+                            colors = SegmentedButtonDefaults.colors(
+                                activeContainerColor = MaterialTheme.colorScheme.primary,
+                                activeContentColor = MaterialTheme.colorScheme.onPrimary,
+                                activeBorderColor = MaterialTheme.colorScheme.primary,
+
+                                inactiveContainerColor = MaterialTheme.colorScheme.onPrimary,
+                                inactiveContentColor = MaterialTheme.colorScheme.primary,
+                                inactiveBorderColor = MaterialTheme.colorScheme.onPrimary,
+                            ),
                         )
                     }
                 }
