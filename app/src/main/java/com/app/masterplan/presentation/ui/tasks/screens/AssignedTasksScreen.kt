@@ -203,7 +203,7 @@ fun AssignedTasksScreen(
 
                     val functionButtonTitle = when(task.status){
                         TaskStatus.COMPLETED -> null
-                        TaskStatus.IN_PROGRESS -> stringResource(R.string.create_report)
+                        TaskStatus.IN_PROGRESS -> stringResource(R.string.create_new_report)
                         TaskStatus.NOT_STARTED -> stringResource(R.string.get_in_work)
                     }
 
