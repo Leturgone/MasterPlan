@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.masterplan.domain.model.reports.ReportStatus
 import com.app.masterplan.domain.model.reports.ReportType
+import com.app.masterplan.domain.model.userManagement.UserRole
+import com.app.masterplan.domain.useacse.auth.GetUserRoleUseCase
 import com.app.masterplan.domain.useacse.document.DownloadFileUseCase
 import com.app.masterplan.domain.useacse.employee.GetEmployeeByIdUseCase
 import com.app.masterplan.domain.useacse.employee.GetLocalEmpIdUseCase
@@ -30,6 +32,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ReportsScreenViewModel @Inject constructor(
     private val getLocalEmpIdUseCase: GetLocalEmpIdUseCase,
+    private val getUserRoleUseCase: GetUserRoleUseCase,
     private val getEmployeeByIdUseCase: GetEmployeeByIdUseCase,
     private val changeReportStatusUseCase: ChangeReportStatusUseCase,
     private val deleteReportUseCase: DeleteReportUseCase,
@@ -55,12 +58,15 @@ class ReportsScreenViewModel @Inject constructor(
     private val _isSwitchOn = MutableStateFlow(true)
     val isSwitchOn: StateFlow<Boolean> = _isSwitchOn
 
-    private val _isSwitchVisible = MutableStateFlow(true)
+    private val _isSwitchVisible = MutableStateFlow(false)
     val isSwitchVisible: StateFlow<Boolean> = _isSwitchVisible
 
     private val _isModalVisible = MutableStateFlow(false)
     val isModalVisible: StateFlow<Boolean> = _isModalVisible
 
+    private val _isSingleChoiceSegmentedButtonRowVisible = MutableStateFlow(false)
+
+    val isSingleChoiceSegmentedButtonRowVisible: StateFlow<Boolean> = _isSingleChoiceSegmentedButtonRowVisible
 
     private val _selectedReport = MutableStateFlow<ReportListDataItem?>(null)
     val selectedReport: StateFlow<ReportListDataItem?> = _selectedReport
@@ -80,6 +86,16 @@ class ReportsScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            getUserRoleUseCase().onSuccess {
+                when{
+                    UserRole.DIRECTOR in it ->{
+                        _isSingleChoiceSegmentedButtonRowVisible.value = true
+                        _isSwitchVisible.value = true
+                    }
+                }
+            }.onFailure {
+                _reportsListFlow.value = MasterPlanState.Failure(Exception(it.message))
+            }
             getLocalEmpIdUseCase().onSuccess {
                 employeeId = it
             }.onFailure {
