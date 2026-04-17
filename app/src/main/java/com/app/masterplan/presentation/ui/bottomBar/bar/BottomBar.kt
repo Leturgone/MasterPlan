@@ -105,7 +105,7 @@ fun BottomBar(
         BottomNavigationItem(
             route = "accounts",
             icon = Icons.Rounded.AccountCircle,
-            title = stringResource(id = R.string.employees)
+            title = stringResource(id = R.string.accounts)
         ),
 
         BottomNavigationItem(
