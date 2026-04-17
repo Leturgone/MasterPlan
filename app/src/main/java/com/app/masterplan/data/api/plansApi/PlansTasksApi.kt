@@ -179,7 +179,7 @@ interface PlansTasksApi {
     ): Response<PlanIdResponse>
 
 
-    @PATCH("tasks/dir/task/{taskId}/status")
+    @PATCH("tasks/emp/task/{taskId}/status")
     suspend fun updateTaskStatus(
         @Header("Authorization") token: String,
         @Path(value = "taskId") taskId: UUID,
