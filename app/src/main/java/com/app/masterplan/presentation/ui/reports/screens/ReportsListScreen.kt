@@ -106,6 +106,8 @@ fun ReportListScreen(
 
     val isSwitchVisible by viewModel.isSwitchVisible.collectAsState()
 
+    val isSingleChoiceSegmentedButtonRowVisible by viewModel.isSingleChoiceSegmentedButtonRowVisible.collectAsState()
+
 
     Box() {
 
@@ -154,32 +156,35 @@ fun ReportListScreen(
                     stringResource(R.string.my),
                     stringResource(R.string.to_check)
                 )
-                SingleChoiceSegmentedButtonRow(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    options.forEachIndexed { index, label ->
-                        SegmentedButton(
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index = index,
-                                count = options.size
-                            ),
-                            onClick = {
-                                viewModel.updateTab(index)
-                            },
-                            selected = index == currentTab.value,
-                            label = { Text(label) },
-                            colors = SegmentedButtonDefaults.colors(
-                                activeContainerColor = MaterialTheme.colorScheme.primary,
-                                activeContentColor = MaterialTheme.colorScheme.onPrimary,
-                                activeBorderColor = MaterialTheme.colorScheme.primary,
+                if (isSingleChoiceSegmentedButtonRowVisible){
+                    SingleChoiceSegmentedButtonRow(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        options.forEachIndexed { index, label ->
+                            SegmentedButton(
+                                shape = SegmentedButtonDefaults.itemShape(
+                                    index = index,
+                                    count = options.size
+                                ),
+                                onClick = {
+                                    viewModel.updateTab(index)
+                                },
+                                selected = index == currentTab.value,
+                                label = { Text(label) },
+                                colors = SegmentedButtonDefaults.colors(
+                                    activeContainerColor = MaterialTheme.colorScheme.primary,
+                                    activeContentColor = MaterialTheme.colorScheme.onPrimary,
+                                    activeBorderColor = MaterialTheme.colorScheme.primary,
 
-                                inactiveContainerColor = MaterialTheme.colorScheme.onPrimary,
-                                inactiveContentColor = MaterialTheme.colorScheme.primary,
-                                inactiveBorderColor = MaterialTheme.colorScheme.onPrimary,
-                            ),
-                        )
+                                    inactiveContainerColor = MaterialTheme.colorScheme.onPrimary,
+                                    inactiveContentColor = MaterialTheme.colorScheme.primary,
+                                    inactiveBorderColor = MaterialTheme.colorScheme.onPrimary,
+                                ),
+                            )
+                        }
                     }
                 }
+
             }
 
 
