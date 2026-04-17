@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.app.masterplan.R
+import com.app.masterplan.domain.model.userManagement.UserRole
 import com.app.masterplan.presentation.ui.common.InputTextField
 
 @Composable
@@ -62,7 +63,13 @@ fun AccountDataEditComponent(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(role.role.name)
+                    Text(
+                        when(role.role){
+                            UserRole.ADMIN -> stringResource(R.string.admin)
+                            UserRole.EMPLOYEE -> stringResource(R.string.employee)
+                            UserRole.DIRECTOR -> stringResource(R.string.director)
+                        }
+                    )
                     Switch(
                         checked = role.isSelected,
                         onCheckedChange = { onRoleToggle(role) }
