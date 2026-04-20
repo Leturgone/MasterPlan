@@ -4,6 +4,7 @@ import com.app.masterplan.data.api.authApi.AuthApi
 import com.app.masterplan.data.api.authApi.dto.request.LoginRequest
 import com.app.masterplan.data.api.exception.ApiErrorResponse
 import com.app.masterplan.data.exception.ApiException
+import com.app.masterplan.data.exception.StorageException
 import com.app.masterplan.data.mapper.ApiErrorResponseHandler
 import com.app.masterplan.data.mapper.AuthResponseMapper
 import com.app.masterplan.data.storage.EmployeeIdStorage
@@ -53,6 +54,15 @@ class AuthRepositoryImpl @Inject constructor(
             val roles = token.roles
             rolesCache = roles
             roles
+        }
+    }
+
+    override suspend fun isLogged(): Boolean {
+        return try {
+            tokenStorage.getTokenFromDataStorage()
+            true
+        }catch (_: StorageException.TokenNotFoundException){
+            false
         }
     }
 
