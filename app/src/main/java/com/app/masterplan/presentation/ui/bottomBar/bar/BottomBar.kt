@@ -17,6 +17,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -118,8 +119,10 @@ fun BottomBar(
     viewModel.setLists(directorItems, employeeItems, adminItems)
 
     val itemsListState = viewModel.itemsFlow.collectAsState()
+    LaunchedEffect(Unit) {
+        viewModel.loadItems()
+    }
 
-    viewModel.loadItems()
 
     when (itemsListState.value){
         MasterPlanState.Loading -> CircularProgressIndicator()
