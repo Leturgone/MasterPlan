@@ -44,13 +44,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-//themeViewModel: AppThemeViewModel
 fun MainScreen() {
     val navController = rememberNavController()
     //Получение текущего состояния экрана
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-    //val profileViewModel:ProfileViewModel = hiltViewModel(LocalContext.current as ViewModelStoreOwner)
-    val excludedRoutes = setOf("reg","log")
+    val excludedRoutes = setOf("login")
 
     Scaffold(
         bottomBar = {
@@ -60,7 +58,6 @@ fun MainScreen() {
         }
     ) {
             innerPadding ->
-        //themeViewModel,profileViewModel
         AppNavigation(innerPadding = innerPadding, navController = navController)
 
     }
