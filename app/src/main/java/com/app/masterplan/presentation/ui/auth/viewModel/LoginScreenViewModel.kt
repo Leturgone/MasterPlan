@@ -3,6 +3,8 @@ package com.app.masterplan.presentation.ui.auth.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.masterplan.domain.model.auth.JwtToken
+import com.app.masterplan.domain.model.userManagement.UserRole
+import com.app.masterplan.domain.useacse.auth.CheckIfAlreadyLogged
 import com.app.masterplan.domain.useacse.employee.GetLocalEmpIdUseCase
 import com.app.masterplan.domain.useacse.auth.GetUserRoleUseCase
 import com.app.masterplan.domain.useacse.auth.LoginUseCase
@@ -17,11 +19,41 @@ import javax.inject.Inject
 class LoginScreenViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val getLocalEmpIdUseCase: GetLocalEmpIdUseCase,
-    private val getUserRoleUseCase: GetUserRoleUseCase
+    private val getUserRoleUseCase: GetUserRoleUseCase,
+    private val checkIfAlreadyLogged: CheckIfAlreadyLogged,
 ): ViewModel() {
     private val _loginFlow = MutableStateFlow<MasterPlanState<JwtToken>>(MasterPlanState.Waiting)
 
     val loginFlow: StateFlow<MasterPlanState<JwtToken>> = _loginFlow
+
+    private val _isAdmin = MutableStateFlow<Boolean>(false)
+
+    val isAdmin : StateFlow<Boolean> = _isAdmin
+
+    private val _isLogged = MutableStateFlow<MasterPlanState<Boolean>>(MasterPlanState.Waiting)
+
+    val isLogged : StateFlow<MasterPlanState<Boolean>> = _isLogged
+
+
+    init {
+        viewModelScope.launch {
+            _isLogged.value = MasterPlanState.Loading
+            checkIfAlreadyLogged().onSuccess {
+                getUserRoleUseCase().onSuccess { userRoles ->
+                    _isAdmin.value =  when {
+                        UserRole.ADMIN in userRoles -> true
+                        else -> false
+                    }
+                    _isLogged.value = MasterPlanState.Success(true)
+                }.onFailure {
+                    _isLogged.value = MasterPlanState.Failure(Exception())
+                    _isAdmin.value = false
+                }
+            }.onFailure {
+                _isLogged.value = MasterPlanState.Failure(Exception())
+            }
+        }
+    }
 
 
     fun login(login: String, password: String) = viewModelScope.launch {
@@ -30,8 +62,14 @@ class LoginScreenViewModel @Inject constructor(
         val result = loginUseCase(login, password)
 
         result.onSuccess {
-            getUserRoleUseCase()
+            getUserRoleUseCase().onSuccess { userRoles ->
+                _isAdmin.value =  when {
+                    UserRole.ADMIN in userRoles -> true
+                    else -> false
+                }
+            }
             getLocalEmpIdUseCase()
+            _isLogged.value = MasterPlanState.Success(true)
             _loginFlow.value = MasterPlanState.Success(it)
         }.onFailure {
             val exception = when(it){
