@@ -58,111 +58,131 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginScreenViewMode
 
     var passwordVisible by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.fillMaxWidth()){
-        CustomToastMessage(
-            message = errorMessage,
-            isVisible = showToast,
-            onDismiss = { showToast = false },
-        )
-        Box(Modifier.fillMaxWidth(),contentAlignment = Alignment.Center) {
-            Column( modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Spacer(modifier = Modifier.height(60.dp))
-                    Text(
-                        text = stringResource(id = R.string.sign_in),
-                        fontSize = 26.sp,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(16.dp),
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.height(30.dp))
-                    Spacer(modifier = Modifier.height(101.dp))
-                    OutlinedTextField(
-                        value = loginInputText,
-                        modifier = Modifier.size(width = 255.dp,60.dp),
-                        label = { Text(stringResource(id = R.string.login_input)) },
-                        colors = TextFieldDefaults
-                            .colors(
-                                focusedTextColor = MaterialTheme.colorScheme.primary,
-                                unfocusedTextColor = MaterialTheme.colorScheme.primary,
-                                focusedLabelColor = MaterialTheme.colorScheme.primary,
-                                unfocusedLabelColor = MaterialTheme.colorScheme.primary,
-                                focusedContainerColor = MaterialTheme.colorScheme.background,
-                                unfocusedContainerColor = MaterialTheme.colorScheme.background,
-                                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                                unfocusedIndicatorColor = MaterialTheme.colorScheme.primary),
-                        singleLine = true,
-                        keyboardOptions =  KeyboardOptions(keyboardType = KeyboardType.Email),
-                        onValueChange = {
-                            loginInputText = it
-                        })
-                    Spacer(modifier = Modifier.height(41.dp))
+    val isAdmin = viewModel.isAdmin.collectAsState()
 
-                    OutlinedTextField(
-                        value = passwordInputText,
-                        modifier = Modifier.size(width = 255.dp,60.dp),
-                        colors = TextFieldDefaults
-                            .colors(
-                                focusedTextColor = MaterialTheme.colorScheme.primary,
-                                unfocusedTextColor = MaterialTheme.colorScheme.primary,
-                                focusedLabelColor = MaterialTheme.colorScheme.primary,
-                                unfocusedLabelColor = MaterialTheme.colorScheme.primary,
-                                focusedContainerColor = MaterialTheme.colorScheme.background,
-                                unfocusedContainerColor = MaterialTheme.colorScheme.background,
-                                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                                unfocusedIndicatorColor = MaterialTheme.colorScheme.primary),
-                        singleLine = true,
-                        label = { Text(stringResource(id = R.string.password)) },
-                        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                        keyboardOptions =  KeyboardOptions(keyboardType = KeyboardType.Password),
-                        onValueChange = {
-                            passwordInputText = it
-                        },
-                        trailingIcon = {
-                            val image = if (passwordVisible)
-                                Icons.Filled.Visibility
-                            else Icons.Filled.VisibilityOff
+    val isLogged = viewModel.isLogged.collectAsState()
 
-                            val description = if (passwordVisible) "Hide password" else "Show password"
 
-                            IconButton(onClick = {passwordVisible = !passwordVisible}){
-                                Icon(imageVector  = image, description,
-                                    tint = MaterialTheme.colorScheme.primary)
+    when(isLogged.value) {
+        MasterPlanState.Loading -> CircularProgressIndicator()
+        is MasterPlanState.Success ->{
+            when(isAdmin.value){
+                true -> navController.navigate("requests")
+                false -> navController.navigate("profile")
+            }
+        }
+        else -> {
+            Box(modifier = Modifier.fillMaxWidth()){
+                CustomToastMessage(
+                    message = errorMessage,
+                    isVisible = showToast,
+                    onDismiss = { showToast = false },
+                )
+                Box(Modifier.fillMaxWidth(),contentAlignment = Alignment.Center) {
+                    Column( modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Spacer(modifier = Modifier.height(60.dp))
+                            Text(
+                                text = stringResource(id = R.string.sign_in),
+                                fontSize = 26.sp,
+                                color = MaterialTheme.colorScheme.onBackground,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(16.dp),
+                                textAlign = TextAlign.Center
+                            )
+                            Spacer(modifier = Modifier.height(30.dp))
+                            Spacer(modifier = Modifier.height(101.dp))
+                            OutlinedTextField(
+                                value = loginInputText,
+                                modifier = Modifier.size(width = 255.dp,60.dp),
+                                label = { Text(stringResource(id = R.string.login_input)) },
+                                colors = TextFieldDefaults
+                                    .colors(
+                                        focusedTextColor = MaterialTheme.colorScheme.primary,
+                                        unfocusedTextColor = MaterialTheme.colorScheme.primary,
+                                        focusedLabelColor = MaterialTheme.colorScheme.primary,
+                                        unfocusedLabelColor = MaterialTheme.colorScheme.primary,
+                                        focusedContainerColor = MaterialTheme.colorScheme.background,
+                                        unfocusedContainerColor = MaterialTheme.colorScheme.background,
+                                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                                        unfocusedIndicatorColor = MaterialTheme.colorScheme.primary),
+                                singleLine = true,
+                                keyboardOptions =  KeyboardOptions(keyboardType = KeyboardType.Email),
+                                onValueChange = {
+                                    loginInputText = it
+                                })
+                            Spacer(modifier = Modifier.height(41.dp))
+
+                            OutlinedTextField(
+                                value = passwordInputText,
+                                modifier = Modifier.size(width = 255.dp,60.dp),
+                                colors = TextFieldDefaults
+                                    .colors(
+                                        focusedTextColor = MaterialTheme.colorScheme.primary,
+                                        unfocusedTextColor = MaterialTheme.colorScheme.primary,
+                                        focusedLabelColor = MaterialTheme.colorScheme.primary,
+                                        unfocusedLabelColor = MaterialTheme.colorScheme.primary,
+                                        focusedContainerColor = MaterialTheme.colorScheme.background,
+                                        unfocusedContainerColor = MaterialTheme.colorScheme.background,
+                                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                                        unfocusedIndicatorColor = MaterialTheme.colorScheme.primary),
+                                singleLine = true,
+                                label = { Text(stringResource(id = R.string.password)) },
+                                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                                keyboardOptions =  KeyboardOptions(keyboardType = KeyboardType.Password),
+                                onValueChange = {
+                                    passwordInputText = it
+                                },
+                                trailingIcon = {
+                                    val image = if (passwordVisible)
+                                        Icons.Filled.Visibility
+                                    else Icons.Filled.VisibilityOff
+
+                                    val description = if (passwordVisible) "Hide password" else "Show password"
+
+                                    IconButton(onClick = {passwordVisible = !passwordVisible}){
+                                        Icon(imageVector  = image, description,
+                                            tint = MaterialTheme.colorScheme.primary)
+                                    }
+                                })
+                        }
+                        Spacer(modifier = Modifier.height(142.dp))
+
+                        Button(
+                            onClick = {
+                                viewModel.login(loginInputText, passwordInputText) },
+
+                            ) {
+                            Text(text = stringResource(id = R.string.sign_in),)
+                        }
+
+                        when (loginState.value) {
+                            is MasterPlanState.Failure -> LaunchedEffect(loginState.value) {
+                                showToast = true
+                                errorMessage = (loginState.value as MasterPlanState.Failure).exception.toString()
                             }
-                        })
-                }
-                Spacer(modifier = Modifier.height(142.dp))
 
-                Button(
-                    onClick = {
-                        viewModel.login(loginInputText, passwordInputText) },
+                            is MasterPlanState.Loading -> CircularProgressIndicator()
 
-                    ) {
-                    Text(text = stringResource(id = R.string.sign_in),)
-                }
+                            is MasterPlanState.Success -> LaunchedEffect(Unit){
+                                when(isAdmin.value){
+                                    true -> navController.navigate("requests")
+                                    false -> navController.navigate("profile")
+                                }
+                                navController.popBackStack()
+                            }
 
-                when (loginState.value) {
-                    is MasterPlanState.Failure -> LaunchedEffect(loginState.value) {
-                        showToast = true
-                        errorMessage = (loginState.value as MasterPlanState.Failure).exception.toString()
+                            is MasterPlanState.Waiting -> null
+                        }
+
+
+                        Spacer(modifier = Modifier.height(1.dp))
                     }
-
-                    is MasterPlanState.Loading -> CircularProgressIndicator()
-
-                    is MasterPlanState.Success<*> -> LaunchedEffect(Unit){
-                        navController.popBackStack()
-                        //navController.navigate("profile")
-                        navController.navigate("requests")
-                    }
-
-                    is MasterPlanState.Waiting -> null
                 }
-
-
-                Spacer(modifier = Modifier.height(1.dp))
             }
         }
     }
+
+
 }

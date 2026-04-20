@@ -9,4 +9,6 @@ interface AuthRepository {
     suspend fun logout()
 
     suspend fun getLocalRoles(): Set<UserRole>
+
+    suspend fun isLogged(): Boolean
 }

@@ -16,6 +16,7 @@ import com.app.masterplan.domain.useacse.adminRequests.CreateAdminRequestUseCase
 import com.app.masterplan.domain.useacse.adminRequests.GetAdminAnswerForRequestUseCase
 import com.app.masterplan.domain.useacse.adminRequests.GetAdminRequestsListUseCase
 import com.app.masterplan.domain.useacse.adminRequests.GetCreatedAdminRequestsBySenderListUseCase
+import com.app.masterplan.domain.useacse.auth.CheckIfAlreadyLoggedUseCase
 import com.app.masterplan.domain.useacse.employee.GetLocalEmpIdUseCase
 import com.app.masterplan.domain.useacse.auth.GetUserRoleUseCase
 import com.app.masterplan.domain.useacse.auth.LoginUseCase
@@ -117,7 +118,8 @@ object ViewModelModule {
         val loginUseCase = LoginUseCase(authRepository)
         val getLocalEmpIdUseCase = GetLocalEmpIdUseCase(employeeRepository)
         val getUserRoleUseCase = GetUserRoleUseCase(authRepository)
-        return LoginScreenViewModel(loginUseCase, getLocalEmpIdUseCase, getUserRoleUseCase)
+        val checkIfAlreadyLoggedUseCase = CheckIfAlreadyLoggedUseCase(authRepository)
+        return LoginScreenViewModel(loginUseCase, getLocalEmpIdUseCase, getUserRoleUseCase, checkIfAlreadyLoggedUseCase)
     }
 
 
