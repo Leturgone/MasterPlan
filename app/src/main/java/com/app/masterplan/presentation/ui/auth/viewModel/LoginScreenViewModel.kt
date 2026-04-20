@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.masterplan.domain.model.auth.JwtToken
 import com.app.masterplan.domain.model.userManagement.UserRole
-import com.app.masterplan.domain.useacse.auth.CheckIfAlreadyLogged
+import com.app.masterplan.domain.useacse.auth.CheckIfAlreadyLoggedUseCase
 import com.app.masterplan.domain.useacse.employee.GetLocalEmpIdUseCase
 import com.app.masterplan.domain.useacse.auth.GetUserRoleUseCase
 import com.app.masterplan.domain.useacse.auth.LoginUseCase
@@ -20,7 +20,7 @@ class LoginScreenViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val getLocalEmpIdUseCase: GetLocalEmpIdUseCase,
     private val getUserRoleUseCase: GetUserRoleUseCase,
-    private val checkIfAlreadyLogged: CheckIfAlreadyLogged,
+    private val checkIfAlreadyLoggedUseCase: CheckIfAlreadyLoggedUseCase,
 ): ViewModel() {
     private val _loginFlow = MutableStateFlow<MasterPlanState<JwtToken>>(MasterPlanState.Waiting)
 
@@ -38,7 +38,7 @@ class LoginScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _isLogged.value = MasterPlanState.Loading
-            checkIfAlreadyLogged().onSuccess {
+            checkIfAlreadyLoggedUseCase().onSuccess {
                 getUserRoleUseCase().onSuccess { userRoles ->
                     _isAdmin.value =  when {
                         UserRole.ADMIN in userRoles -> true
