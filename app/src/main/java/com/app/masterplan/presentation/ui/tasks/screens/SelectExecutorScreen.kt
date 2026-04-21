@@ -46,11 +46,7 @@ fun SelectExecutorScreen(
     }
 
     Box() {
-        CustomToastMessage(
-            message = errorMessage,
-            isVisible = showToast,
-            onDismiss = { showToast = false },
-        )
+
 
         Column(
             modifier = Modifier
@@ -113,5 +109,10 @@ fun SelectExecutorScreen(
                 MasterPlanState.Waiting -> null
             }
         }
+        CustomToastMessage(
+            message = errorMessage,
+            isVisible = showToast,
+            onDismiss = { showToast = false },
+        )
     }
 }
