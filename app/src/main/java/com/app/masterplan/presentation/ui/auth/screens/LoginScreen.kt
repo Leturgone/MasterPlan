@@ -73,11 +73,7 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginScreenViewMode
         }
         else -> {
             Box(modifier = Modifier.fillMaxWidth()){
-                CustomToastMessage(
-                    message = errorMessage,
-                    isVisible = showToast,
-                    onDismiss = { showToast = false },
-                )
+
                 Box(Modifier.fillMaxWidth(),contentAlignment = Alignment.Center) {
                     Column( modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -180,6 +176,11 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginScreenViewMode
                         Spacer(modifier = Modifier.height(1.dp))
                     }
                 }
+                CustomToastMessage(
+                    message = errorMessage,
+                    isVisible = showToast,
+                    onDismiss = { showToast = false },
+                )
             }
         }
     }
