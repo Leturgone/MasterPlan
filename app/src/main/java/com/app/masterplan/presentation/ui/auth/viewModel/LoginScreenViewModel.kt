@@ -1,5 +1,6 @@
 package com.app.masterplan.presentation.ui.auth.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.masterplan.domain.model.auth.JwtToken
@@ -77,6 +78,12 @@ class LoginScreenViewModel @Inject constructor(
             }
             _loginFlow.value = MasterPlanState.Failure(exception)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("LoginScreenViewModel", "=== LoginScreenViewModel CLEARED: ${this.hashCode()} ===")
+        Log.d("LoginScreenViewModel", "Final state: ${_loginFlow.value}")
     }
 
 }
