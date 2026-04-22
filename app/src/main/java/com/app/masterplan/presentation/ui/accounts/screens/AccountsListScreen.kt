@@ -148,8 +148,8 @@ fun AccountsListScreen(
                         modalViewModel.closeRequestTab()
                     },
                     afterDelete = {
-                        modalViewModel.closeRequestTab()
                         viewModel.loadAccounts()
+                        modalViewModel.closeRequestTab()
                     }
                 )
             }
