@@ -81,8 +81,7 @@ fun AccountCard(viewModel: AccountCardViewModel, editUserButtonOnClick: () -> Un
                 }
 
                 IconButton(onClick = {
-                    viewModel.deleteUser()
-                    afterDelete()
+                    viewModel.deleteUser(afterDelete)
                 }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
