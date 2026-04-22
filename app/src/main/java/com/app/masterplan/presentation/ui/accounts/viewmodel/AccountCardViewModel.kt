@@ -69,15 +69,19 @@ class AccountCardViewModel @Inject constructor(
         _userDataFlow.value = MasterPlanState.Success(userData)
     }
 
-    fun deleteUser() = viewModelScope.launch{
+    fun deleteUser(afterDelete: () -> Unit) = viewModelScope.launch{
         if (_userDataFlow.value is MasterPlanState.Success){
+
             val userId = (_userDataFlow.value as MasterPlanState.Success).result.id
-            deleteUserUseCase(userId)
+            deleteUserUseCase(userId).getOrElse {
+                _userDataFlow.value = MasterPlanState.Failure(Exception(it))
+            }
+            afterDelete()
         }else {
             return@launch
         }
     }
-    fun closeRequestTab() = viewModelScope.launch {
+    fun closeRequestTab() {
         _isModalVisible.value = false
         _userDataFlow.value = MasterPlanState.Waiting
         _directorFlow.value = MasterPlanState.Waiting
