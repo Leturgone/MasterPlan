@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -163,18 +162,18 @@ fun CreateAccountScreen(
                     onClick = {
                         viewModel.saveProfile() },
                 ) {
-                    Text(text = stringResource(id = R.string.save),)
+                    Text(text = stringResource(id = R.string.save))
                 }
 
                 Spacer(modifier = Modifier.height(1.dp))
             }
 
-            CustomToastMessage(
-                message = errorMessage,
-                isVisible = showToast,
-                onDismiss = { showToast = false },
-            )
         }
+        CustomToastMessage(
+            message = errorMessage,
+            isVisible = showToast,
+            onDismiss = { showToast = false },
+        )
 
     }
 
