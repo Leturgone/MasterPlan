@@ -132,12 +132,13 @@ class RequestCardViewModel @Inject constructor(
 
     }
 
-    fun getInWork() = viewModelScope.launch {
+    fun getInWork(onGetInWork: () -> Unit) = viewModelScope.launch {
         val requestId = selectedRequest.value?.id ?: return@launch
         updateAdminRequestStatusUseCase(
             requestId, AdminRequestStatus.IN_PROGRESS
         ).onSuccess {
             _selectedRequestStatus.value = AdminRequestStatus.IN_PROGRESS
+            onGetInWork()
         }
 
     }
