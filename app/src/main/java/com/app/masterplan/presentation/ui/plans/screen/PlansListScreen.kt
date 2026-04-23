@@ -224,7 +224,6 @@ fun PlansListScreen(
                         onDeleteClick = {
                             viewModel.deletePlan()
                             viewModel.closeRequestTab()
-                            viewModel.loadPlans()
                         },
                         onEditClick = {
                             navController.navigate("edit_plan/${plan.id}")
