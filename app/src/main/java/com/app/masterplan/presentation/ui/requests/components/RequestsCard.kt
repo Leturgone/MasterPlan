@@ -33,7 +33,10 @@ import com.app.masterplan.presentation.ui.theme.YellowSoft
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun RequestsCard(viewModel: RequestCardViewModel, createAnswerButtonOnClick: () -> Unit){
+fun RequestsCard(viewModel: RequestCardViewModel,
+                 createAnswerButtonOnClick: () -> Unit,
+                 onGetInWork: () -> Unit
+){
 
     val selectedRequest = viewModel.selectedRequest.collectAsState()
 
@@ -135,7 +138,7 @@ fun RequestsCard(viewModel: RequestCardViewModel, createAnswerButtonOnClick: () 
             when {
                 showGetInWorkButton.value == true -> {
                     CardButton(stringResource(R.string.get_in_work) ){
-                        viewModel.getInWork()
+                        viewModel.getInWork(onGetInWork)
                     }
 
                 }
