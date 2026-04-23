@@ -96,6 +96,8 @@ class PlansListScreenViewModel @Inject constructor(
         }
 
         _deletePlan.value = MasterPlanState.Success(result)
+
+        loadPlans()
     }
 
 
