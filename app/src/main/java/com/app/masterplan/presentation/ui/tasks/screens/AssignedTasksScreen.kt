@@ -228,7 +228,6 @@ fun AssignedTasksScreen(
                                 TaskStatus.NOT_STARTED -> viewModel.getTaskInWork()
                             }
                             viewModel.closeRequestTab()
-                            viewModel.loadAssignedTasks()
                         }
                     )
                 }
