@@ -289,13 +289,14 @@ fun TasksFromPlanScreen(
                         crud = isCrud,
                         onDeleteClick = {
                             viewModel.deleteTaskFromPlan()
-                            viewModel.closeRequestTab()
-                            viewModel.loadTasksFromPlan()
                         },
                         onEditClick = {
                             navController.navigate("edit_task/${task.id}")
                             viewModel.closeRequestTab()
                             viewModel.loadTasksFromPlan()
+                        },
+                        onCompleteClick = {
+                            viewModel.completeTask()
                         }
                     )
                 }
