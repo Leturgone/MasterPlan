@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Menu
@@ -54,7 +53,6 @@ import com.app.masterplan.presentation.ui.tasks.components.AboutPlanFromTasksCar
 import com.app.masterplan.presentation.ui.tasks.components.TaskFromPlanCard
 import com.app.masterplan.presentation.ui.tasks.components.TaskList
 import com.app.masterplan.presentation.ui.tasks.viewModel.TasksFromPlanScreenViewModel
-import com.app.masterplan.presentation.ui.theme.RedSoft
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
