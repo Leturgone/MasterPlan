@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.FloatingActionButton
@@ -29,6 +30,7 @@ import com.app.masterplan.R
 import com.app.masterplan.domain.model.employee.Employee
 import com.app.masterplan.domain.model.plans.Task
 import com.app.masterplan.presentation.ui.common.CardButton
+import com.app.masterplan.presentation.ui.theme.GreenSoft
 import com.app.masterplan.presentation.ui.theme.RedSoft
 import com.app.masterplan.presentation.ui.theme.YellowSoft
 import java.util.UUID
@@ -41,7 +43,8 @@ fun TaskFromPlanCard(
     executors: List<Employee>,
     crud: Boolean,
     onDeleteClick: (UUID) -> Unit,
-    onEditClick: (UUID) -> Unit
+    onEditClick: (UUID) -> Unit,
+    onCompleteClick: (UUID) -> Unit,
 ){
     Column(
         modifier = Modifier.fillMaxSize().padding(start = 16.dp, end = 16.dp),
@@ -79,6 +82,15 @@ fun TaskFromPlanCard(
                     onClick = { onDeleteClick(task.id) },
                 ) {
                     Icon(Icons.Filled.Delete, "Floating delete button.")
+                }
+
+                FloatingActionButton(
+                    modifier = Modifier.width(73.dp).height(56.dp),
+                    containerColor = GreenSoft,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    onClick = { onCompleteClick(task.id) },
+                ) {
+                    Icon(Icons.Filled.Check, "Floating complete button.")
                 }
 
                 FloatingActionButton(
