@@ -36,13 +36,13 @@ import com.app.masterplan.R
 import com.app.masterplan.domain.dto.AttachedDocument
 import com.app.masterplan.domain.dto.NewTaskData
 import com.app.masterplan.presentation.ui.accounts.components.DirectorData
-import com.app.masterplan.presentation.ui.common.CardButton
 import com.app.masterplan.presentation.ui.common.CustomToastMessage
 import com.app.masterplan.presentation.ui.common.DeadLintPicker
 import com.app.masterplan.presentation.ui.common.FileCard
 import com.app.masterplan.presentation.ui.common.InputTextField
 import com.app.masterplan.presentation.ui.common.MasterPlanState
 import com.app.masterplan.presentation.ui.plans.screen.convertLocalDateToDateString
+import com.app.masterplan.presentation.ui.tasks.components.AssignEmployeeCardButton
 import com.app.masterplan.presentation.ui.tasks.viewModel.CreateNewTaskViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -65,6 +65,8 @@ fun CreateNewTaskScreen(
 
     var endDatePickerShow by remember { mutableStateOf(false) }
 
+    val assignedEmployeesList by viewModel.assignedEmployeesList.collectAsState()
+
     // Обработка результата выбора исполнителя из навигации
     val result: DirectorData? by navController.currentBackStackEntry
         ?.savedStateHandle
@@ -82,7 +84,7 @@ fun CreateNewTaskScreen(
         ) {
             LaunchedEffect(Unit) {
                 result?.let { executor ->
-                    viewModel.addExecutor(executor.id)
+                    viewModel.addExecutor(executor)
                     navController.currentBackStackEntry
                         ?.savedStateHandle
                         ?.remove<DirectorData>("selected_executor")
@@ -164,10 +166,13 @@ fun CreateNewTaskScreen(
             )
 
             // Кнопка назначения исполнителя
-            CardButton(stringResource(R.string.assign_executor)) {
+
+            AssignEmployeeCardButton(
+                title = stringResource(R.string.assign_executor),
+                assignedEmployeesList = assignedEmployeesList
+            ){
                 navController.navigate("selected_executor")
             }
-
 
             when(savingState){
                 is MasterPlanState.Failure -> {
