@@ -2,6 +2,7 @@ package com.app.masterplan.presentation.ui.reports.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.masterplan.domain.model.adminRequests.AdminRequestStatus
 import com.app.masterplan.domain.model.reports.ReportStatus
 import com.app.masterplan.domain.model.reports.ReportType
 import com.app.masterplan.domain.model.userManagement.UserRole
@@ -71,6 +72,9 @@ class ReportsScreenViewModel @Inject constructor(
     private val _selectedReport = MutableStateFlow<ReportListDataItem?>(null)
     val selectedReport: StateFlow<ReportListDataItem?> = _selectedReport
 
+    private val _selectedReportStatus = MutableStateFlow(ReportStatus.NOT_CHECKED)
+    val selectedReportStatus: StateFlow<ReportStatus> = _selectedReportStatus
+
     private val _reportItemTitle = MutableStateFlow<MasterPlanState<String>>(MasterPlanState.Waiting)
 
     val reportItemTitle: StateFlow<MasterPlanState<String>> = _reportItemTitle
@@ -108,6 +112,7 @@ class ReportsScreenViewModel @Inject constructor(
     fun openReportTab(report: ReportListDataItem) = viewModelScope.launch {
         _isModalVisible.value = true
         _selectedReport.value = report
+        _selectedReportStatus.value = report.report.reportStatus
         _reportItemTitle.value = MasterPlanState.Loading
         val itemTitle = when (report.report.type) {
             ReportType.TASK ->{
@@ -162,7 +167,10 @@ class ReportsScreenViewModel @Inject constructor(
                 reportId = report.report.id,
                 status = ReportStatus.CHECKING,
                 type = report.report.type
-            )
+            ).onSuccess {
+                _selectedReportStatus.value = ReportStatus.CHECKING
+                loadAllReports()
+            }
         }
     }
 
@@ -173,7 +181,10 @@ class ReportsScreenViewModel @Inject constructor(
                 reportId = report.report.id,
                 status = ReportStatus.CHECKED,
                 type = report.report.type
-            )
+            ).onSuccess {
+                _selectedReportStatus.value = ReportStatus.CHECKED
+                loadAllReports()
+            }
         }
     }
 
@@ -184,7 +195,10 @@ class ReportsScreenViewModel @Inject constructor(
                 reportId = report.report.id,
                 status = ReportStatus.TO_UPDATE,
                 type = report.report.type
-            )
+            ).onSuccess {
+                _selectedReportStatus.value = ReportStatus.TO_UPDATE
+                loadAllReports()
+            }
         }
     }
 
