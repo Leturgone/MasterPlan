@@ -7,6 +7,7 @@ import com.app.masterplan.domain.dto.AttachedDocument
 import com.app.masterplan.domain.dto.NewTaskData
 import com.app.masterplan.domain.useacse.document.AttachFileUseCase
 import com.app.masterplan.domain.useacse.plans.AddTaskToPlanUseCase
+import com.app.masterplan.presentation.ui.accounts.components.DirectorData
 import com.app.masterplan.presentation.ui.common.MasterPlanState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,6 +40,10 @@ class CreateNewTaskViewModel @Inject constructor(
 
     val savingFlow: StateFlow<MasterPlanState<UUID>> = _savingFlow
 
+    private val _assignedEmployeesList = MutableStateFlow<List<DirectorData>>(emptyList())
+
+    val assignedEmployeesList: StateFlow<List<DirectorData>> = _assignedEmployeesList
+
     fun attachDocument(uri: Uri?) = viewModelScope.launch {
         uri?: return@launch
         _attachedDocument.value = MasterPlanState.Loading
@@ -63,8 +68,11 @@ class CreateNewTaskViewModel @Inject constructor(
         _savingFlow.value = MasterPlanState.Success(result)
     }
 
-    fun addExecutor(id: UUID) = viewModelScope.launch {
-        _currentCreatingTask.value.executorsId.add(id)
+    fun addExecutor(executor: DirectorData) = viewModelScope.launch {
+        val list = _assignedEmployeesList.value.toMutableList()
+        list.add(executor)
+        _assignedEmployeesList.value = list
+        _currentCreatingTask.value.executorsId.add(executor.id)
     }
 
 
