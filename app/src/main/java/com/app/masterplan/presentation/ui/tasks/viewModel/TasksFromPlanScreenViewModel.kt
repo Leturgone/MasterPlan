@@ -10,6 +10,7 @@ import com.app.masterplan.domain.model.userManagement.UserRole
 import com.app.masterplan.domain.useacse.auth.GetUserRoleUseCase
 import com.app.masterplan.domain.useacse.document.DownloadFileUseCase
 import com.app.masterplan.domain.useacse.employee.GetEmployeeByIdUseCase
+import com.app.masterplan.domain.useacse.plans.ChangeTaskStatusUseCase
 import com.app.masterplan.domain.useacse.plans.DeleteTaskFromPlanUseCase
 import com.app.masterplan.domain.useacse.plans.ExportPlanUseCase
 import com.app.masterplan.domain.useacse.plans.FilterPlanTasksByStatusUseCase
@@ -37,7 +38,8 @@ class TasksFromPlanScreenViewModel @Inject constructor(
     private val exportPlanUseCase: ExportPlanUseCase,
     private val deleteTaskFromPlanUseCase: DeleteTaskFromPlanUseCase,
     private val getEmployeeByIdUseCase: GetEmployeeByIdUseCase,
-    private val getPlanInfUseCase: GetPlanInfUseCase
+    private val getPlanInfUseCase: GetPlanInfUseCase,
+    private val changeTaskStatusUseCase: ChangeTaskStatusUseCase
 ): ViewModel() {
 
     private val _assignedTasksListFlow = MutableStateFlow<MasterPlanState<List<Task>>>(MasterPlanState.Waiting)
@@ -81,10 +83,6 @@ class TasksFromPlanScreenViewModel @Inject constructor(
     private val _isCrudOperations = MutableStateFlow(false)
     val isCrudOperations: StateFlow<Boolean> = _isCrudOperations
 
-    private val _deleteTask = MutableStateFlow<MasterPlanState<UUID>>(MasterPlanState.Waiting)
-
-    val deleteTask: StateFlow<MasterPlanState<UUID>> = _deleteTask
-
     private val _executorsList = MutableStateFlow<MasterPlanState<List<Employee>>>(MasterPlanState.Waiting)
     val executorsList: StateFlow<MasterPlanState<List<Employee>>> = _executorsList
 
@@ -109,17 +107,22 @@ class TasksFromPlanScreenViewModel @Inject constructor(
 
     fun deleteTaskFromPlan() = viewModelScope.launch {
         if (!_isCrudOperations.value)  return@launch
-        val planId = _currentPlan.value ?: return@launch
         val task = _selectedTask.value ?: return@launch
 
-        _deleteTask.value = MasterPlanState.Loading
-
-        val result = deleteTaskFromPlanUseCase(task.id).getOrElse {
-            _deleteTask.value =  MasterPlanState.Failure(Exception(it.message))
-            return@launch
+        deleteTaskFromPlanUseCase(task.id).onSuccess {
+            closeRequestTab()
+            loadTasksFromPlan()
         }
+    }
 
-        _deleteTask.value = MasterPlanState.Success(result)
+    fun completeTask() = viewModelScope.launch {
+        if (!_isCrudOperations.value)  return@launch
+        val task = _selectedTask.value ?: return@launch
+
+        changeTaskStatusUseCase(task.id, TaskStatus.COMPLETED).onSuccess {
+            closeRequestTab()
+            loadTasksFromPlan()
+        }
     }
 
 
@@ -226,6 +229,8 @@ class TasksFromPlanScreenViewModel @Inject constructor(
 
         _assignedTasksListFlow.value = MasterPlanState.Success(list)
     }
+
+
 
     fun getNotStartedTasks() = viewModelScope.launch {
         val planId = _currentPlan.value ?: return@launch
