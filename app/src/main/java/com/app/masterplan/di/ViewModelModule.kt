@@ -17,7 +17,6 @@ import com.app.masterplan.domain.useacse.adminRequests.GetAdminAnswerForRequestU
 import com.app.masterplan.domain.useacse.adminRequests.GetAdminRequestsListUseCase
 import com.app.masterplan.domain.useacse.adminRequests.GetCreatedAdminRequestsBySenderListUseCase
 import com.app.masterplan.domain.useacse.auth.CheckIfAlreadyLoggedUseCase
-import com.app.masterplan.domain.useacse.employee.GetLocalEmpIdUseCase
 import com.app.masterplan.domain.useacse.auth.GetUserRoleUseCase
 import com.app.masterplan.domain.useacse.auth.LoginUseCase
 import com.app.masterplan.domain.useacse.auth.LogoutUseCase
@@ -28,6 +27,7 @@ import com.app.masterplan.domain.useacse.employee.GetAllDirectorEmployeesUseCase
 import com.app.masterplan.domain.useacse.employee.GetAllEmployeesUseCase
 import com.app.masterplan.domain.useacse.employee.GetDirEmployeesWithoutTasksUseCase
 import com.app.masterplan.domain.useacse.employee.GetEmployeeByIdUseCase
+import com.app.masterplan.domain.useacse.employee.GetLocalEmpIdUseCase
 import com.app.masterplan.domain.useacse.employee.GetProfileInformationUseCase
 import com.app.masterplan.domain.useacse.employee.SearchDirEmployeeByNameUseCase
 import com.app.masterplan.domain.useacse.employee.SearchEmployeeByNameUseCase
@@ -102,7 +102,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 
 @Module
