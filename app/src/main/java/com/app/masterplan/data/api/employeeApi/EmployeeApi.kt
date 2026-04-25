@@ -52,7 +52,7 @@ interface EmployeeApi {
     ): Response<List<EmployeeDetailsResponse>>
 
 
-    @GET("dir/employee/{id}")
+    @GET("emp/employee/{id}")
     suspend fun getEmployeeById(
         @Header("Authorization") token: String,
         @Path(value = "id") empId: UUID
