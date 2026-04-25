@@ -1,5 +1,6 @@
 package com.app.masterplan.presentation.ui.accounts.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.masterplan.domain.dto.NewEmployeeData
@@ -47,7 +48,6 @@ class CreateAccountScreenViewModel @Inject constructor(
 
     val savingFlow: StateFlow<MasterPlanState<UUID>> = _savingFlow
 
-
     fun saveProfile() = viewModelScope.launch {
         _savingFlow.value = MasterPlanState.Loading
         val userRoles = _roles.value.mapNotNull { role ->
@@ -84,6 +84,7 @@ class CreateAccountScreenViewModel @Inject constructor(
 
 
     fun toggleRoleSelection(roleData: RoleData) {
+        Log.d("ViewModel", "toggleRoleSelection($roleData)")
         _roles.value = _roles.value.map { role ->
             if (role == roleData) {
                 role.copy(isSelected = !role.isSelected)
@@ -125,5 +126,12 @@ class CreateAccountScreenViewModel @Inject constructor(
         )
     }
 
+
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("CreateAccountScreenViewModel", "=== CreateAccountScreenViewModel CLEARED: ${this.hashCode()} ===")
+        Log.d("CreateAccountScreenViewModel", "Final state: ${_savingFlow.value}")
+    }
 
 }

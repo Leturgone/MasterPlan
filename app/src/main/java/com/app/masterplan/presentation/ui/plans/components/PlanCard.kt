@@ -1,15 +1,18 @@
 package com.app.masterplan.presentation.ui.plans.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Mail
@@ -40,14 +43,31 @@ fun PlanCard(
     onDeleteClick: (UUID) -> Unit,
     onStartClick: (UUID) -> Unit,
     onCreateReportClick: (UUID) -> Unit,
-    onEditClick: (UUID) -> Unit
+    onEditClick: (UUID) -> Unit,
+    onCompleteClick: (UUID) -> Unit
 ){
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier.fillMaxSize().padding(start = 16.dp, end = 16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.Start
     ) {
-        PlanView(plan)
+        Box(Modifier.height(400.dp)) {
+            PlanView(plan)
+            FloatingActionButton(
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
+                    .align(Alignment.TopEnd)
+                    .offset(y = 16.dp)
+                    .padding(start = 16.dp, top = 16.dp),
+                containerColor = GreenSoft,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                onClick = { onCompleteClick(plan.id) },
+            ) {
+                Icon(Icons.Filled.Check, "Floating complete button.")
+            }
+        }
+
 
         if (plan.documentId!= null){
             CardButton(downloadButtonTitle) { onDownloadFileClick(plan.documentId) }

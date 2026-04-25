@@ -58,11 +58,6 @@ class PlansListScreenViewModel @Inject constructor(
 
     private val _isCrudOperations = MutableStateFlow(false)
     val isCrudOperations: StateFlow<Boolean> = _isCrudOperations
-
-    private val _deletePlan = MutableStateFlow<MasterPlanState<UUID>>(MasterPlanState.Waiting)
-
-    val deletePlan: StateFlow<MasterPlanState<UUID>> = _deletePlan
-
     private lateinit var employeeId: UUID
 
 
@@ -88,14 +83,13 @@ class PlansListScreenViewModel @Inject constructor(
         if (!_isCrudOperations.value)  return@launch
         val plan = _selectedPlan.value ?: return@launch
 
-        _deletePlan.value = MasterPlanState.Loading
 
-        val result = deletePlanUseCase(plan.id).getOrElse {
-            _deletePlan.value =  MasterPlanState.Failure(Exception(it.message))
-            return@launch
+        val result = deletePlanUseCase(plan.id).onSuccess {
+            closeRequestTab()
+            loadPlans()
         }
 
-        _deletePlan.value = MasterPlanState.Success(result)
+
     }
 
 
@@ -195,9 +189,21 @@ class PlansListScreenViewModel @Inject constructor(
 
     }
 
-    fun getPlanInWork(planId: UUID) = viewModelScope.launch {
-        changePlanStatusUseCase(planId, PlanStatus.IN_PROGRESS).getOrElse {
-            return@launch
+    fun getPlanInWork() = viewModelScope.launch {
+        if (!_isCrudOperations.value)  return@launch
+        val planId = _selectedPlan.value?.id ?: return@launch
+        changePlanStatusUseCase(planId, PlanStatus.IN_PROGRESS).onSuccess {
+            closeRequestTab()
+            loadPlans()
+        }
+    }
+
+    fun completePlan() = viewModelScope.launch {
+        if (!_isCrudOperations.value)  return@launch
+        val planId = _selectedPlan.value?.id ?: return@launch
+        changePlanStatusUseCase(planId, PlanStatus.COMPLETED).onSuccess {
+            closeRequestTab()
+            loadPlans()
         }
     }
 }

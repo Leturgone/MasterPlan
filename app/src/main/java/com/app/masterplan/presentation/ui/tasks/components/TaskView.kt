@@ -1,12 +1,18 @@
 package com.app.masterplan.presentation.ui.tasks.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -47,14 +53,22 @@ fun TaskView(task: Task, onPlanClick: (UUID) -> Unit){
                 color = Color.Black,
                 textAlign = TextAlign.Start,
             )
-
-            Text(
-                text = stringResource(R.string.to_plan),
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                textAlign = TextAlign.End,
-                modifier = Modifier.clickable(onClick = { onPlanClick(task.planId) })
+            ExtendedFloatingActionButton(
+                shape = CircleShape,
+                onClick = {
+                    onPlanClick(task.planId)
+                },
+                icon = { Icon(Icons.Default.List,
+                    "Export plan button", modifier = Modifier.size(20.dp)) },
+                text = {
+                    Text(
+                        text = stringResource(R.string.to_plan),
+                        fontSize = 12.sp,
+                        modifier = Modifier.padding(vertical = 20.dp)
+                    )
+                },
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                containerColor = MaterialTheme.colorScheme.primary,
             )
         }
 

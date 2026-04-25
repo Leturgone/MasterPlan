@@ -60,24 +60,21 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginScreenViewMode
 
     val isAdmin = viewModel.isAdmin.collectAsState()
 
-    val isLogged = viewModel.isLogged.collectAsState()
 
-
-    when(isLogged.value) {
+    when(loginState.value) {
         MasterPlanState.Loading -> CircularProgressIndicator()
         is MasterPlanState.Success ->{
-            when(isAdmin.value){
-                true -> navController.navigate("requests")
-                false -> navController.navigate("profile")
+            LaunchedEffect(Unit){
+                navController.popBackStack()
+                when(isAdmin.value){
+                    true -> navController.navigate("requests")
+                    false -> navController.navigate("profile")
+                }
             }
         }
         else -> {
             Box(modifier = Modifier.fillMaxWidth()){
-                CustomToastMessage(
-                    message = errorMessage,
-                    isVisible = showToast,
-                    onDismiss = { showToast = false },
-                )
+
                 Box(Modifier.fillMaxWidth(),contentAlignment = Alignment.Center) {
                     Column( modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -162,24 +159,18 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginScreenViewMode
                                 showToast = true
                                 errorMessage = (loginState.value as MasterPlanState.Failure).exception.toString()
                             }
-
-                            is MasterPlanState.Loading -> CircularProgressIndicator()
-
-                            is MasterPlanState.Success -> LaunchedEffect(Unit){
-                                when(isAdmin.value){
-                                    true -> navController.navigate("requests")
-                                    false -> navController.navigate("profile")
-                                }
-                                navController.popBackStack()
-                            }
-
-                            is MasterPlanState.Waiting -> null
+                            else -> null
                         }
 
 
                         Spacer(modifier = Modifier.height(1.dp))
                     }
                 }
+                CustomToastMessage(
+                    message = errorMessage,
+                    isVisible = showToast,
+                    onDismiss = { showToast = false },
+                )
             }
         }
     }

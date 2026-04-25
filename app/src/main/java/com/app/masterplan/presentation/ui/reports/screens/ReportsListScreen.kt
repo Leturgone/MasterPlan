@@ -96,6 +96,8 @@ fun ReportListScreen(
 
     val selectedReport by viewModel.selectedReport.collectAsState()
 
+    val selectedReportStatus by viewModel.selectedReportStatus.collectAsState()
+
     val downloadedTask by viewModel.downloadFile.collectAsState()
 
     val currentTab = viewModel.currentTab.collectAsState()
@@ -261,6 +263,7 @@ fun ReportListScreen(
 
                             AboutToCheckReport(
                                 report = report.report,
+                                reportStatus = selectedReportStatus,
                                 employeeName = report.employeeName,
                                 employeeSurname = report.employeeSurname,
                                 employeePatronymic = report.employeePatronymic,

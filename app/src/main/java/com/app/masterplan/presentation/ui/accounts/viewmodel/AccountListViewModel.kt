@@ -1,5 +1,6 @@
 package com.app.masterplan.presentation.ui.accounts.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.masterplan.domain.model.employee.Employee
@@ -70,5 +71,12 @@ class AccountListViewModel @Inject constructor(
             return@launch
         }
         _searchHistoryFlow.value = MasterPlanState.Success(list)
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("AccountListViewModel", "=== AccountListViewModel CLEARED: ${this.hashCode()} ===")
+        Log.d("AccountListViewModel", "Final state: ${_accountsListFlow.value}")
     }
 }

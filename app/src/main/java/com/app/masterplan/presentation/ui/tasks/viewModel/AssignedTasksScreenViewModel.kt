@@ -92,6 +92,7 @@ class AssignedTasksScreenViewModel @Inject constructor(
                 return@launch
             }
         }
+        loadByCurrentSort()
     }
 
     fun loadAssignedTasks() = viewModelScope.launch {

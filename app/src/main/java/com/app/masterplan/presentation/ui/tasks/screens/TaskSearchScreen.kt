@@ -125,7 +125,7 @@ fun TaskSearchScreen(
 
                     TaskCard(
                         task = task,
-                        onPlanClick = { navController.navigate("plan/${task.planId}/tasks") },
+                        onPlanClick = { navController.navigate("tasks_from_plan/${task.planId}") },
                         downloadButtonTitle = when (downloadedTask) {
                             is MasterPlanState.Failure -> stringResource(R.string.error_while_loading)
                             MasterPlanState.Loading -> stringResource(R.string.loading)

@@ -37,11 +37,7 @@ fun NewRequestScreen(
     val creatingStatus = viewModel.creatingStatus.collectAsState()
 
     Box(){
-        CustomToastMessage(
-            message = errorMessage,
-            isVisible = showToast,
-            onDismiss = { showToast = false },
-        )
+
 
         Column(
             modifier = Modifier
@@ -75,5 +71,10 @@ fun NewRequestScreen(
 
 
         }
+        CustomToastMessage(
+            message = errorMessage,
+            isVisible = showToast,
+            onDismiss = { showToast = false },
+        )
     }
 }

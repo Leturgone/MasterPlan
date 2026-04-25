@@ -223,22 +223,20 @@ fun PlansListScreen(
                         crud = isCrud,
                         onDeleteClick = {
                             viewModel.deletePlan()
-                            viewModel.closeRequestTab()
-                            viewModel.loadPlans()
                         },
                         onEditClick = {
                             navController.navigate("edit_plan/${plan.id}")
                             viewModel.closeRequestTab()
-                            viewModel.loadPlans()
                         },
                         onStartClick = {
-                            viewModel.getPlanInWork(plan.id)
-                            viewModel.closeRequestTab()
-                            viewModel.loadPlans()
+                            viewModel.getPlanInWork()
                         },
                         onCreateReportClick = {
                             navController.navigate("create_report_plan/${plan.id}")
                             viewModel.closeRequestTab()
+                        },
+                        onCompleteClick = {
+                            viewModel.completePlan()
                         }
                     )
                 }

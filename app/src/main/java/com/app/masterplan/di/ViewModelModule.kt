@@ -17,7 +17,6 @@ import com.app.masterplan.domain.useacse.adminRequests.GetAdminAnswerForRequestU
 import com.app.masterplan.domain.useacse.adminRequests.GetAdminRequestsListUseCase
 import com.app.masterplan.domain.useacse.adminRequests.GetCreatedAdminRequestsBySenderListUseCase
 import com.app.masterplan.domain.useacse.auth.CheckIfAlreadyLoggedUseCase
-import com.app.masterplan.domain.useacse.employee.GetLocalEmpIdUseCase
 import com.app.masterplan.domain.useacse.auth.GetUserRoleUseCase
 import com.app.masterplan.domain.useacse.auth.LoginUseCase
 import com.app.masterplan.domain.useacse.auth.LogoutUseCase
@@ -28,6 +27,7 @@ import com.app.masterplan.domain.useacse.employee.GetAllDirectorEmployeesUseCase
 import com.app.masterplan.domain.useacse.employee.GetAllEmployeesUseCase
 import com.app.masterplan.domain.useacse.employee.GetDirEmployeesWithoutTasksUseCase
 import com.app.masterplan.domain.useacse.employee.GetEmployeeByIdUseCase
+import com.app.masterplan.domain.useacse.employee.GetLocalEmpIdUseCase
 import com.app.masterplan.domain.useacse.employee.GetProfileInformationUseCase
 import com.app.masterplan.domain.useacse.employee.SearchDirEmployeeByNameUseCase
 import com.app.masterplan.domain.useacse.employee.SearchEmployeeByNameUseCase
@@ -102,7 +102,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 
 @Module
@@ -110,7 +109,6 @@ import javax.inject.Singleton
 object ViewModelModule {
 
     @Provides
-    @Singleton
     fun provideLoginViewModel(
         authRepository: AuthRepository,
         employeeRepository: EmployeeRepository
@@ -124,7 +122,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideBottomBarViewModel(
         authRepository: AuthRepository
     ): BottomBarViewModel {
@@ -133,7 +130,6 @@ object ViewModelModule {
     }
 
     @Provides
-    @Singleton
     fun provideRequestsListScreenViewModel(
         authRepository: AuthRepository,
         adminRequestsRepository: AdminRequestsRepository,
@@ -154,7 +150,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideRequestCardViewModel(
         employeeRepository: EmployeeRepository,
         adminRequestsRepository: AdminRequestsRepository,
@@ -171,7 +166,6 @@ object ViewModelModule {
     }
 
     @Provides
-    @Singleton
     fun provideNewAnswerScreenViewModel(
         adminRequestsRepository: AdminRequestsRepository,
     ): NewAnswerScreenViewModel {
@@ -182,7 +176,6 @@ object ViewModelModule {
     }
 
     @Provides
-    @Singleton
     fun provideNewRequestsScreenViewModel(
         employeeRepository: EmployeeRepository,
         adminRequestsRepository: AdminRequestsRepository,
@@ -195,7 +188,6 @@ object ViewModelModule {
     }
 
     @Provides
-    @Singleton
     fun provideAccountCardViewModel(
         employeeRepository: EmployeeRepository,
         userRepository: UserRepository
@@ -211,7 +203,6 @@ object ViewModelModule {
     }
 
     @Provides
-    @Singleton
     fun provideAccountListViewModel(
         employeeRepository: EmployeeRepository,
         searchHistoryRepository: SearchHistoryRepository,
@@ -231,7 +222,6 @@ object ViewModelModule {
     }
 
     @Provides
-    @Singleton
     fun provideCreateAccountScreenViewModel(
         userRepository: UserRepository
     ): CreateAccountScreenViewModel{
@@ -243,7 +233,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideEditAccountScreenViewModel(
         userRepository: UserRepository,
         employeeRepository: EmployeeRepository,
@@ -261,7 +250,6 @@ object ViewModelModule {
     }
 
     @Provides
-    @Singleton
     fun provideOptionsViewModel(
         themeRepository: ThemeRepository,
         authRepository: AuthRepository
@@ -278,7 +266,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideProfileViewModel(
         employeeRepository: EmployeeRepository,
         authRepository: AuthRepository
@@ -295,7 +282,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideEmployeeCardViewModel(
         employeeRepository: EmployeeRepository,
         taskRepository: TaskRepository
@@ -310,7 +296,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideEmployeeListScreenViewModel(
         employeeRepository: EmployeeRepository,
         searchHistoryRepository: SearchHistoryRepository
@@ -342,7 +327,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideAssignedTasksScreenViewModel(
         employeeRepository: EmployeeRepository,
         taskRepository: TaskRepository,
@@ -367,7 +351,6 @@ object ViewModelModule {
     }
 
     @Provides
-    @Singleton
     fun provideTaskSearchScreenViewModel(
         employeeRepository: EmployeeRepository,
         taskRepository: TaskRepository,
@@ -397,7 +380,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun providePlansListScreenViewModel(
         authRepository: AuthRepository,
         employeeRepository: EmployeeRepository,
@@ -427,7 +409,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideUpdatePlanViewModel(
         planRepository: PlanRepository,
         documentRepository: DocumentRepository
@@ -444,7 +425,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideCreateNewPlanViewModel(
         employeeRepository: EmployeeRepository,
         planRepository: PlanRepository,
@@ -462,7 +442,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideTasksFromPlanScreenViewModel(
         authRepository: AuthRepository,
         taskRepository: TaskRepository,
@@ -479,6 +458,7 @@ object ViewModelModule {
         val deleteTaskFromPlanUseCase = DeleteTaskFromPlanUseCase(taskRepository)
         val getEmployeeByIdUseCase = GetEmployeeByIdUseCase(employeeRepository)
         val getPlanInfUseCase = GetPlanInfUseCase(planRepository)
+        val changeTaskStatusUseCase = ChangeTaskStatusUseCase(taskRepository)
         return TasksFromPlanScreenViewModel(
             getUserRoleUseCase,
             getTasksFromPlanUseCase,
@@ -488,13 +468,13 @@ object ViewModelModule {
             exportPlanUseCase,
             deleteTaskFromPlanUseCase,
             getEmployeeByIdUseCase,
-            getPlanInfUseCase
+            getPlanInfUseCase,
+            changeTaskStatusUseCase
         )
     }
 
 
     @Provides
-    @Singleton
     fun provideCreateNewTaskViewModel(
         taskRepository: TaskRepository,
         documentRepository: DocumentRepository
@@ -509,7 +489,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideUpdateTaskViewModel(
         taskRepository: TaskRepository,
         documentRepository: DocumentRepository
@@ -526,7 +505,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideReportsScreenViewModel(
         authRepository: AuthRepository,
         employeeRepository: EmployeeRepository,
@@ -564,7 +542,6 @@ object ViewModelModule {
     }
 
     @Provides
-    @Singleton
     fun provideNewReportViewModel(
         employeeRepository: EmployeeRepository,
         reportRepository: ReportRepository,
@@ -582,7 +559,6 @@ object ViewModelModule {
 
 
     @Provides
-    @Singleton
     fun provideUpdateReportViewModel(
         employeeRepository: EmployeeRepository,
         reportRepository: ReportRepository,

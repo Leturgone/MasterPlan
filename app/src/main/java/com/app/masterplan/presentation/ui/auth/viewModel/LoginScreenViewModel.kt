@@ -1,5 +1,6 @@
 package com.app.masterplan.presentation.ui.auth.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.masterplan.domain.model.auth.JwtToken
@@ -22,35 +23,34 @@ class LoginScreenViewModel @Inject constructor(
     private val getUserRoleUseCase: GetUserRoleUseCase,
     private val checkIfAlreadyLoggedUseCase: CheckIfAlreadyLoggedUseCase,
 ): ViewModel() {
-    private val _loginFlow = MutableStateFlow<MasterPlanState<JwtToken>>(MasterPlanState.Waiting)
+    private val _loginFlow = MutableStateFlow<MasterPlanState<Boolean>>(MasterPlanState.Waiting)
 
-    val loginFlow: StateFlow<MasterPlanState<JwtToken>> = _loginFlow
+    val loginFlow: StateFlow<MasterPlanState<Boolean>> = _loginFlow
 
     private val _isAdmin = MutableStateFlow<Boolean>(false)
 
     val isAdmin : StateFlow<Boolean> = _isAdmin
 
-    private val _isLogged = MutableStateFlow<MasterPlanState<Boolean>>(MasterPlanState.Waiting)
-
-    val isLogged : StateFlow<MasterPlanState<Boolean>> = _isLogged
-
-
     init {
         viewModelScope.launch {
-            _isLogged.value = MasterPlanState.Loading
-            checkIfAlreadyLoggedUseCase().onSuccess {
-                getUserRoleUseCase().onSuccess { userRoles ->
-                    _isAdmin.value =  when {
-                        UserRole.ADMIN in userRoles -> true
-                        else -> false
+            _loginFlow.value = MasterPlanState.Loading
+            checkIfAlreadyLoggedUseCase().onSuccess { isLogged ->
+                if (!isLogged){
+                    _loginFlow.value = MasterPlanState.Waiting
+                }else {
+                    getUserRoleUseCase().onSuccess { userRoles ->
+                        _isAdmin.value =  when {
+                            UserRole.ADMIN in userRoles -> true
+                            else -> false
+                        }
+                        _loginFlow.value = MasterPlanState.Success(true)
+                    }.onFailure {
+                        _loginFlow.value = MasterPlanState.Waiting
+                        _isAdmin.value = false
                     }
-                    _isLogged.value = MasterPlanState.Success(true)
-                }.onFailure {
-                    _isLogged.value = MasterPlanState.Failure(Exception())
-                    _isAdmin.value = false
                 }
             }.onFailure {
-                _isLogged.value = MasterPlanState.Failure(Exception())
+                _loginFlow.value = MasterPlanState.Waiting
             }
         }
     }
@@ -69,14 +69,19 @@ class LoginScreenViewModel @Inject constructor(
                 }
             }
             getLocalEmpIdUseCase()
-            _isLogged.value = MasterPlanState.Success(true)
-            _loginFlow.value = MasterPlanState.Success(it)
+            _loginFlow.value = MasterPlanState.Success(true)
         }.onFailure {
             val exception = when(it){
                 else -> Exception("Error during login: ${it.message}")
             }
             _loginFlow.value = MasterPlanState.Failure(exception)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("LoginScreenViewModel", "=== LoginScreenViewModel CLEARED: ${this.hashCode()} ===")
+        Log.d("LoginScreenViewModel", "Final state: ${_loginFlow.value}")
     }
 
 }

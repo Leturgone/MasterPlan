@@ -154,6 +154,7 @@ fun BottomNavigationBar(navController: NavHostController,items: List<BottomNavig
                 NavigationBarItem(selected = currentRoute == item.route, modifier = Modifier.semantics
                 { contentDescription = item.route },
                     onClick = {
+                        navController.popBackStack()
                         navController.navigate(item.route) {
                             launchSingleTop = true
                         }

@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Menu
@@ -54,7 +53,6 @@ import com.app.masterplan.presentation.ui.tasks.components.AboutPlanFromTasksCar
 import com.app.masterplan.presentation.ui.tasks.components.TaskFromPlanCard
 import com.app.masterplan.presentation.ui.tasks.components.TaskList
 import com.app.masterplan.presentation.ui.tasks.viewModel.TasksFromPlanScreenViewModel
-import com.app.masterplan.presentation.ui.theme.RedSoft
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -239,19 +237,22 @@ fun TasksFromPlanScreen(
             }
         }
 
-        FloatingActionButton(
-            content =  {
-                Icon(Icons.Default.Add, null)
-            },
-            onClick = {
-                navController.navigate("add_task_to_plan/$planId")
-            },
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(start =20.dp ,bottom = 50.dp),
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-            containerColor = MaterialTheme.colorScheme.primary
-        )
+        if (isCrud){
+            FloatingActionButton(
+                content =  {
+                    Icon(Icons.Default.Add, null)
+                },
+                onClick = {
+                    navController.navigate("add_task_to_plan/$planId")
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(start =20.dp ,bottom = 50.dp),
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        }
+
 
         FabMenu(
             menuOptions = menuOptions
@@ -289,13 +290,14 @@ fun TasksFromPlanScreen(
                         crud = isCrud,
                         onDeleteClick = {
                             viewModel.deleteTaskFromPlan()
-                            viewModel.closeRequestTab()
-                            viewModel.loadTasksFromPlan()
                         },
                         onEditClick = {
                             navController.navigate("edit_task/${task.id}")
                             viewModel.closeRequestTab()
                             viewModel.loadTasksFromPlan()
+                        },
+                        onCompleteClick = {
+                            viewModel.completeTask()
                         }
                     )
                 }

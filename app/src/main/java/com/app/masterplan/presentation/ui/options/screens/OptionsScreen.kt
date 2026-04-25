@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -33,6 +34,15 @@ fun OptionsScreen(
 ) {
 
     val isDarkTheme by viewModel.isDarkMode.collectAsState()
+    val isLogout by viewModel.isLogout.collectAsState()
+
+    if (isLogout == true) {
+        LaunchedEffect(Unit) {
+            navHostController.popBackStack()
+            navHostController.popBackStack()
+            navHostController.navigate("login")
+        }
+    }
 
     Column {
         Box(modifier = Modifier.fillMaxWidth()){
@@ -57,14 +67,7 @@ fun OptionsScreen(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
                     .padding(start = 16.dp, top = 16.dp)
-                    .clickable {
-                        viewModel.logout()
-                        navHostController.navigate("login"){
-                            popUpTo(navHostController.graph.startDestinationId) {
-                                inclusive = true
-                            }
-                        }
-                    }
+                    .clickable { viewModel.logout() }
             )
         }
         Box(modifier = Modifier

@@ -38,14 +38,14 @@ interface PlansTasksApi {
     ): Response<TaskInformationResponse>
 
 
-    @GET("plans/dir/plan/{planId}/tasks")
+    @GET("plans/emp/plan/{planId}/tasks")
     suspend fun getPlanTasks(
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID
     ): Response<List<TaskInformationResponse>>
 
 
-    @GET("plans/dir/plan/{planId}/tasks/status/{status}")
+    @GET("plans/emp/plan/{planId}/tasks/status/{status}")
     suspend fun getPlanTasksFilterByStatus(
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID,
@@ -53,7 +53,7 @@ interface PlansTasksApi {
     ): Response<List<TaskInformationResponse>>
 
 
-    @GET("plans/dir/plan/{planId}/tasks/sortTime")
+    @GET("plans/emp/plan/{planId}/tasks/sortTime")
     suspend fun getPlanTasksSortByTime(
         @Header("Authorization") token: String,
         @Path(value = "planId") planId: UUID

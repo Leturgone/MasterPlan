@@ -41,6 +41,7 @@ import java.util.UUID
 @Composable
 fun AboutToCheckReport(
     report: Report,
+    reportStatus: ReportStatus,
     employeeName: String? = null,
     employeeSurname: String? = null,
     employeePatronymic: String? = null,
@@ -143,14 +144,14 @@ fun AboutToCheckReport(
         }
 
 
-        val statusColor = when(report.reportStatus){
+        val statusColor = when(reportStatus){
             ReportStatus.NOT_CHECKED -> RedSoft
             ReportStatus.CHECKED -> GreenSoft
             ReportStatus.CHECKING -> YellowSoft
             ReportStatus.TO_UPDATE -> PurpleSoft
         }
 
-        val statusTitle = when(report.reportStatus){
+        val statusTitle = when(reportStatus){
             ReportStatus.NOT_CHECKED -> stringResource(R.string.not_check)
             ReportStatus.CHECKED -> stringResource(R.string.checked)
             ReportStatus.CHECKING -> stringResource(R.string.checking)

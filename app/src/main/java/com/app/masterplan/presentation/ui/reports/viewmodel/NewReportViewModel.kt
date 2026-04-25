@@ -72,7 +72,12 @@ class NewReportViewModel @Inject constructor(
             referenceId = ref, employeeId = employeeId
         )
 
-        val document = attachedDocument.value as? MasterPlanState.Success?:return@launch
+        val document = attachedDocument.value as? MasterPlanState.Success?
+
+        if (document == null){
+            _savingFlow.value =  MasterPlanState.Failure(Exception("Attach document"))
+            return@launch
+        }
 
         val result = createNewReportUseCase(
             newReportData = reportData,

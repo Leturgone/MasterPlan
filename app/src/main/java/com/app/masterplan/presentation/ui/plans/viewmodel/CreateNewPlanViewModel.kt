@@ -65,9 +65,9 @@ class CreateNewPlanViewModel @Inject constructor(
     fun createNewPlan() = viewModelScope.launch {
         _savingFlow.value = MasterPlanState.Loading
         val planData = _currentCreatingPlan.value
-        val document = attachedDocument.value as? MasterPlanState.Success?:return@launch
+        val document = attachedDocument.value as? MasterPlanState.Success
 
-        val result = createNewPlanUseCase(planData, document.result).getOrElse {
+        val result = createNewPlanUseCase(planData, document?.result).getOrElse {
             _savingFlow.value =  MasterPlanState.Failure(Exception(it.message))
             return@launch
         }

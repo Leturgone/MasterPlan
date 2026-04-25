@@ -1,5 +1,6 @@
 package com.app.masterplan.presentation.ui.accounts.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.masterplan.domain.model.employee.Employee
@@ -147,5 +148,10 @@ class EditAccountScreenViewModel @Inject constructor(
         )
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("EditAccountScreenViewModel", "=== EditAccountScreenViewModel CLEARED: ${this.hashCode()} ===")
+        Log.d("EditAccountScreenViewModel", "Final state: ${_savingFlow.value}")
+    }
 
 }

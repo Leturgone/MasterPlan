@@ -73,12 +73,6 @@ fun RequestsListScreen(
 
 
     Box() {
-        CustomToastMessage(
-            message = errorMessage,
-            isVisible = showToast,
-            onDismiss = { showToast = false },
-        )
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -94,8 +88,10 @@ fun RequestsListScreen(
 
             when(requestsList.value){
                 is MasterPlanState.Failure -> {
-                    showToast = true
-                    errorMessage = (requestsList.value as MasterPlanState.Failure).exception.message ?: ""
+                    LaunchedEffect(Unit) {
+                        showToast = true
+                        errorMessage = (requestsList.value as MasterPlanState.Failure).exception.message ?: ""
+                    }
                 }
                 MasterPlanState.Loading -> CircularProgressIndicator()
                 is MasterPlanState.Success -> {
@@ -142,12 +138,23 @@ fun RequestsListScreen(
                     modalViewModel.closeRequestTab()
                 },
             ){
-                RequestsCard(modalViewModel) {
-                    val requestId = modalViewModel.selectedRequest.value?.id?:""
-                    navController.navigate("new_answer/${requestId}")
-                }
+                RequestsCard(
+                    modalViewModel,
+                    createAnswerButtonOnClick = {
+                        val requestId = modalViewModel.selectedRequest.value?.id ?: ""
+                        navController.navigate("new_answer/${requestId}")
+                    },
+                    onGetInWork = {
+                        viewModel.loadRequestsList()
+                    }
+                )
             }
         }
+        CustomToastMessage(
+            message = errorMessage,
+            isVisible = showToast,
+            onDismiss = { showToast = false },
+        )
     }
 
 }
