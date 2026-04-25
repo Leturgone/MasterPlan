@@ -25,12 +25,12 @@ import com.app.masterplan.presentation.ui.theme.YellowSoft
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun PlanView(plan: Plan){
-
-
+fun PlanView(
+    plan: Plan,
+){
     val outputFormatter = DateTimeFormatter.ofPattern("dd.MM.yy")
     Column(
-        modifier = Modifier.height(400.dp).padding(16.dp),
+        modifier = Modifier.height(400.dp).padding(start = 16.dp, bottom = 16.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.Start
     ) {
