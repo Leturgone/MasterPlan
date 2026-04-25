@@ -237,19 +237,22 @@ fun TasksFromPlanScreen(
             }
         }
 
-        FloatingActionButton(
-            content =  {
-                Icon(Icons.Default.Add, null)
-            },
-            onClick = {
-                navController.navigate("add_task_to_plan/$planId")
-            },
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(start =20.dp ,bottom = 50.dp),
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-            containerColor = MaterialTheme.colorScheme.primary
-        )
+        if (isCrud){
+            FloatingActionButton(
+                content =  {
+                    Icon(Icons.Default.Add, null)
+                },
+                onClick = {
+                    navController.navigate("add_task_to_plan/$planId")
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(start =20.dp ,bottom = 50.dp),
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        }
+
 
         FabMenu(
             menuOptions = menuOptions
