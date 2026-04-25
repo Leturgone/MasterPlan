@@ -21,6 +21,9 @@ class OptionsViewModel @Inject constructor(
     private val _isDarkMode = MutableStateFlow(false)
     val isDarkMode:StateFlow<Boolean> = _isDarkMode
 
+    private val _isLogout = MutableStateFlow(false)
+    val isLogout:StateFlow<Boolean> = _isLogout
+
     init {
         viewModelScope.launch {
             _isDarkMode.value = getCurrentThemeIsDarkUseCase().getOrElse {
@@ -38,6 +41,8 @@ class OptionsViewModel @Inject constructor(
     }
 
     fun logout() = viewModelScope.launch {
-        logoutUseCase()
+        logoutUseCase().onSuccess {
+            _isLogout.value = true
+        }
     }
 }
