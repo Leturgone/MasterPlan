@@ -95,6 +95,7 @@ import com.app.masterplan.presentation.ui.requests.viewmodel.RequestCardViewMode
 import com.app.masterplan.presentation.ui.requests.viewmodel.RequestsListScreenViewModel
 import com.app.masterplan.presentation.ui.tasks.viewModel.AssignedTasksScreenViewModel
 import com.app.masterplan.presentation.ui.tasks.viewModel.CreateNewTaskViewModel
+import com.app.masterplan.presentation.ui.tasks.viewModel.SelectExecutorViewModel
 import com.app.masterplan.presentation.ui.tasks.viewModel.TaskSearchScreenViewModel
 import com.app.masterplan.presentation.ui.tasks.viewModel.TasksFromPlanScreenViewModel
 import com.app.masterplan.presentation.ui.tasks.viewModel.UpdateTaskViewModel
@@ -321,6 +322,34 @@ object ViewModelModule {
             saveSearchHistoryUseCase,
             clearSearchHistoryUseCase,
             exportDirEmployeesUseCase
+        )
+    }
+
+
+    @Provides
+    fun provideSelectExecutorViewModel(
+        employeeRepository: EmployeeRepository,
+        searchHistoryRepository: SearchHistoryRepository
+    ): SelectExecutorViewModel {
+        val getLocalEmpIdUseCase = GetLocalEmpIdUseCase(employeeRepository)
+        val getAllDirectorEmployeesUseCase = GetAllDirectorEmployeesUseCase(employeeRepository)
+        val sortDirEmployeesByRatingUseCase = SortDirEmployeesByRatingUseCase(employeeRepository)
+        val sortDirEmployeesByWorkloadUseCase = SortDirEmployeesByWorkloadUseCase(employeeRepository)
+        val getDirEmployeesWithoutTasksUseCase = GetDirEmployeesWithoutTasksUseCase(employeeRepository)
+        val searchDirEmployeeByNameUseCase = SearchDirEmployeeByNameUseCase(employeeRepository)
+        val getSearchHistoryUseCase = GetSearchHistoryUseCase(searchHistoryRepository)
+        val saveSearchHistoryUseCase = SaveSearchHistoryUseCase(searchHistoryRepository)
+        val clearSearchHistoryUseCase = ClearSearchHistoryUseCase(searchHistoryRepository)
+        return SelectExecutorViewModel(
+            getLocalEmpIdUseCase,
+            getAllDirectorEmployeesUseCase,
+            sortDirEmployeesByRatingUseCase,
+            sortDirEmployeesByWorkloadUseCase,
+            getDirEmployeesWithoutTasksUseCase,
+            searchDirEmployeeByNameUseCase,
+            getSearchHistoryUseCase,
+            saveSearchHistoryUseCase,
+            clearSearchHistoryUseCase
         )
     }
 
