@@ -4,6 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,20 +30,47 @@ import com.app.masterplan.R
 import com.app.masterplan.presentation.ui.accounts.components.AccountList
 import com.app.masterplan.presentation.ui.accounts.components.DirectorData
 import com.app.masterplan.presentation.ui.common.CustomToastMessage
+import com.app.masterplan.presentation.ui.common.FabMenu
+import com.app.masterplan.presentation.ui.common.FabMenuOption
 import com.app.masterplan.presentation.ui.common.MasterPlanState
 import com.app.masterplan.presentation.ui.common.SearchSec
-import com.app.masterplan.presentation.ui.employees.viewmodel.EmployeeListScreenViewModel
+import com.app.masterplan.presentation.ui.tasks.viewModel.SelectExecutorViewModel
 
 @Composable
 fun SelectExecutorScreen(
     navController: NavHostController,
-    viewModel: EmployeeListScreenViewModel  = hiltViewModel(),
+    viewModel: SelectExecutorViewModel = hiltViewModel(),
 ){
     var showToast by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
 
     val accountListFlow = viewModel.employeesFlow.collectAsState()
     val searchHistoryFlow = viewModel.searchHistoryFlow.collectAsState()
+
+
+    val menuOptions = listOf(
+        FabMenuOption(
+            title = stringResource(R.string.all),
+            icon = Icons.Default.Menu,
+            onClick = { viewModel.loadDirEmployees() }
+        ),
+        FabMenuOption(
+            title = stringResource(R.string.by_rating),
+            icon = Icons.Default.Check,
+            onClick = { viewModel.sortDirEmployeesByRating() }
+        ),
+        FabMenuOption(
+            title = stringResource(R.string.by_workload),
+            icon = Icons.Default.Edit,
+            onClick = { viewModel.sortDirEmployeesByWorkload() }
+        ),
+        FabMenuOption(
+            title = stringResource(R.string.without_tasks),
+            icon = Icons.Default.Error,
+            onClick = { viewModel.getDirEmployeesWithoutTasks() }
+        )
+    )
+
 
 
     LaunchedEffect(Unit) {
@@ -109,6 +141,10 @@ fun SelectExecutorScreen(
                 MasterPlanState.Waiting -> null
             }
         }
+        FabMenu(
+            menuOptions = menuOptions
+        )
+
         CustomToastMessage(
             message = errorMessage,
             isVisible = showToast,
