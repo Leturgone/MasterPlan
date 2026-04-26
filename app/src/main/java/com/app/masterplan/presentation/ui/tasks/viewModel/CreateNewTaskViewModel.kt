@@ -71,7 +71,7 @@ class CreateNewTaskViewModel @Inject constructor(
     fun addExecutor(executor: DirectorData) = viewModelScope.launch {
         val list = _assignedEmployeesList.value.toMutableList()
         list.add(executor)
-        _assignedEmployeesList.value = list
+        _assignedEmployeesList.value = list.toSet().toList()
         _currentCreatingTask.value.executorsId.add(executor.id)
     }
 
