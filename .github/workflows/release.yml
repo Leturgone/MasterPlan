@@ -41,7 +41,7 @@ jobs:
           RELEASE_SIGN_KEY_ALIAS: ${{ secrets.RELEASE_SIGN_KEY_ALIAS }}
           RELEASE_SIGN_KEY_PASSWORD: ${{ secrets.RELEASE_SIGN_KEY_PASSWORD }}
         run: |
-          ./gradlew assembleRelease 
+          ./gradlew assembleRelease --stacktrace --info
           jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
           -keystore "$KEYSTORE_PATH" \
           -storepass "$KEYSTORE_PASSWORD" \
