@@ -18,6 +18,28 @@ jobs:
           token: ${{ secrets.KEYSTORE_REPOSITORY_TOKEN }}
           path: app/keystore
 
+      - name: Generate keys.kt
+        env:
+          API_URL: ${{ secrets.API_URL_SECRET }}
+          WEBSOCKET_URL: ${{ secrets.WEBSOCKET_URL_SECRET }}
+        run: |
+          mkdir -p app/src/main/java/com/app/masterplan/di
+          cat > app/src/main/java/com/app/masterplan/di/keys.kt << EOF
+          package com.app.masterplan.di
+          
+          const val API_URL = "$API_URL"
+          
+          EOF
+          
+          mkdir -p app/src/main/java/com/app/masterplan/framework/websocket
+          cat > app/src/main/java/com/app/masterplan/framework/websocket/keys.kt << EOF
+          package com.app.masterplan.framework.websocket
+          
+          const val WEBSOCKET_URL = "WEBSOCKET_URL"
+          
+          EOF
+          
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
