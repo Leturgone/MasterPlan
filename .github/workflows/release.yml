@@ -3,6 +3,12 @@ on:
   push:
     branches:
       - dev/add-apk-build-ci-cd
+
+
+permissions:
+  contents: write
+
+
 jobs:
   buid:
     runs-on: ubuntu-latest
