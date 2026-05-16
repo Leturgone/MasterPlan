@@ -64,14 +64,6 @@ jobs:
           RELEASE_SIGN_KEY_PASSWORD: ${{ secrets.RELEASE_SIGN_KEY_PASSWORD }}
         run: |
           ./gradlew assembleRelease --stacktrace --info
-          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
-          -keystore "$KEYSTORE_PATH" \
-          -storepass "$KEYSTORE_PASSWORD" \
-          -keypass "$RELEASE_SIGN_KEY_PASSWORD" \
-          app/build/outputs/apk/release/app-release-unsigned.apk "$RELEASE_SIGN_KEY_ALIAS"
-          zipalign -v 4 \
-          app/build/outputs/apk/release/app-release-unsigned.apk \
-          app/build/outputs/apk/release/app-release.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v7.0.1
