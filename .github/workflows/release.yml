@@ -60,13 +60,28 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+      - name: Extract Version Name
+        id: extract_version
+        run: |
+          VERSION_NAME=$(grep -m1 "versionName" app/build.gradle.kts | grep -o '"[^"]*"' | tr -d '"')
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_OUTPUT
 
       - name: Sign APK
         run: |
           ./gradlew assembleRelease --stacktrace --info
+          ./gradlew bundleRelease --stacktrace --info
+      
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v7.0.1
+      - name: Create Tag and Release
+        id: create_release
+        uses: softprops/action-gh-release@v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: app-release.apk
-          path: app/build/outputs/apk/release/app-release.apk
+          tag_name: v${{ steps.extract_version.outputs.VERSION_NAME }}
+          release_name: Release v${{ steps.extract_version.outputs.VERSION_NAME }}
+          draft: false
+          prerelease: false
+          files: |
+            app/build/outputs/apk/release/app-release.apk
+            app/build/outputs/bundle/release/app-release.aab
