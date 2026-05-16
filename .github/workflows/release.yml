@@ -1,9 +1,10 @@
 name: Android Release
+
 on:
   push:
-    branches:
-      - dev/add-apk-build-ci-cd
-
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 permissions:
   contents: write
@@ -85,7 +86,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ steps.extract_version.outputs.VERSION_NAME }}
-          release_name: Release v${{ steps.extract_version.outputs.VERSION_NAME }}
+          release_name: MasterPlan v${{ steps.extract_version.outputs.VERSION_NAME }}
           draft: false
           prerelease: false
           files: |
