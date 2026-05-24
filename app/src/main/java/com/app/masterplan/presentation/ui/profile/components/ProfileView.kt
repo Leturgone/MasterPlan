@@ -1,5 +1,6 @@
 package com.app.masterplan.presentation.ui.profile.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.app.masterplan.R
 import com.app.masterplan.domain.model.employee.EmployeeWithMetrics
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun ProfileView(profile: EmployeeWithMetrics){
 
@@ -91,7 +93,7 @@ fun ProfileView(profile: EmployeeWithMetrics){
             )
 
             Text(
-                text = profile.rating.toString(),
+                text = String.format("%.2f", profile.rating),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Normal,
                 color = Color.Black,
