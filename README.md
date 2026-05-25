@@ -13,7 +13,7 @@
 
 ## Описание
 
-[<img src="app/src/main/res/icon/ic_launcher-playstore.png" align="left"
+[<img src="app/src/main/res/ic_launcher-playstore.png" align="left"
 width="200" hspace="10" vspace="10">](app/src/main/res/icon/ic_launcher-playstore.png)
 
 MasterPlan это мобильное приложение для Android написанное на языке Kotlin, позволяющее упростить контроль выполнения планов мероприятий в подразделении предприятия.<br>
