@@ -87,14 +87,14 @@ interface EmployeeApi {
     ): Response<List<EmployeeDetailsResponse>>
 
 
-    @GET("dir/{directorId}/getSortedEmpByRating/")
+    @GET("dir/employee/{directorId}/employees/sortedByRating")
     suspend fun sortDirEmployeesByRating(
         @Header("Authorization") token: String,
         @Path(value = "directorId") directorId: UUID
     ): Response<List<EmployeeDetailsResponse>>
 
 
-    @GET("dir/{directorId}/employeesgetSortedEmpByWorkload/")
+    @GET("dir/employee/{directorId}/employees/sortedByWorkload")
     suspend fun sortDirEmployeesByWorkload(
         @Header("Authorization") token: String,
         @Path(value = "directorId") directorId: UUID
